@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+    <!-- Anchor dummy View for the buttons-->
+    <View
+        android:id="@+id/navigationView_buttons_anchor"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@color/colorAlmostWhite"
+        android:layout_alignParentBottom="true" />
+
+    <com.example.android.drroster.UI.StepBarView
+        android:id="@+id/step_bar_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:numberOfDots="7"
+        custom:boldDotColor="@color/colorPrimaryDark"
+        custom:normalDotColor="@color/colorPrimary" />
+
+    <!-- Setes white between two buttons-->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/navigationView_buttons_anchor">
+
+    <!--PREVIOUS button-->
+    <Button
+        android:id="@+id/navigationView_previous_button"
+        android:text="@string/navigationView_previous_button_text"
+        android:textSize="@dimen/button_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorTextDark"
+        android:background="@android:color/transparent"
+        android:layout_marginLeft="16dp"
+        android:layout_alignParentLeft="true"
+       />
+
+    <!--NEXT button-->
+    <Button
+        android:id="@+id/navigationView_next_button"
+        android:text="@string/next_button_text"
+        android:textSize="@dimen/button_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorTextDark"
+        android:background="@android:color/transparent"
+        android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+</merge>
