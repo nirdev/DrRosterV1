@@ -10,6 +10,7 @@
     <color name="colorAlmostWhite">#d0cdce</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBackgroundWhite">#FFFAFAFA</color>
+    <color name="list_person_name_color">#0e0d0d</color>
 
     <!-- Draggable List-->
     <color name="drag_list_view_choosen_dates">#264557</color>
@@ -21,4 +22,5 @@
     <color name="custom_background">#FFFAFAFA</color>
     <color name="custom_background_today">#eff5f8</color>
     <color name="custom_selected">#c0e2ec</color>
+
 </resources>

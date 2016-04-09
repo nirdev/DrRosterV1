@@ -15,6 +15,7 @@ public class Person {
     Boolean isFirstCall;
     Boolean isSecondCall;
     Boolean isThirdCall;
+    boolean isLeavDate;
     List<Date> leaveDates;
 
     public Person(Long id, String name) {
@@ -22,12 +23,13 @@ public class Person {
         this.name = name;
     }
 
-    public Person(Long id, String name, Boolean isFirstCall, Boolean isSecondCall, Boolean isThirdCall, List<Date> leaveDates) {
+    public Person(Long id, String name, Boolean isFirstCall, Boolean isSecondCall, Boolean isThirdCall,Boolean isLeavDate, List<Date> leaveDates) {
         this.id = id;
         this.name = name;
         this.isFirstCall = isFirstCall;
         this.isSecondCall = isSecondCall;
         this.isThirdCall = isThirdCall;
+        this.isLeavDate = isLeavDate;
         this.leaveDates = leaveDates;
     }
 
@@ -69,6 +71,14 @@ public class Person {
 
     public void setIsThirdCall(Boolean isThirdCall) {
         this.isThirdCall = isThirdCall;
+    }
+
+    public boolean isLeavDate() {
+        return isLeavDate;
+    }
+
+    public void setIsLeavDate(boolean isLeavDate) {
+        this.isLeavDate = isLeavDate;
     }
 
     public List<Date> getLeaveDates() {

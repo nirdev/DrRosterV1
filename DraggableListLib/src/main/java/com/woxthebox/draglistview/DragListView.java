@@ -94,7 +94,7 @@ public class DragListView extends FrameLayout {
 
     private DragItemRecyclerView createRecyclerView() {
         final DragItemRecyclerView recyclerView = (DragItemRecyclerView) LayoutInflater.from(getContext()).inflate(R.layout.drag_item_recycler_view, this, false);
-        recyclerView.setMotionEventSplittingEnabled(false);
+        recyclerView.setMotionEventSplittingEnabled(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setVerticalScrollBarEnabled(false);
         recyclerView.setHorizontalScrollBarEnabled(false);

@@ -1,10 +1,10 @@
 package com.example.android.drroster.fragments;
 
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.example.android.drroster.R;
 import com.example.android.drroster.activities.GenerateRosterActivity;
 import com.example.android.drroster.adapters.ItemDragListAdapter;
-import com.example.android.drroster.models.Person;
 import com.woxthebox.draglistview.DragItem;
 import com.woxthebox.draglistview.DragListView;
 
@@ -48,13 +47,13 @@ public class DraggableListFragment extends Fragment {
             @Override
             public void onItemDragStarted(int position) {
             }
+
             @Override
             public void onItemDragEnded(int fromPosition, int toPosition) {
                 if (fromPosition != toPosition) {
                 }
             }
         });
-
 
         setupListRecyclerView();
 
@@ -64,17 +63,20 @@ public class DraggableListFragment extends Fragment {
     @Override
     public void onDestroyView() {
         //TODo: handel DB here with gettag() - check this is best practice place to handle db in fragment life cycle
-        Log.wtf("here", "--------------------------------------------");
-        for (Person person : GenerateRosterActivity.mPeopleArray){
-            person.LogPerson();
-        }
+
         super.onDestroyView();
     }
 
     public void setupListRecyclerView() {
         mDragListView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ItemDragListAdapter listAdapter = new ItemDragListAdapter(GenerateRosterActivity.mPeopleArray,
-                R.layout.item_list_draggable, R.id.image, false,getTag(),getContext());
+        ItemDragListAdapter listAdapter = new ItemDragListAdapter(
+                GenerateRosterActivity.mPeopleArray,
+                R.layout.item_list_draggable,
+                R.id.image,
+                false,
+                getTag(),
+                getContext(),
+                getActivity());
         mDragListView.setAdapter(listAdapter, true);
         mDragListView.setCanDragHorizontally(false);
         mDragListView.setCustomDragItem(new MyDragItem(getContext(), R.layout.item_list_draggable));
