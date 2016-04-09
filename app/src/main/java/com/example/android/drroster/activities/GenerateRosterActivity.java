@@ -81,7 +81,6 @@ public class GenerateRosterActivity extends AppCompatActivity {
                             ft.replace(R.id.fragment_place_holder_generate_roster,
                                     new DraggableListFragment(),FRAGMENT_PEOPLE_LIST_THIRD_CALL_INDEX + "");
                             break;
-
                         case FRAGMENT_DATEABLE_LIST_INDEX:
                             ft.replace(R.id.fragment_place_holder_generate_roster,
                                     new DraggableListFragment(),FRAGMENT_DATEABLE_LIST_INDEX + "");

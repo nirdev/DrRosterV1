@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -119,8 +118,7 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
 
         //People name vars
         public TextView mNameTextView;
-        public String mText;
-        public String mOldText;
+
 
         public ViewHolder(final View itemView) {
             super(itemView, mGrabHandleId);
@@ -129,92 +127,50 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
             mDeleteImageButton = (ImageButton) itemView.findViewById(R.id.delete_draggable_item);
             mCheckBox = (CheckBox) itemView.findViewById(R.id.checkbox_draggable_list_item);
 
-            //Delete Button was clicked listener
-            mDeleteImageButton.setOnClickListener(new View.OnClickListener() {
+
+            mCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    //Check which index was selected by comparing to edit text
-                    int i = 0;
-                    for (Person temp : GenerateRosterActivity.mPeopleArray) {
-                        if (temp.getName().equals("" + mOldText)) {
-                            break;
-                        }
-                        i++;
-                    }
-                    GenerateRosterActivity.mPeopleArray.remove(i);
-                    notifyDataSetChanged();
-                }
-            });
-
-            //Change Name Listener
-            mNameTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    //User clicked on edit text
-                    if (hasFocus) {
-                        //Get text before edited
-                        mOldText = mNameTextView.getText().toString();
-
-                        //Set Cancel item visible
-                        mDeleteImageButton.setVisibility(View.VISIBLE);
-                    }
-                    //User leaved edit text
-                    else {
-                        //Set new text
-                        mText = mNameTextView.getText().toString();
-
-                        //Set delete button invisible
-                        mDeleteImageButton.setVisibility(View.GONE);
-
-                        //Set new value in the array
-                        int i = 0;
-                        Long mTempLong = -1l;
-                        //Check which index was selected by comparing to old edit text
-                        for (Person temp : GenerateRosterActivity.mPeopleArray) {
-                            if (temp.getName().equals("" + mOldText)) {
-                                mTempLong = (long) temp.getId();
-                                break;
-                            }
-                            i++;
-                        }
-
-                        //If long id was found set the data in the array.
-                        if (mTempLong != -1) {
-                            GenerateRosterActivity.mPeopleArray.set(i, new Person(mTempLong, mText));
-                        }
-                        notifyDataSetChanged();
-                    }
-
-                }
-            });
-
-            //CheckBox change listener
-            mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+                    Boolean isChecked = mCheckBox.isChecked();
                     //Sets checked boxes on chose item and save data depends on current fragment tag
-                            switch (FRAGMENT_TAG) {
-                                case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_FIRST_CALL_INDEX + "":
-                                    itemView.setActivated(isChecked);
-                                    GenerateRosterActivity.mPeopleArray.get(getItemPosition()).setIsFirstCall(isChecked);
-                                    break;
-                                case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_SECOND_CALL_INDEX + "":
-                                    itemView.setActivated(isChecked);
-                                    GenerateRosterActivity.mPeopleArray.get(getItemPosition()).setIsSecondCall(isChecked);
-                                    break;
-                                case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_THIRD_CALL_INDEX + "":
-                                    itemView.setActivated(isChecked);
-                                    GenerateRosterActivity.mPeopleArray.get(getItemPosition()).setIsThirdCall(isChecked);
-                                    break;
-                                case GenerateRosterActivity.FRAGMENT_DATEABLE_LIST_INDEX + "":
-                                    itemView.setActivated(isChecked);
-                                    GenerateRosterActivity.mPeopleArray.get(getItemPosition()).setIsThirdCall(isChecked);
-                                    break;
-                            }
-                        }
+                    switch (FRAGMENT_TAG) {
+                        case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_FIRST_CALL_INDEX + "":
+                            itemView.setActivated(isChecked);
+                            GenerateRosterActivity.mPeopleArray.get(getItemPosition()).setIsFirstCall(isChecked);
+                            break;
+                        case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_SECOND_CALL_INDEX + "":
+                            itemView.setActivated(isChecked);
+                            GenerateRosterActivity.mPeopleArray.get(getItemPosition()).setIsSecondCall(isChecked);
+                            break;
+                        case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_THIRD_CALL_INDEX + "":
+                            itemView.setActivated(isChecked);
+                            GenerateRosterActivity.mPeopleArray.get(getItemPosition()).setIsThirdCall(isChecked);
+                            break;
+                        case GenerateRosterActivity.FRAGMENT_DATEABLE_LIST_INDEX + "":
+                            itemView.setActivated(isChecked);
+                            GenerateRosterActivity.mPeopleArray.get(getItemPosition()).setIsLeavDate(isChecked);
+                            break;
+                    }
+
+                    //if date option is available && item is marked as checked
+                    if ((FRAGMENT_TAG == String.valueOf(GenerateRosterActivity.FRAGMENT_DATEABLE_LIST_INDEX)) && isChecked) {
+
+                        showCalendarInDialog(mContext.getString(R.string.dialog_calerdar_title), R.layout.dialog_date_picker);
+                        mCalendarPickerView.init(lastMonth.getTime(), nextMonth.getTime())
+                                .inMode(CalendarPickerView.SelectionMode.MULTIPLE)
+                                .withSelectedDate(new Date());
+
+                    }
+                }
             });
+//            //CheckBox change listener
+//            mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//
+//                }
+//            });
         }
 
         private void showCalendarInDialog(String title, int layoutResId) {
@@ -317,6 +273,10 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
         }
         private String getItemName(){
             return GenerateRosterActivity.mPeopleArray.get(getItemPosition()).getName();
+        }
+
+        private String[] getDatesUI(List<Date>){
+
         }
 
         //List item is clicked listener
