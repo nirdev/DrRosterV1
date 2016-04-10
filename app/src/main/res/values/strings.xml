@@ -9,4 +9,5 @@
     <string name="navigationView_previous_button_text">PREVIOUS</string>
     <string name="dialog_choose_date_button">Set dates</string>
     <string name="dialog_calerdar_title">Choose Leave dates</string>
+    <string name="add_new_name_footer">Add new name</string>
 </resources>

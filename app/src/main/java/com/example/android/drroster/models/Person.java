@@ -73,7 +73,7 @@ public class Person {
         this.isThirdCall = isThirdCall;
     }
 
-    public boolean isLeavDate() {
+    public boolean getIsLeavDate() {
         return isLeavDate;
     }
 
