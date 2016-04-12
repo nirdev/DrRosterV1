@@ -1,21 +1,17 @@
 package com.example.android.drroster.activities;
 
 
-import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
 import com.example.android.drroster.R;
 import com.example.android.drroster.UI.NavigationView;
+import com.example.android.drroster.fragments.AdditionalDutiesListFragment;
 import com.example.android.drroster.fragments.ChooseMonthFragment;
 import com.example.android.drroster.fragments.DraggableListFragment;
+import com.example.android.drroster.fragments.FinalReviewFragment;
 import com.example.android.drroster.models.Person;
 
 import java.util.ArrayList;
@@ -23,6 +19,7 @@ import java.util.ArrayList;
 public class GenerateRosterActivity extends AppCompatActivity {
 
     public static ArrayList<Person> mPeopleArray;
+    public static ArrayList<String> mADArray;
 
     //Constants
     public static final int GENERATOR_FRAGMENTS_NUMBER = 7;
@@ -32,15 +29,20 @@ public class GenerateRosterActivity extends AppCompatActivity {
     public static final int FRAGMENT_PEOPLE_LIST_THIRD_CALL_INDEX = 3;
     public static final int FRAGMENT_DATEABLE_LIST_INDEX = 4;
     public static final int FRAGMENT_ADDITION_DUTIES_INDEX = 5;
+    public static final int FRAGMENT_FINAL_REVIEW_INDEX = 6;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generate_roster);
 
-        //TODO: take from database
+
+        //TODO: take from database - last item is dummy for + add new
+
         mPeopleArray = new ArrayList<>();
+        mADArray = new ArrayList<>();
         for (int i = 0; i < 40; i++) {
-            mPeopleArray.add(new Person(Long.valueOf(i),"item" +i,false,false,false,false,null));
+            mPeopleArray.add(new Person(Long.valueOf(i),"item " +i,false,false,false,false,null));
+            mADArray.add("item " + i );
         }
 
         //Set first layout
@@ -85,6 +87,14 @@ public class GenerateRosterActivity extends AppCompatActivity {
                             ft.replace(R.id.fragment_place_holder_generate_roster,
                                     new DraggableListFragment(),FRAGMENT_DATEABLE_LIST_INDEX + "");
                             break;
+                        case FRAGMENT_ADDITION_DUTIES_INDEX:
+                            ft.replace(R.id.fragment_place_holder_generate_roster,
+                                    new AdditionalDutiesListFragment(),FRAGMENT_DATEABLE_LIST_INDEX + "");
+                            break;
+                        case FRAGMENT_FINAL_REVIEW_INDEX:
+                            ft.replace(R.id.fragment_place_holder_generate_roster,
+                                    new FinalReviewFragment(),FRAGMENT_DATEABLE_LIST_INDEX + "");
+                            break;
                     }
                     // replace
                     ft.commit();
@@ -96,21 +106,23 @@ public class GenerateRosterActivity extends AppCompatActivity {
 
     //Automagically lose focus on any click outside editText - this way app don't crush
     // http://stackoverflow.com/questions/4828636/edittext-clear-focus-on-touch-outside
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if ( v instanceof EditText) {
-                Rect outRect = new Rect();
-                v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
-                    v.clearFocus();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
-        }
-        return super.dispatchTouchEvent( event );
-    }
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent event) {
+//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//            View v = getCurrentFocus();
+//            if ( v instanceof EditText) {
+//                Rect outRect = new Rect();
+//                v.getGlobalVisibleRect(outRect);
+//                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+//                    v.clearFocus();
+//                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+//                }
+//            }
+//        }
+//        return super.dispatchTouchEvent( event );
+//    }
+
+
 
 }

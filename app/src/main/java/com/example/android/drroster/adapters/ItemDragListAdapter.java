@@ -5,11 +5,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -214,9 +214,7 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
                 });
             }
             //Footer options -
-            else {
-                Log.wtf("here", "--------------------------------------------");
-            }
+
         }
 
         private void showCalendarInDialog(String title, int layoutResId) {
@@ -273,13 +271,19 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
             input.setText(getItemName(), TextView.BufferType.EDITABLE);
             alertDialogBuilder.setView(input);
             alertDialogBuilder.setCancelable(false);
+            final int mSavedPOsition = getItemPosition();//Save position because no reference on edit text
             alertDialogBuilder.setTitle("Edit name"); //Set the title of the box
-            //alertDialogBuilder.setMessage(""); //Set the message for the box
             alertDialogBuilder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    String name = input.getText().toString();
+                    // Shut Keyboard after edit text so app want crash
+                    View view = mActivity.getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
 
-                    changePersonName(getItemPosition(), name);
+                    String name = input.getText().toString();
+                    changePersonName(mSavedPOsition, name);
                     dialog.cancel(); //when they click dismiss we will dismiss the box
                 }
             });
@@ -287,7 +291,7 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
-                    deletePerson(getItemPosition());
+                    deletePerson(mSavedPOsition);
                     dialog.cancel(); //when they click dismiss we will dismiss the box
                 }
             });
@@ -298,17 +302,22 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
         private void showAddNewNameDialog() {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     mContext);
+
+            //Build View with id in order to inflate it in onClick
             final EditText input = new EditText(mContext);
-            input.setText("", TextView.BufferType.EDITABLE);
+            final int DIALOD_EDITTEXT_ID = 777;
+            input.setId(DIALOD_EDITTEXT_ID);
             input.setHint("New name");
+
+            //Set up the dialog view all programmatically
             alertDialogBuilder.setView(input);
-            alertDialogBuilder.setCancelable(false);
+            alertDialogBuilder.setCancelable(true);
             alertDialogBuilder.setTitle("Add new name"); //Set the title of the box
-            //alertDialogBuilder.setMessage(""); //Set the message for the box
             alertDialogBuilder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    String name = input.getText().toString();
 
+                    EditText edit = (EditText) input.findViewById(DIALOD_EDITTEXT_ID);
+                    String name = edit.getText().toString();
                     AddPersonName(name);
                     dialog.cancel(); //when they click dismiss we will dismiss the box
                 }
@@ -318,24 +327,28 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
         }
 
         private void deletePerson(int position) {
-            GenerateRosterActivity.mPeopleArray.remove(position);
-            notifyDataSetChanged();
+            if(position < mItemList.size() && position >= 0) {
+                GenerateRosterActivity.mPeopleArray.remove(position);
+                notifyDataSetChanged();
+            }
         }
 
         private void changePersonName(int position, String newName) {
-            Person newPerson = GenerateRosterActivity.mPeopleArray.get(position);
-            newPerson.setName(newName);
-            GenerateRosterActivity.mPeopleArray.set(position, newPerson);
-            notifyDataSetChanged();
+            if(position < mItemList.size() && position >= 0 ) {
+                Person newPerson = GenerateRosterActivity.mPeopleArray.get(position);
+                newPerson.setName(newName);
+                GenerateRosterActivity.mPeopleArray.set(position, newPerson);
+                notifyDataSetChanged();
+            }
         }
         private void AddPersonName( String newName) {
             Person newPerson = new Person((long) (mItemList.size()),newName, false,false,false,false,null);
-            GenerateRosterActivity.mPeopleArray.add(newPerson);
+            GenerateRosterActivity.mPeopleArray.add(GenerateRosterActivity.mPeopleArray.size() - 1,newPerson);
             notifyDataSetChanged();
         }
-int nit;
+
         private int getItemPosition() {
-            return (getPosition());
+            return (getAdapterPosition());
         }
 
         private String getItemName() {
