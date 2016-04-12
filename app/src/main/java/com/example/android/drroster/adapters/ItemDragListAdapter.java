@@ -333,7 +333,7 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
             GenerateRosterActivity.mPeopleArray.add(newPerson);
             notifyDataSetChanged();
         }
-
+int nit;
         private int getItemPosition() {
             return (getPosition());
         }
