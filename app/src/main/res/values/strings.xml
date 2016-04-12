@@ -10,4 +10,5 @@
     <string name="dialog_choose_date_button">Set dates</string>
     <string name="dialog_calerdar_title">Choose Leave dates</string>
     <string name="add_new_name_footer">Add new name</string>
+    <string name="add_new_friend_footer_view_text">+ add new friend</string>
 </resources>

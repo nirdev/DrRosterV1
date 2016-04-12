@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +28,10 @@ import java.util.Date;
 import java.util.List;
 
 
-
 /**
  * Created by Nir on 4/3/2016.bugalbugala
  */
-public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAdapter.ViewHolder> {
+public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAdapter.ViewHolderNormal> {
 
     //.super adapter vas
     private int mLayoutId;
@@ -73,25 +74,17 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = null;
-        //Inflate normal or footer view
-        if (viewType == NORMAL_VIEWTYPE)
-        {
-            view = LayoutInflater.from(parent.getContext()).inflate(mLayoutId, parent, false);
-        }
-        else if (viewType == FOOTER_VIEWTYPE){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_footer, parent, false);
-        }
+    public ViewHolderNormal onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(mLayoutId, parent, false);
+        return new ViewHolderNormal(view);
 
-        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolderNormal holder, int position) {
         super.onBindViewHolder(holder, position);
         //If not footer
-        if(position != (mItemList.size() - 1)) {
+        if (position != (mItemList.size() - 1)) {
             //Set keyboard down automatically
             mActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -139,12 +132,17 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
 
         }
         //Footer viewholder
+        else {
+            holder.mNameTextView.setText(R.string.add_new_friend_footer_view_text);
+            holder.mNameTextView.setTextColor(Color.GRAY);
+            holder.mCheckBox.setVisibility(View.INVISIBLE);
+        }
 
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(position < mItemList.size() - 1) {
+        if (position < mItemList.size() - 1) {
             return NORMAL_VIEWTYPE;
         }
         return FOOTER_VIEWTYPE;
@@ -155,7 +153,7 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
         return mItemList.get(position).getId();
     }
 
-    public class ViewHolder extends DragItemAdapter<ArrayList<Person>, ItemDragListAdapter.ViewHolder>.ViewHolder {
+    public class ViewHolderNormal extends DragItemAdapter<ArrayList<Person>, ViewHolderNormal>.ViewHolder {
         public ImageButton mDeleteImageButton;
         public CheckBox mCheckBox;
 
@@ -167,51 +165,58 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
         public TextView mNameTextView;
 
 
-        public ViewHolder(final View itemView) {
+        public ViewHolderNormal(final View itemView) {
             super(itemView, mGrabHandleId);
 
-            mNameTextView = (TextView) itemView.findViewById(R.id.text);
-            mDeleteImageButton = (ImageButton) itemView.findViewById(R.id.delete_draggable_item);
-            mCheckBox = (CheckBox) itemView.findViewById(R.id.checkbox_draggable_list_item);
-            mChoseDays = (TextView) itemView.findViewById(R.id.days_item_draglist);
-            mChoseMonthandYear = (TextView) itemView.findViewById(R.id.month_item_draglist);
+            //If not footer - normal view
+            if(getItemPosition() < (mItemList.size() - 1) ) {
+                mNameTextView = (TextView) itemView.findViewById(R.id.text);
+                mDeleteImageButton = (ImageButton) itemView.findViewById(R.id.delete_draggable_item);
+                mCheckBox = (CheckBox) itemView.findViewById(R.id.checkbox_draggable_list_item);
+                mChoseDays = (TextView) itemView.findViewById(R.id.days_item_draglist);
+                mChoseMonthandYear = (TextView) itemView.findViewById(R.id.month_item_draglist);
 
-            mCheckBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Boolean isChecked = mCheckBox.isChecked();
-                    //Sets checked boxes on chose item and save data depends on current fragment tag
-                    switch (FRAGMENT_TAG) {
-                        case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_FIRST_CALL_INDEX + "":
-                            itemView.setActivated(isChecked);
-                            GenerateRosterActivity.mPeopleArray.get(getItemPosition()).setIsFirstCall(isChecked);
-                            break;
-                        case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_SECOND_CALL_INDEX + "":
-                            itemView.setActivated(isChecked);
-                            GenerateRosterActivity.mPeopleArray.get(getItemPosition()).setIsSecondCall(isChecked);
-                            break;
-                        case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_THIRD_CALL_INDEX + "":
-                            itemView.setActivated(isChecked);
-                            GenerateRosterActivity.mPeopleArray.get(getItemPosition()).setIsThirdCall(isChecked);
-                            break;
-                        case GenerateRosterActivity.FRAGMENT_DATEABLE_LIST_INDEX + "":
-                            itemView.setActivated(isChecked);
-                            GenerateRosterActivity.mPeopleArray.get(getItemPosition()).setIsLeavDate(isChecked);
-                            break;
+                mCheckBox.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Boolean isChecked = mCheckBox.isChecked();
+                        //Sets checked boxes on chose item and save data depends on current fragment tag
+                        switch (FRAGMENT_TAG) {
+                            case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_FIRST_CALL_INDEX + "":
+                                itemView.setActivated(isChecked);
+                                GenerateRosterActivity.mPeopleArray.get(getItemPosition()).setIsFirstCall(isChecked);
+                                break;
+                            case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_SECOND_CALL_INDEX + "":
+                                itemView.setActivated(isChecked);
+                                GenerateRosterActivity.mPeopleArray.get(getItemPosition()).setIsSecondCall(isChecked);
+                                break;
+                            case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_THIRD_CALL_INDEX + "":
+                                itemView.setActivated(isChecked);
+                                GenerateRosterActivity.mPeopleArray.get(getItemPosition()).setIsThirdCall(isChecked);
+                                break;
+                            case GenerateRosterActivity.FRAGMENT_DATEABLE_LIST_INDEX + "":
+                                itemView.setActivated(isChecked);
+                                GenerateRosterActivity.mPeopleArray.get(getItemPosition()).setIsLeavDate(isChecked);
+                                break;
+                        }
+
+                        //if date option is available && item is marked as checked
+                        if ((FRAGMENT_TAG.equals(String.valueOf(GenerateRosterActivity.FRAGMENT_DATEABLE_LIST_INDEX))) && isChecked) {
+
+                            showCalendarInDialog(mContext.getString(R.string.dialog_calerdar_title), R.layout.dialog_date_picker);
+                            mCalendarPickerView.init(lastMonth.getTime(), nextMonth.getTime())
+                                    .inMode(CalendarPickerView.SelectionMode.MULTIPLE)
+                                    .withSelectedDate(new Date());
+
+                        }
+                        notifyDataSetChanged();
                     }
-
-                    //if date option is available && item is marked as checked
-                    if ((FRAGMENT_TAG.equals(String.valueOf(GenerateRosterActivity.FRAGMENT_DATEABLE_LIST_INDEX))) && isChecked) {
-
-                        showCalendarInDialog(mContext.getString(R.string.dialog_calerdar_title), R.layout.dialog_date_picker);
-                        mCalendarPickerView.init(lastMonth.getTime(), nextMonth.getTime())
-                                .inMode(CalendarPickerView.SelectionMode.MULTIPLE)
-                                .withSelectedDate(new Date());
-
-                    }
-                    notifyDataSetChanged();
-                }
-            });
+                });
+            }
+            //Footer options -
+            else {
+                Log.wtf("here", "--------------------------------------------");
+            }
         }
 
         private void showCalendarInDialog(String title, int layoutResId) {
@@ -260,7 +265,8 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
 
             theDialog.show();
         }
-        private void showEditNameDialog(){
+
+        private void showEditNameDialog() {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     mContext);
             final EditText input = new EditText(mContext);
@@ -285,32 +291,68 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
                     dialog.cancel(); //when they click dismiss we will dismiss the box
                 }
             });
-            AlertDialog alertDialog =alertDialogBuilder.create(); //create the box
+            AlertDialog alertDialog = alertDialogBuilder.create(); //create the box
             alertDialog.show(); //actually show the box
         }
 
-        private void deletePerson(int position){
+        private void showAddNewNameDialog() {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    mContext);
+            final EditText input = new EditText(mContext);
+            input.setText("", TextView.BufferType.EDITABLE);
+            input.setHint("New name");
+            alertDialogBuilder.setView(input);
+            alertDialogBuilder.setCancelable(false);
+            alertDialogBuilder.setTitle("Add new name"); //Set the title of the box
+            //alertDialogBuilder.setMessage(""); //Set the message for the box
+            alertDialogBuilder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    String name = input.getText().toString();
+
+                    AddPersonName(name);
+                    dialog.cancel(); //when they click dismiss we will dismiss the box
+                }
+            });
+            AlertDialog alertDialog = alertDialogBuilder.create(); //create the box
+            alertDialog.show(); //actually show the box
+        }
+
+        private void deletePerson(int position) {
             GenerateRosterActivity.mPeopleArray.remove(position);
             notifyDataSetChanged();
         }
-        private void changePersonName(int position,String newName){
+
+        private void changePersonName(int position, String newName) {
             Person newPerson = GenerateRosterActivity.mPeopleArray.get(position);
             newPerson.setName(newName);
             GenerateRosterActivity.mPeopleArray.set(position, newPerson);
             notifyDataSetChanged();
         }
+        private void AddPersonName( String newName) {
+            Person newPerson = new Person((long) (mItemList.size()),newName, false,false,false,false,null);
+            GenerateRosterActivity.mPeopleArray.add(newPerson);
+            notifyDataSetChanged();
+        }
 
-        private int getItemPosition(){
+        private int getItemPosition() {
             return (getPosition());
         }
-        private String getItemName(){
+
+        private String getItemName() {
             return GenerateRosterActivity.mPeopleArray.get(getItemPosition()).getName();
         }
 
         //List item is clicked listener
         @Override
         public void onItemClicked(View view) {
-            showEditNameDialog();
+            // if not footer
+            if (getItemPosition() < mItemList.size() - 1 ) {
+
+                showEditNameDialog();
+            }
+            else {
+                showAddNewNameDialog();
+            }
         }
 
         @Override
@@ -318,4 +360,5 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
             return true;
         }
     }
+
 }
