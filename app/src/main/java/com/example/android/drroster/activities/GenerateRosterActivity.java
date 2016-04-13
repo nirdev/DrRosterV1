@@ -12,6 +12,7 @@ import com.example.android.drroster.fragments.AdditionalDutiesListFragment;
 import com.example.android.drroster.fragments.ChooseMonthFragment;
 import com.example.android.drroster.fragments.DraggableListFragment;
 import com.example.android.drroster.fragments.FinalReviewFragment;
+import com.example.android.drroster.models.ADBean;
 import com.example.android.drroster.models.Person;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class GenerateRosterActivity extends AppCompatActivity {
 
     public static ArrayList<Person> mPeopleArray;
-    public static ArrayList<String> mADArray;
+    public static ArrayList<ADBean> mADArray;
 
     //Constants
     public static final int GENERATOR_FRAGMENTS_NUMBER = 7;
@@ -42,7 +43,7 @@ public class GenerateRosterActivity extends AppCompatActivity {
         mADArray = new ArrayList<>();
         for (int i = 0; i < 40; i++) {
             mPeopleArray.add(new Person(Long.valueOf(i),"item " +i,false,false,false,false,null));
-            mADArray.add("item " + i );
+            mADArray.add(new ADBean("item AD " + i));
         }
 
         //Set first layout
