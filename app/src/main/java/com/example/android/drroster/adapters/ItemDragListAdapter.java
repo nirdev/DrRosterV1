@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.drroster.R;
@@ -135,7 +135,9 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
         else {
             holder.mNameTextView.setText(R.string.add_new_friend_footer_view_text);
             holder.mNameTextView.setTextColor(Color.GRAY);
+            holder.mImageView.setVisibility(View.INVISIBLE);
             holder.mCheckBox.setVisibility(View.INVISIBLE);
+
         }
 
     }
@@ -154,14 +156,14 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
     }
 
     public class ViewHolderNormal extends DragItemAdapter<ArrayList<Person>, ViewHolderNormal>.ViewHolder {
-        public ImageButton mDeleteImageButton;
         public CheckBox mCheckBox;
+        public ImageView mImageView;
 
         //chosen dates vars
         public TextView mChoseDays;
         public TextView mChoseMonthandYear;
 
-        //People name vars
+        //People mDutyIsChecked vars
         public TextView mNameTextView;
 
 
@@ -171,7 +173,7 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
             //If not footer - normal view
             if(getItemPosition() < (mItemList.size() - 1) ) {
                 mNameTextView = (TextView) itemView.findViewById(R.id.text);
-                mDeleteImageButton = (ImageButton) itemView.findViewById(R.id.delete_draggable_item);
+                mImageView = (ImageView) itemView.findViewById(R.id.image);
                 mCheckBox = (CheckBox) itemView.findViewById(R.id.checkbox_draggable_list_item);
                 mChoseDays = (TextView) itemView.findViewById(R.id.days_item_draglist);
                 mChoseMonthandYear = (TextView) itemView.findViewById(R.id.month_item_draglist);
