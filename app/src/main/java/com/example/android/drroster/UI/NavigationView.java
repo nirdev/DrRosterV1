@@ -69,7 +69,7 @@ public class NavigationView extends RelativeLayout {
         mNextButton = (Button) this.findViewById(R.id.navigationView_next_button);
         mNextButton.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
-                if ( mSelectedIndex < GenerateRosterActivity.GENERATOR_FRAGMENTS_NUMBER - 1) {
+                if ( mSelectedIndex < GenerateRosterActivity.GENERATOR_FRAGMENTS_NUMBER) {
                     int newSelectedIndex = mSelectedIndex + 1;
                     setSelectedIndex(newSelectedIndex);
                 }
@@ -85,6 +85,7 @@ public class NavigationView extends RelativeLayout {
      * @param index the index of the value to select.
      */
     public void setSelectedIndex(int index) {
+
 
 
         if (fragmentChangeListener != null){
@@ -104,11 +105,12 @@ public class NavigationView extends RelativeLayout {
         else {
             mPreviousButton.setVisibility(VISIBLE);
         }
-        // If the last value is shown, hide the next button.
+        // If the last value is shown,show "generate" button.
         if (mSelectedIndex ==  GenerateRosterActivity.GENERATOR_FRAGMENTS_NUMBER - 1 ) {
-            mNextButton.setVisibility(INVISIBLE);
+            mNextButton.setText(R.string.generate_button_navigation_view);
         }
         else {
+            mNextButton.setText(R.string.next_button_text);
             mNextButton.setVisibility(VISIBLE);
         }
     }

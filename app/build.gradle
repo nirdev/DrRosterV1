@@ -18,12 +18,19 @@ android {
         }
     }
 }
-
+repositories {
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+}
+apply plugin: 'com.neenbedankt.android-apt'
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile project(':DraggableListLib')
+    apt 'org.parceler:parceler:1.0.4'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:support-v4:23.2.1'
+    compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     compile 'com.squareup:android-times-square:1.6.5@aar'
+    compile 'org.parceler:parceler-api:1.0.4'
 }

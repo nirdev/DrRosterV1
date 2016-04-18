@@ -5,7 +5,9 @@
     <dimen name="toolbar_shadow">4dp</dimen>
     <dimen name="editTextSize">18sp</dimen>
     <dimen name="button_text_size">22sp</dimen>
-    <dimen name="textview_title_big">24sp</dimen>
+    <dimen name="text_view_title_big">24sp</dimen>
     <dimen name="dimen_margin_circle">4dp</dimen>
     <dimen name="dimen_margin_circle.negative">-4dp</dimen>
+    <dimen name="small_title_size_final_review">22sp</dimen>
+    <dimen name="chosen_objects_final_review">16sp</dimen>
 </resources>

@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.example.android.drroster.R;
 import com.example.android.drroster.activities.GenerateRosterActivity;
 import com.example.android.drroster.adapters.AdditionalDutiesAdapter;
+import com.example.android.drroster.database.AdditionalDutyModel;
 import com.example.android.drroster.models.ADBean;
 
 
@@ -30,7 +31,7 @@ public class AdditionalDutiesListFragment extends ListFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_additional_duties, container, false);
-        mFooterView = inflater.inflate(R.layout.item_list_footer, null);
+        mFooterView = inflater.inflate(R.layout.item_list_additional_duty_footer, null);
         return view;
     }
 
@@ -84,5 +85,12 @@ public class AdditionalDutiesListFragment extends ListFragment {
         ADBean newDuty = new ADBean(newName);
         GenerateRosterActivity.mADArray.add(newDuty);
         mAdapter.notifyDataSetChanged();
+
+        //Set new duty in database todo:delte
+        AdditionalDutyModel tempDuty = new AdditionalDutyModel();
+        tempDuty.name = newName;
+        tempDuty.number = GenerateRosterActivity.mPeopleArray.size() - 1;
+        tempDuty.save();
+
     }
 }

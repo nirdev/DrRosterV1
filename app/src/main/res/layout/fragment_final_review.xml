@@ -1,0 +1,166 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.FinalReviewFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:isScrollContainer="false"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_final_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="PLACE HOLDER"
+                android:textColor="#303232"
+                android:textSize="@dimen/text_view_title_big" />
+
+            <TextView
+                android:id="@+id/month_title_final_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="@string/month_title_final_review"
+                android:textSize="@dimen/small_title_size_final_review" />
+
+            <TextView
+                android:id="@+id/month_chosen_one_final_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="PLACE HOLDER"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/chosen_objects_final_review" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_margin="6dp"
+                android:background="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/first_call_title_final_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="@string/first_call_title_final_review"
+                android:textSize="@dimen/small_title_size_final_review" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/first_call_listView_final_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="36dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_margin="6dp"
+                android:background="@color/colorAccent" />
+
+            <!-- Second call-->
+
+            <TextView
+                android:id="@+id/second_call_title_final_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="@string/second_call_title_final_review"
+                android:textSize="@dimen/small_title_size_final_review" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/second_call_listView_final_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="36dp"
+                android:divider="@color/colorTransparent"
+                android:dividerHeight="0dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_margin="6dp"
+                android:background="@color/colorAccent" />
+
+            <!-- Third call-->
+
+            <TextView
+                android:id="@+id/third_call_title_final_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="@string/third_call_title_final_review"
+                android:textSize="@dimen/small_title_size_final_review" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/third_call_listView_final_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="36dp"
+                android:divider="@color/colorTransparent"
+                android:dividerHeight="0dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_margin="6dp"
+                android:background="@color/colorAccent" />
+
+            <!-- Dates-->
+            <TextView
+                android:id="@+id/date_call_title_final_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="@string/date_call_title_final_review"
+                android:textSize="@dimen/small_title_size_final_review" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/date_call_listView_final_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="36dp"
+                android:divider="@color/colorTransparent"
+                android:dividerHeight="0dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_margin="6dp"
+                android:background="@color/colorAccent" />
+
+            <!-- Additional duties-->
+            <TextView
+                android:id="@+id/additional_duties_title_final_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="@string/additional_duties_title_final_review"
+                android:textSize="@dimen/small_title_size_final_review" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/additional_duties_listView_final_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isScrollContainer="false"
+                android:layout_marginLeft="36dp"
+                android:divider="@color/colorTransparent"
+                android:dividerHeight="0dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

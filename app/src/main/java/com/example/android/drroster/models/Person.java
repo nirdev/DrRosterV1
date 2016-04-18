@@ -2,25 +2,27 @@ package com.example.android.drroster.models;
 
 import android.util.Log;
 
+import org.parceler.Parcel;
+
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Nir on 4/5/2016.
  */
-public class Person {
+@Parcel
+public class Person{
 
     Long id;
     String name;
-    Boolean isFirstCall;
-    Boolean isSecondCall;
-    Boolean isThirdCall;
-    boolean isLeavDate;
-    List<Date> leaveDates;
+    Boolean isFirstCall = false;
+    Boolean isSecondCall = false;
+    Boolean isThirdCall = false;
+    boolean isLeavDate = false;
+    List<Date> leaveDates = null;
 
-    public Person(Long id, String name) {
-        this.id = id;
-        this.name = name;
+    // empty constructor needed by the Parceler library
+    public Person() {
     }
 
     public Person(Long id, String name, Boolean isFirstCall, Boolean isSecondCall, Boolean isThirdCall,Boolean isLeavDate, List<Date> leaveDates) {
@@ -91,4 +93,5 @@ public class Person {
     public void LogPerson(){
         Log.wtf(id+"", "name: " + name + " isFirst " + isFirstCall + " isSecond " + isSecondCall + " isthird: " + isThirdCall);
     }
+
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.RandomiseActivity">
+
+
+    <include
+        android:id="@+id/toolbar_random_activity"
+        layout="@layout/toolbar_roster_generator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
+
+    <FrameLayout
+        android:id="@+id/fragment_place_holder_random_activity"
+        android:layout_below="@id/toolbar_random_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/anchor_navigation_view"/>
+
+
+    <RelativeLayout
+        android:id="@+id/button_wrapper_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+
+    <!--PREVIOUS button-->
+    <Button
+        android:id="@+id/previous_button_random_activity"
+        android:onClick="onPreviousButton"
+        android:text="@string/navigationView_previous_button_text"
+        android:textSize="@dimen/button_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorTextDark"
+        android:background="@android:color/transparent"
+        android:layout_marginLeft="16dp"
+        android:layout_alignParentLeft="true"
+        />
+
+    <!--NEXT button-->
+    <Button
+        android:id="@+id/next_button_random_activity"
+        android:onClick="onNextButton"
+        android:text="@string/next_button_text"
+        android:textSize="@dimen/button_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorTextDark"
+        android:background="@android:color/transparent"
+        android:layout_alignParentRight="true" />
+    </RelativeLayout>
+</RelativeLayout>
+

@@ -34,8 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:textSize="@dimen/textview_title_big"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/colorTextDark"/>
+        android:textSize="@dimen/text_view_title_big"
+        android:layout_gravity="center_horizontal" />
 
 </RelativeLayout>

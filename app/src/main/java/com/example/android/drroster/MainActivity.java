@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         //Go to choose month activity //TODO:Delete after finish build sign in
         Intent i1 = new Intent(this,GenerateRosterActivity.class );
         startActivity(i1);

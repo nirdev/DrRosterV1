@@ -14,4 +14,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="generate_button_navigation_view">FINISHED</string>
+    <string name="generate_random_acitvity_button">GENERATE</string>
+    <string name="month_title_final_review">Month</string>
+    <string name="first_call_title_final_review">1st Call</string>
+    <string name="second_call_title_final_review">2nd Call</string>
+    <string name="third_call_title_final_review">3rd Call</string>
+    <string name="date_call_title_final_review">Leave</string>
+    <string name="additional_duties_title_final_review">Additional Duties</string>
 </resources>

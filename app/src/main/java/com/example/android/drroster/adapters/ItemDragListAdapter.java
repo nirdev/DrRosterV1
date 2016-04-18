@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.android.drroster.R;
 import com.example.android.drroster.activities.GenerateRosterActivity;
+import com.example.android.drroster.database.PersonModel;
 import com.example.android.drroster.models.Person;
 import com.example.android.drroster.utils.DateUtils;
 import com.squareup.timessquare.CalendarPickerView;
@@ -171,7 +172,7 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
             super(itemView, mGrabHandleId);
 
             //If not footer - normal view
-            if(getItemPosition() < (mItemList.size() - 1) ) {
+            if (getItemPosition() < (mItemList.size() - 1)) {
                 mNameTextView = (TextView) itemView.findViewById(R.id.text);
                 mImageView = (ImageView) itemView.findViewById(R.id.image);
                 mCheckBox = (CheckBox) itemView.findViewById(R.id.checkbox_draggable_list_item);
@@ -329,24 +330,32 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
         }
 
         private void deletePerson(int position) {
-            if(position < mItemList.size() && position >= 0) {
+            if (position < mItemList.size() && position >= 0) {
                 GenerateRosterActivity.mPeopleArray.remove(position);
                 notifyDataSetChanged();
             }
         }
 
         private void changePersonName(int position, String newName) {
-            if(position < mItemList.size() && position >= 0 ) {
+            if (position < mItemList.size() && position >= 0) {
                 Person newPerson = GenerateRosterActivity.mPeopleArray.get(position);
                 newPerson.setName(newName);
                 GenerateRosterActivity.mPeopleArray.set(position, newPerson);
                 notifyDataSetChanged();
             }
         }
-        private void AddPersonName( String newName) {
-            Person newPerson = new Person((long) (mItemList.size()),newName, false,false,false,false,null);
-            GenerateRosterActivity.mPeopleArray.add(GenerateRosterActivity.mPeopleArray.size() - 1,newPerson);
+
+        private void AddPersonName(String newName) {
+            Person newPerson = new Person((long) (mItemList.size()), newName, false, false, false, false, null);
+            GenerateRosterActivity.mPeopleArray.add(GenerateRosterActivity.mPeopleArray.size() - 1, newPerson);
             notifyDataSetChanged();
+
+            //Set new person in database todo:delete before realese
+            PersonModel tempPerson = new PersonModel();
+            tempPerson.name = newName;
+            tempPerson.number = GenerateRosterActivity.mPeopleArray.size() - 1;
+            tempPerson.save();
+
         }
 
         private int getItemPosition() {
@@ -361,11 +370,10 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
         @Override
         public void onItemClicked(View view) {
             // if not footer
-            if (getItemPosition() < mItemList.size() - 1 ) {
+            if (getItemPosition() < mItemList.size() - 1) {
 
                 showEditNameDialog();
-            }
-            else {
+            } else {
                 showAddNewNameDialog();
             }
         }

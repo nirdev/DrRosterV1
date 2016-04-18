@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.android.drroster.R;
+import com.example.android.drroster.activities.GenerateRosterActivity;
 import com.example.android.drroster.dialogs.ChooseMonthDialog;
 
 import java.text.DateFormatSymbols;
@@ -43,6 +44,9 @@ public class ChooseMonthFragment extends Fragment {
                     choosedMonthTextview.setText(
                             //convert month number to name
                             new DateFormatSymbols().getMonths()[month-1] + " " + year);
+                    GenerateRosterActivity.chosedMonth = new DateFormatSymbols().getMonths()[month-1] + " " + year;
+                    GenerateRosterActivity.monthYearNumbers[0] = month;
+                    GenerateRosterActivity.monthYearNumbers[1] = year;
                 }
             }
         });
