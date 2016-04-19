@@ -36,9 +36,12 @@ public class RandomManager {
     }
 
     public ArrayList<ArrayList<String>> getFirstCallRandomMonth (){
+        ArrayList<String> randomizedNames = new ArrayList<>();
         ArrayList<String> firstCallNames = firstCallNamesBuilder(mRosterArray);
         Date firstDayDate = DateUtils.getDateFromInt(monthAndYear[0], monthAndYear[1]);
         int NumberOfDays = DateUtils.getNumberOfDayInMonth(monthAndYear[0], monthAndYear[1]);
+
+        //Set
 
 
 
