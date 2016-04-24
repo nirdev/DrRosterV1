@@ -1,4 +1,4 @@
-package com.example.android.drroster.database;
+package com.example.android.drroster.models;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;

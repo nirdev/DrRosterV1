@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.android.drroster.R;
+import com.example.android.drroster.database.DataBaseUtils;
 import com.example.android.drroster.fragments.RandomListFragment;
 import com.example.android.drroster.models.Person;
 
@@ -34,14 +35,22 @@ public class RandomiseActivity extends AppCompatActivity {
     Button nextButton;
     Button previousButton;
     public static ArrayList<Person> mPeopleArray;
+    public static ArrayList<String> mUnShuffledNames;
     public static Integer[] selectionOption = new Integer[3];
+    public static int[] monthYearNumbers;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_randomis);
+
+        //get unShuffled name list to show numbers and not items in fragment week days
+        mUnShuffledNames = DataBaseUtils.getNameList();
+
+        //Unparcelize the Person array from
         mPeopleArray = Parcels.unwrap(getIntent().getExtras().getParcelable(GenerateRosterActivity.INTENT_EXTRA_PEOPLE_ARRAY));
+        monthYearNumbers = getIntent().getExtras().getIntArray(GenerateRosterActivity.INTENT_EXTRA_MONTH_YEAR_ARRAY);
         //Sets UI
         nextButton = (Button) findViewById(R.id.next_button_random_activity);
         previousButton = (Button) findViewById(R.id.previous_button_random_activity);

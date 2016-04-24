@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.android.drroster.R;
 import com.example.android.drroster.activities.GenerateRosterActivity;
-import com.example.android.drroster.database.PersonModel;
+import com.example.android.drroster.models.PersonModel;
 import com.example.android.drroster.models.Person;
 import com.example.android.drroster.utils.DateUtils;
 import com.squareup.timessquare.CalendarPickerView;

@@ -12,7 +12,7 @@ import com.activeandroid.query.Select;
 import com.example.android.drroster.R;
 import com.example.android.drroster.UI.NavigationView;
 import com.example.android.drroster.database.AdditionalDutyModel;
-import com.example.android.drroster.database.PersonModel;
+import com.example.android.drroster.models.PersonModel;
 import com.example.android.drroster.fragments.AdditionalDutiesListFragment;
 import com.example.android.drroster.fragments.ChooseMonthFragment;
 import com.example.android.drroster.fragments.DraggableListFragment;
@@ -49,6 +49,8 @@ public class GenerateRosterActivity extends AppCompatActivity {
     public static final int RANDOM_ACTIVITY = 7;
 
     public static final String INTENT_EXTRA_PEOPLE_ARRAY = "mPeopleArray";
+    public static final String INTENT_EXTRA_MONTH_YEAR_ARRAY = "mMonthAndYear";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -175,6 +177,7 @@ public class GenerateRosterActivity extends AppCompatActivity {
                     if (index == RANDOM_ACTIVITY){
                         Intent i = new Intent(mContext,RandomiseActivity.class);
                         i.putExtra(INTENT_EXTRA_PEOPLE_ARRAY, Parcels.wrap(mPeopleArray));
+                        i.putExtra(INTENT_EXTRA_MONTH_YEAR_ARRAY,monthYearNumbers);
                         startActivity(i);
                     }
                 }

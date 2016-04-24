@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class DateUtils {
 
+
+
     public static String[] getDatesUI (List<Date> rawDateList){
 
         //First - day String, Second - month + year String
@@ -81,10 +83,19 @@ public class DateUtils {
         return daysInMonth;
     }
     public static ArrayList<Date> buildMonthOfDatesArray(int month,int year){
+
+        long timeadj = 24*60*60*1000;
+
         int numberOfDays = getNumberOfDayInMonth(month,year);
-        Date firstDayDate = getDateFromInt(month,year);
+        Date currentDayDate = getDateFromInt(month,year);
 
         ArrayList<Date> monthOfDatesArray = new ArrayList<>();
+        monthOfDatesArray.add(currentDayDate);
+
+        for (int i = 0 ; i < numberOfDays;i++){
+            currentDayDate = new Date (currentDayDate.getTime ()+timeadj);
+            monthOfDatesArray.add(currentDayDate);
+    }
 
         return monthOfDatesArray;
     }

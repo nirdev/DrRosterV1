@@ -5,9 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.example.android.drroster.R;
 import com.example.android.drroster.activities.RandomiseActivity;
+import com.example.android.drroster.utils.RandomManager;
 
 /**
  * Created by Nir on 4/17/2016.
@@ -17,11 +19,13 @@ public class RandomAdapter extends BaseAdapter {
     int selectedIndex = -1;
     String[] typeStringArray = new String[5];
     Activity mParentActivity;
+    RandomManager randomManager;
     public final String FRAGMENT_TAG;
 
-    public RandomAdapter(String[] typeStringArray, Activity mParentActivity, String fragment_tag) {
+    public RandomAdapter(String[] typeStringArray, Activity mParentActivity, String fragment_tag, RandomManager randomManager) {
         this.typeStringArray = typeStringArray;
         this.mParentActivity = mParentActivity;
+        this.randomManager = randomManager;
         FRAGMENT_TAG = fragment_tag;
     }
 
@@ -36,7 +40,8 @@ public class RandomAdapter extends BaseAdapter {
             rbSelect.setChecked(true);
         }
         else{rbSelect.setChecked(false);}
-
+        TextView textView = (TextView) convertView.findViewById(0x7f0c007e);
+        textView.setText("1");
         return convertView;
     }
 

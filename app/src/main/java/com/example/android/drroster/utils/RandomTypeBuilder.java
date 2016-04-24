@@ -3,7 +3,6 @@ package com.example.android.drroster.utils;
 import android.util.Pair;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -16,9 +15,12 @@ public class RandomTypeBuilder {
     private ArrayList<Pair<String,List<Date>>> leaveDatesList;
     private int[] monthAndYear;
     private int numberOfDaysInMonth;
+    Boolean isFirstTime = true;
     private ArrayList<Date> dateInMonthList;
     private int mTotalLoops = 1000;
+    private ArrayList<String> names;
 
+    //Last person is good
     public RandomTypeBuilder(ArrayList<Pair<String, List<Date>>> leaveDatesList, int[] monthAndYear) {
         this.leaveDatesList = leaveDatesList;
         this.monthAndYear = monthAndYear;
@@ -26,88 +28,73 @@ public class RandomTypeBuilder {
         dateInMonthList = DateUtils.buildMonthOfDatesArray(monthAndYear[0],monthAndYear[1]);
     }
 
-    //Last person is good
-    public ArrayList<String> buildTypeOne(ArrayList<String> names){
+
+    public ArrayList<String> buildTypeOne(ArrayList<String> names,String safeName){
         ArrayList<String> randomizedArray = new ArrayList<>();
-        ArrayList<String> mTempNames = null;
+        this.names = names;
+        ArrayList<String> mTempNames = this.names;
 
-        mTempNames = names;
-        Collections.shuffle(Arrays.asList(mTempNames));
-        firstNotEqualsLast(randomizedArray,mTempNames);
+        //Set safe first one in full array and delete it from temp
+        randomizedArray.add(safeName);
+        mTempNames.remove(safeName);
+
+        int dayOfMonthIndex = 1;
+
+        outerLoop:
+        for (int i = 0; i < mTotalLoops; i++){
+
+            Collections.shuffle(mTempNames);
 
 
+            // Check Two randomization conditions -
+            // first - last full not equals temo so no same names day after day
+            // no on is on leave date
+            if (firstNotEqualsLast(randomizedArray, mTempNames) && !isOnLeaveDateArrayChecker(mTempNames,dayOfMonthIndex)) {
+                //add all to the full array
 
-//        int mNameSize = names.size();
-//
-//        //Sets the last one from the array and set it first because last is for sure not last from last month
-//        randomizedArray.add(mNames.get(names.size()-1));
-//        Boolean isFirstTime = true;
-//
-//        ArrayList<String> mNamesBeforeAdding = null;
-//
-//        int currentNameIndex = 0;
-//        for (int dayOfMonthIndex = 1; dayOfMonthIndex < numberOfDaysInMonth; dayOfMonthIndex++){
-//
-//            //build new array each time temp is done filling names of month or start from saved state
-//            if (mTempNames == null || (mTempNames.size() < 1)){
-//                //Set new names and new index for current name
-//                mTempNames = mNames;
-//                currentNameIndex = 0;
-//
-//                //if first time lose the last because he's already been used
-//                if (isFirstTime){
-//                    mTempNames.remove(mTempNames.size() - 1);
-//                }
-//
-//            }
-//
-//
+                for (int x = 0; x < this.names.size(); x++) {
 
-//        }
+                    randomizedArray.add(mTempNames.get(x));
+                    dayOfMonthIndex++;
+                    if (dayOfMonthIndex == (numberOfDaysInMonth - 1)){
+                        break outerLoop;
+                    }
+                }
+                mTempNames = this.names;
+            }
+        }
 
-//        int i2;
-//
-//        //Building the array (i = 1 because fist one is already settled)
-//        outerLoop:
-//        for (int i = 1;i < numberOfDaysInMonth; i++) {
-//            //build new array each time temp is done filling names of month
-//            ArrayList<String> mTempNames = mNames;
-//
-//            //Loop starts from one only first time
-//            i2 = 0;
-//
-//            //if first time lose the last because he's already been used
-//            if (isFirstTime) {
-//                isFirstTime = false;
-//                mTempNames.remove(mTempNames.size() - 1);
-//                i2 = 1;
-//            }
-//
-//            for (int tempi2 = i2; i2 < mNames.size(); i2++) {
-//                //Break if randomized array is as big as number of days
-//                if (randomizedArray.size() == numberOfDaysInMonth) {
-//                    break outerLoop;
-//                }
-//
-//
-//                if(!isOnLeaveDate()) {
-//                    //add if on call date feature
-//                    Random rand = null;
-//                    int randomNum = rand.nextInt(mTempNames.size() - i2);
-//                    randomizedArray.add(mTempNames.get(randomNum));
-//                    mTempNames.remove(randomNum);
-//                }
-//            }
-//        }
         return randomizedArray;
     }
 
+    public ArrayList<String> buildTypeTwo(ArrayList<String> mCurrentNames, String safeName) {
+        return null;//buildTypeOne(mCurrentNames,safeName);
+    }
+
+    public ArrayList<String> buildTypeThree(ArrayList<String> mCurrentNames, String safeName) {
+        return null;//buildTypeOne(mCurrentNames,safeName);
+    }
+
+    public ArrayList<String> buildTypeFive(ArrayList<String> mCurrentNames, String safeName) {
+        return null;//buildTypeOne(mCurrentNames,safeName);
+    }
+
+    public ArrayList<String> buildTypeFour(ArrayList<String> mCurrentNames, String safeName) {
+        return null;//buildTypeOne(mCurrentNames,safeName);
+    }
+
+
+
     private boolean firstNotEqualsLast(ArrayList<String> fullArray, ArrayList<String> shuffledArray){
-        return fullArray.get(fullArray.size() - 1).equals(shuffledArray.get(0));
+        return !fullArray.get(fullArray.size() - 1).equals(shuffledArray.get(0));
     }
     private boolean isOnLeaveDateArrayChecker(ArrayList<String> shuffledArray,int dayOfMonthIndex){
-
-
+        for (int i = 0; i < shuffledArray.size();i++){
+            //if day on month is on leave date
+            if (isOnLeaveDate(dateInMonthList.get(dayOfMonthIndex - 1),shuffledArray.get(i))){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -125,4 +112,6 @@ public class RandomTypeBuilder {
         }
         return false;
     }
+
+
 }

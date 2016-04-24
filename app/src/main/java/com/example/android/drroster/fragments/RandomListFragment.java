@@ -10,14 +10,28 @@ import android.widget.ListView;
 
 import com.example.android.drroster.activities.RandomiseActivity;
 import com.example.android.drroster.adapters.RandomAdapter;
+import com.example.android.drroster.utils.RandomManager;
 
 
 public class RandomListFragment extends ListFragment {
 
     RandomAdapter adapter;
+    RandomManager randomManager;
 
     public RandomListFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+
+
+
+        //ArrayList<String> fullRandomMonthName = randomManager.getRandomizedType(1);
+
     }
 
     @Override
@@ -29,15 +43,20 @@ public class RandomListFragment extends ListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = new RandomAdapter(RandomiseActivity.typesList,getActivity(), getTag());
+        //Build and initiate the randomManager class
+        randomManager = new RandomManager();
+        randomManager.initiateRandomManager(
+                RandomiseActivity.mPeopleArray,
+                RandomiseActivity.monthYearNumbers
+                , getTag(), "gogo");
+
+        adapter = new RandomAdapter(RandomiseActivity.typesList,getActivity(), getTag(),randomManager);
         setListAdapter(adapter);
 
         final ListView listView = getListView();
         //listView.addHeaderView();
         listView.setItemsCanFocus(false);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
-
     }
 
     @Override

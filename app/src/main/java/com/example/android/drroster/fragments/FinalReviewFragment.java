@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +15,8 @@ import com.example.android.drroster.R;
 import com.example.android.drroster.Signin.SigninConstants;
 import com.example.android.drroster.activities.GenerateRosterActivity;
 import com.example.android.drroster.utils.DateUtils;
-import com.example.android.drroster.utils.RandomManager;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,21 +53,6 @@ public class FinalReviewFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_final_review, container, false);
-
-        RandomManager randomManager = new RandomManager(
-                GenerateRosterActivity.mPeopleArray,
-                GenerateRosterActivity.monthYearNumbers
-                ,1);
-        ArrayList<Pair<String,List<Date>>> namesDatePairArray = randomManager.LeaveDatesBuilder();
-
-        for (Pair pair : namesDatePairArray){
-           System.out.print(pair.first + " dates: ");
-
-            for (Date date: (List<Date>) pair.second){
-                System.out.println(date.getTime());
-            }
-
-        }
 
         inflateViews();
 
