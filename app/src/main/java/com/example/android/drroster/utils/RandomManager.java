@@ -2,8 +2,7 @@ package com.example.android.drroster.utils;
 
 import android.util.Pair;
 
-import com.example.android.drroster.models.Person;
-import com.example.android.drroster.activities.RandomiseActivity;
+import com.example.android.drroster.models.ShiftFull;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,7 +22,7 @@ public class RandomManager {
 
     private String CALL_TAG;
     RandomTypeBuilder randomTypeBuilder;
-    private ArrayList<Person> mRosterArray;
+    private ArrayList<ShiftFull> mRosterArray;
     private ArrayList<ArrayList<String>> mCurrentCallRandomizeTable;
     private ArrayList<String> mCurrentNames;
     private int[] monthAndYear = new int[2];
@@ -33,7 +32,7 @@ public class RandomManager {
     }
 
 
-    public void initiateRandomManager(ArrayList<Person> data,int[] monthAndYear,String call_tag,String safeName){
+    public void initiateRandomManager(ArrayList<ShiftFull> data, int[] monthAndYear, String call_tag, String safeName) {
 
         CALL_TAG = call_tag;
         this.mRosterArray = data;
@@ -42,7 +41,7 @@ public class RandomManager {
 
 
         //Build table of name with their leave date
-        ArrayList<Pair<String,List<Date>>> namesDatePairArray = leaveDatesBuilder();
+        ArrayList<Pair<String, List<Date>>> namesDatePairArray = leaveDatesBuilder();
 
         randomTypeBuilder = new RandomTypeBuilder(
                 namesDatePairArray,
@@ -50,34 +49,37 @@ public class RandomManager {
 
 
         //Decide which names array to build base on the tag
-        switch (CALL_TAG){
-            case RandomiseActivity.RANDOM_FRAGMENT_FIRST_CALL + "":{
+        switch (CALL_TAG) {
+            case "0":
                 mCurrentNames = firstCallNamesBuilder(this.mRosterArray);
-            }
-            case RandomiseActivity.RANDOM_FRAGMENT_SECOND_CALL + "":{
+                break;
+            case "1":
                 mCurrentNames = secondCallNamesBuilder(this.mRosterArray);
-            }
-            case RandomiseActivity.RANDOM_FRAGMENT_THIRD_CALL + "":{
+                break;
+            case "2":
                 mCurrentNames = thirdCallNamesBuilder(this.mRosterArray);
-            }
+                break;
         }
-
-        //Build the table
-        mCurrentCallRandomizeTable = getRandomMonth();
-
-
-
+        if (!isCallEmpty()) {
+            //Build the table
+            mCurrentCallRandomizeTable = getRandomMonth();
+        }
     }
 
     public ArrayList<ArrayList<String>> getRandomizeTable() {
         return mCurrentCallRandomizeTable;
     }
 
-    public ArrayList<String> getRandomizedType(int typeNumber){
+    public ArrayList<String> getRandomizedType(int typeNumber) {
         return mCurrentCallRandomizeTable.get(typeNumber - 1);
     }
 
-    private ArrayList<ArrayList<String>> getRandomMonth (){
+    //Return if call is with people or not
+    public Boolean isCallEmpty() {
+        return mCurrentNames.isEmpty();
+    }
+
+    private ArrayList<ArrayList<String>> getRandomMonth() {
         ArrayList<ArrayList<String>> fullRandomMonthName = new ArrayList<>();
         fullRandomMonthName.add(randomTypeBuilder.buildTypeOne(mCurrentNames, safeName));
         fullRandomMonthName.add(randomTypeBuilder.buildTypeTwo(mCurrentNames, safeName));
@@ -88,23 +90,22 @@ public class RandomManager {
     }
 
     //Build list of pairs with only leave date people and their date arrays
-    private ArrayList<Pair<String,List<Date>>> leaveDatesBuilder(){
-        ArrayList<Pair<String,List<Date>>> namesDatePairArray = new ArrayList<>();
+    private ArrayList<Pair<String, List<Date>>> leaveDatesBuilder() {
+        ArrayList<Pair<String, List<Date>>> namesDatePairArray = new ArrayList<>();
 
-        for (Person person : mRosterArray){
-            if (person.getIsLeavDate()){
-                namesDatePairArray.add(new Pair<>(person.getName(),person.getLeaveDates()));
+        for (ShiftFull person : mRosterArray) {
+            if (person.getIsLeavDate()) {
+                namesDatePairArray.add(new Pair<>(person.getName(), person.getLeaveDates()));
             }
         }
         return namesDatePairArray;
     }
 
 
-
-    private ArrayList<String> firstCallNamesBuilder(ArrayList<Person> data) {
+    private ArrayList<String> firstCallNamesBuilder(ArrayList<ShiftFull> data) {
         ArrayList<String> newArray = new ArrayList<>();
 
-        for (int i = 0; i < data.size() ; i++ ) {
+        for (int i = 0; i < data.size(); i++) {
             if (data.get(i).getIsFirstCall() != null
                     && data.get(i).getIsFirstCall()) {
 
@@ -114,10 +115,10 @@ public class RandomManager {
         return newArray;
     }
 
-    private ArrayList<String> secondCallNamesBuilder(ArrayList<Person> data) {
+    private ArrayList<String> secondCallNamesBuilder(ArrayList<ShiftFull> data) {
         ArrayList<String> newArray = new ArrayList<>();
 
-        for (int i = 0; i < data.size() ; i++ ) {
+        for (int i = 0; i < data.size(); i++) {
             if (data.get(i).getIsSecondCall() != null
                     && data.get(i).getIsSecondCall()) {
 
@@ -127,10 +128,10 @@ public class RandomManager {
         return newArray;
     }
 
-    private ArrayList<String> thirdCallNamesBuilder(ArrayList<Person> data) {
+    private ArrayList<String> thirdCallNamesBuilder(ArrayList<ShiftFull> data) {
         ArrayList<String> newArray = new ArrayList<>();
 
-        for (int i = 0; i < data.size() ; i++ ) {
+        for (int i = 0; i < data.size(); i++) {
             if (data.get(i).getIsThirdCall() != null
                     && data.get(i).getIsThirdCall()) {
 

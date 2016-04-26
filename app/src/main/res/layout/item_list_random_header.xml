@@ -1,59 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
 
-    <RadioButton
+    <View
         android:id="@+id/radio1"
         android:textSize="18dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="36dp"
         android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:checked="false"
-        android:clickable="false"
-        android:focusable="false"/>
+        android:paddingBottom="16dp" />
 
     <TextView
         android:id="@+id/day1"
-        android:text="5"
+        android:text="M"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_marginLeft="26dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
     <TextView
         android:id="@+id/day2"
-        android:text="5"
+        android:text="T"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
     <TextView
         android:id="@+id/day3"
-        android:text="5"
+        android:text="W"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
     <TextView
         android:id="@+id/day4"
-        android:text="5"
+        android:text="T"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
     <TextView
         android:id="@+id/day5"
-        android:text="5"
+        android:text="F"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
     <TextView
         android:id="@+id/day6"
-        android:text="5"
+        android:text="S"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
     <TextView
         android:id="@+id/day7"
-        android:text="5"
+        android:text="S"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>

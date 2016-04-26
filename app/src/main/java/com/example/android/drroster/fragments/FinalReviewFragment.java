@@ -54,6 +54,9 @@ public class FinalReviewFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_final_review, container, false);
 
+        //Set menu title
+        ((GenerateRosterActivity) getActivity()).setActionBarTitle(getString(R.string.genros_final_review_menu_title));
+
         inflateViews();
 
         if(GenerateRosterActivity.mPeopleArray != null){

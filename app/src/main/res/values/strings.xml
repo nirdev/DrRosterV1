@@ -10,6 +10,7 @@
     <string name="dialog_choose_date_button">Set dates</string>
     <string name="dialog_calerdar_title">Choose Leave dates</string>
     <string name="add_new_name_footer">Add new name</string>
+    <string name="add_new_duty_footer">Add new duty</string>
     <string name="add_new_friend_footer_view_text">Add new friend</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -22,4 +23,24 @@
     <string name="third_call_title_final_review">3rd Call</string>
     <string name="date_call_title_final_review">Leave</string>
     <string name="additional_duties_title_final_review">Additional Duties</string>
+
+    <!-- Action bar titles-->
+    <string name="default_menu_title">Dr Roster</string>
+    <string name="sign_in_menu_title">Department Name</string>
+    <string name="genros_month_menu_title">Month</string>
+    <string name="genros_first_call_menu_title">1st Call</string>
+    <string name="genros_second_call_menu_title">2nd Call</string>
+    <string name="genros_third_call_menu_title">3rd Call</string>
+    <string name="genros_leave_menu_title">Leave</string>
+    <string name="genros_additional_duties_menu_title">Addition Duties</string>
+    <string name="genros_final_review_menu_title">Final Review</string>
+    <string name="random_first_call_menu_title">1st Call Randomization</string>
+    <string name="random_second_call_menu_title">2nd Call Randomization</string>
+    <string name="random_third_call_menu_title">3rd Call Randomization</string>
+
+
+    <!-- dummy data for random_list_fragment-->
+    <string-array name="null_data">
+        <item>No people on call </item>
+    </string-array>
 </resources>

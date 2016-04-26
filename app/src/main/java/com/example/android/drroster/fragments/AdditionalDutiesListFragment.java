@@ -14,7 +14,7 @@ import android.widget.ListView;
 import com.example.android.drroster.R;
 import com.example.android.drroster.activities.GenerateRosterActivity;
 import com.example.android.drroster.adapters.AdditionalDutiesAdapter;
-import com.example.android.drroster.database.AdditionalDutyModel;
+import com.example.android.drroster.models.AdditionalDutyDB;
 import com.example.android.drroster.models.ADBean;
 
 
@@ -29,9 +29,13 @@ public class AdditionalDutiesListFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //Set menu title
+        ((GenerateRosterActivity) getActivity()).setActionBarTitle(getString(R.string.genros_additional_duties_menu_title));
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_additional_duties, container, false);
         mFooterView = inflater.inflate(R.layout.item_list_additional_duty_footer, null);
+
         return view;
     }
 
@@ -61,12 +65,12 @@ public class AdditionalDutiesListFragment extends ListFragment {
         final EditText input = new EditText(getContext());
         final int DIALOD_EDITTEXT_ID = 777;
         input.setId(DIALOD_EDITTEXT_ID);
-        input.setHint("New name");
+        input.setHint("New duty");
 
         //Set up the dialog view all programmatically
         alertDialogBuilder.setView(input);
         alertDialogBuilder.setCancelable(true);
-        alertDialogBuilder.setTitle("Add new name"); //Set the title of the box
+        alertDialogBuilder.setTitle("Add new duty"); //Set the title of the box
         alertDialogBuilder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
@@ -86,10 +90,9 @@ public class AdditionalDutiesListFragment extends ListFragment {
         GenerateRosterActivity.mADArray.add(newDuty);
         mAdapter.notifyDataSetChanged();
 
-        //Set new duty in database todo:delte
-        AdditionalDutyModel tempDuty = new AdditionalDutyModel();
-        tempDuty.name = newName;
-        tempDuty.number = GenerateRosterActivity.mPeopleArray.size() - 1;
+        //Set new duty in database todo:delete
+        AdditionalDutyDB tempDuty = new AdditionalDutyDB();
+        tempDuty.type = newName;
         tempDuty.save();
 
     }

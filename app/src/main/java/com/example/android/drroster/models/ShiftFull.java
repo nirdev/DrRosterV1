@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Nir on 4/5/2016.
  */
 @Parcel
-public class Person{
+public class ShiftFull {
 
     Long id;
     String name;
@@ -22,10 +22,10 @@ public class Person{
     List<Date> leaveDates = null;
 
     // empty constructor needed by the Parceler library
-    public Person() {
+    public ShiftFull() {
     }
 
-    public Person(Long id, String name, Boolean isFirstCall, Boolean isSecondCall, Boolean isThirdCall,Boolean isLeavDate, List<Date> leaveDates) {
+    public ShiftFull(Long id, String name, Boolean isFirstCall, Boolean isSecondCall, Boolean isThirdCall, Boolean isLeavDate, List<Date> leaveDates) {
         this.id = id;
         this.name = name;
         this.isFirstCall = isFirstCall;

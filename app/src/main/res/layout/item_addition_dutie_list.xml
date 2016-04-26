@@ -29,9 +29,9 @@
 
     <!-- empty view to fill space from text to the end (delete button)-->
     <View
-        android:id="@+id/view_dummy_draggable_item"
+        android:id="@+id/view_dummy_aditional_duty_item"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"/>
 
 

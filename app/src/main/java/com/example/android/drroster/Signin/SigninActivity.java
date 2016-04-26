@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.drroster.R;
@@ -19,6 +20,10 @@ public class SigninActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+
+        //Setup menu title
+        TextView menuTitle = (TextView) findViewById(R.id.toolbar_title_rostergen);
+        menuTitle.setText(R.string.sign_in_menu_title);
 
     }
 

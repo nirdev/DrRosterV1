@@ -68,19 +68,19 @@ public class RandomTypeBuilder {
     }
 
     public ArrayList<String> buildTypeTwo(ArrayList<String> mCurrentNames, String safeName) {
-        return null;//buildTypeOne(mCurrentNames,safeName);
+        return buildTypeOne(mCurrentNames,safeName);
     }
 
     public ArrayList<String> buildTypeThree(ArrayList<String> mCurrentNames, String safeName) {
-        return null;//buildTypeOne(mCurrentNames,safeName);
+        return buildTypeOne(mCurrentNames,safeName);
     }
 
     public ArrayList<String> buildTypeFive(ArrayList<String> mCurrentNames, String safeName) {
-        return null;//buildTypeOne(mCurrentNames,safeName);
+        return buildTypeOne(mCurrentNames,safeName);
     }
 
     public ArrayList<String> buildTypeFour(ArrayList<String> mCurrentNames, String safeName) {
-        return null;//buildTypeOne(mCurrentNames,safeName);
+        return buildTypeOne(mCurrentNames,safeName);
     }
 
 

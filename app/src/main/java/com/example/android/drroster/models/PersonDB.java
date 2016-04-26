@@ -9,7 +9,7 @@ import com.activeandroid.annotation.Table;
  */
 
 @Table(name = "People")
-public class PersonModel extends Model {
+public class PersonDB extends Model {
 
     @Column(name = "Name")
     public String name;
@@ -17,9 +17,12 @@ public class PersonModel extends Model {
     @Column(name = "Number")
     public int number;
 
-    public PersonModel() {
+    public PersonDB() {
         //Used by ActiveAndroid
     }
 
+    public PersonDB(String name) {
+        this.name = name;
+    }
 
 }

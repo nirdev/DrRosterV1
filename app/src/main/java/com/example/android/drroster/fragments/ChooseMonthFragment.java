@@ -30,9 +30,10 @@ public class ChooseMonthFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_choos_month,
                 container, false);
 
+        //Set menu title
+        ((GenerateRosterActivity) getActivity()).setActionBarTitle(getActivity().getString(R.string.genros_month_menu_title));
 
         //initialize dialog
-
         dialog = new ChooseMonthDialog(getActivity());
         // Listener for dialog result
         dialog.setDialogResult(new ChooseMonthDialog.OnMyDialogResult() {

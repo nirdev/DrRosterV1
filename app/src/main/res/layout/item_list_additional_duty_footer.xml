@@ -15,7 +15,7 @@
         android:padding="10dp"
         android:inputType="none"
         android:textSize="22sp"
-        android:hint="@string/add_new_name_footer"
+        android:hint="@string/add_new_duty_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

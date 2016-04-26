@@ -17,8 +17,8 @@ import android.widget.TextView;
 
 import com.example.android.drroster.R;
 import com.example.android.drroster.activities.GenerateRosterActivity;
-import com.example.android.drroster.models.PersonModel;
-import com.example.android.drroster.models.Person;
+import com.example.android.drroster.models.PersonDB;
+import com.example.android.drroster.models.ShiftFull;
 import com.example.android.drroster.utils.DateUtils;
 import com.squareup.timessquare.CalendarPickerView;
 import com.woxthebox.draglistview.DragItemAdapter;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Created by Nir on 4/3/2016.bugalbugala
  */
-public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAdapter.ViewHolderNormal> {
+public class ItemDragListAdapter extends DragItemAdapter<ShiftFull, ItemDragListAdapter.ViewHolderNormal> {
 
     //.super adapter vas
     private int mLayoutId;
@@ -53,7 +53,7 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
     final Calendar lastMonth;
 
     //Constructor
-    public ItemDragListAdapter(ArrayList<Person> list, int layoutId,
+    public ItemDragListAdapter(ArrayList<ShiftFull> list, int layoutId,
                                int grabHandleId,
                                boolean dragOnLongPress,
                                String TAG,
@@ -156,7 +156,7 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
         return mItemList.get(position).getId();
     }
 
-    public class ViewHolderNormal extends DragItemAdapter<ArrayList<Person>, ViewHolderNormal>.ViewHolder {
+    public class ViewHolderNormal extends DragItemAdapter<ArrayList<ShiftFull>, ViewHolderNormal>.ViewHolder {
         public CheckBox mCheckBox;
         public ImageView mImageView;
 
@@ -338,7 +338,7 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
 
         private void changePersonName(int position, String newName) {
             if (position < mItemList.size() && position >= 0) {
-                Person newPerson = GenerateRosterActivity.mPeopleArray.get(position);
+                ShiftFull newPerson = GenerateRosterActivity.mPeopleArray.get(position);
                 newPerson.setName(newName);
                 GenerateRosterActivity.mPeopleArray.set(position, newPerson);
                 notifyDataSetChanged();
@@ -346,12 +346,12 @@ public class ItemDragListAdapter extends DragItemAdapter<Person, ItemDragListAda
         }
 
         private void AddPersonName(String newName) {
-            Person newPerson = new Person((long) (mItemList.size()), newName, false, false, false, false, null);
+            ShiftFull newPerson = new ShiftFull((long) (mItemList.size()), newName, false, false, false, false, null);
             GenerateRosterActivity.mPeopleArray.add(GenerateRosterActivity.mPeopleArray.size() - 1, newPerson);
             notifyDataSetChanged();
 
             //Set new person in database todo:delete before realese
-            PersonModel tempPerson = new PersonModel();
+            PersonDB tempPerson = new PersonDB();
             tempPerson.name = newName;
             tempPerson.number = GenerateRosterActivity.mPeopleArray.size() - 1;
             tempPerson.save();

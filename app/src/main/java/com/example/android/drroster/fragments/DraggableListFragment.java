@@ -21,6 +21,7 @@ public class DraggableListFragment extends Fragment {
     private DragListView mDragListView;
 
     View view;
+
     public DraggableListFragment() {
     }
 
@@ -35,9 +36,9 @@ public class DraggableListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_first_call, container, false);
+        view = inflater.inflate(R.layout.fragment_draggable_call, container, false);
 
-
+        setMenuTitle();
 
         mDragListView = (DragListView) view.findViewById(R.id.drag_list_view_first_call);
         mDragListView.getRecyclerView().setVerticalScrollBarEnabled(true);
@@ -58,6 +59,28 @@ public class DraggableListFragment extends Fragment {
         setupListRecyclerView();
 
         return view;
+    }
+
+    private void setMenuTitle() {
+        String title = getString(R.string.default_menu_title);
+
+        switch (getTag()) {
+            case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_FIRST_CALL_INDEX + "":
+                title = getString(R.string.genros_first_call_menu_title);
+                break;
+            case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_SECOND_CALL_INDEX + "":
+                title = getString(R.string.genros_second_call_menu_title);
+                break;
+            case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_THIRD_CALL_INDEX + "":
+                title = getString(R.string.genros_third_call_menu_title);
+                break;
+            case GenerateRosterActivity.FRAGMENT_DATEABLE_LIST_INDEX + "":
+                title = getString(R.string.genros_leave_menu_title);
+                break;
+        }
+
+        //Set menu title in the activity
+        ((GenerateRosterActivity) getActivity()).setActionBarTitle(title);
     }
 
     @Override
@@ -81,7 +104,6 @@ public class DraggableListFragment extends Fragment {
         mDragListView.setCanDragHorizontally(false);
         mDragListView.setCustomDragItem(new MyDragItem(getContext(), R.layout.item_list_draggable));
     }
-
 
 
     private static class MyDragItem extends DragItem {

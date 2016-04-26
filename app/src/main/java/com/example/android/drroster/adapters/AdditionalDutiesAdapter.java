@@ -28,6 +28,7 @@ public class AdditionalDutiesAdapter extends BaseAdapter {
     private Context context;
     private ListView mListView;
 
+
     public AdditionalDutiesAdapter(Activity mParentActivity, ListView listView,Context context) {
         this.mParentActivity = mParentActivity;
         this.mListView = listView;
@@ -37,6 +38,7 @@ public class AdditionalDutiesAdapter extends BaseAdapter {
     private static class AccessoriesViewHolder {
         public CheckBox checkBox;
         public TextView textView;
+        public View placeHolderView;
     }
 
     @Override
@@ -62,11 +64,16 @@ public class AdditionalDutiesAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mParentActivity.getLayoutInflater().inflate(R.layout.item_addition_dutie_list, parent, false);
 
+            //Set listener on checkbox
             holder = new AccessoriesViewHolder();
             holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox_draggable_list_item_AD);
             holder.checkBox.setOnCheckedChangeListener(mStarCheckedChanceChangeListener);
+
+            //Set onClick listener on dummy view and text
             holder.textView = (TextView) convertView.findViewById(R.id.text_AD);
             holder.textView.setOnClickListener(mOnTextClickListener);
+            holder.placeHolderView = convertView.findViewById(R.id.view_dummy_aditional_duty_item);
+            holder.placeHolderView.setOnClickListener(mOnTextClickListener);
 
             convertView.setTag(holder);
         } else {

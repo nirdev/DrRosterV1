@@ -9,7 +9,10 @@ import android.widget.TextView;
 
 import com.example.android.drroster.R;
 import com.example.android.drroster.activities.RandomiseActivity;
+import com.example.android.drroster.databases.PersonDBHelper;
 import com.example.android.drroster.utils.RandomManager;
+
+import java.util.ArrayList;
 
 /**
  * Created by Nir on 4/17/2016.
@@ -20,41 +23,68 @@ public class RandomAdapter extends BaseAdapter {
     String[] typeStringArray = new String[5];
     Activity mParentActivity;
     RandomManager randomManager;
+    ArrayList<String> nameList;
     public final String FRAGMENT_TAG;
 
-    public RandomAdapter(String[] typeStringArray, Activity mParentActivity, String fragment_tag, RandomManager randomManager) {
+    public RandomAdapter(String[] typeStringArray, Activity mParentActivity, String fragment_tag, RandomManager randomManager,ArrayList<String> nameList) {
         this.typeStringArray = typeStringArray;
         this.mParentActivity = mParentActivity;
         this.randomManager = randomManager;
+        this.nameList = nameList;
         FRAGMENT_TAG = fragment_tag;
+
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+
         convertView = mParentActivity.getLayoutInflater().inflate(R.layout.item_list_random, parent, false);
 
         //Set Radio Button
         RadioButton rbSelect = (RadioButton) convertView.findViewById(R.id.radio1);
         rbSelect.setText(typeStringArray[position]);
-        if(selectedIndex == position){
+        if (selectedIndex == position) {
             rbSelect.setChecked(true);
+        } else {
+            rbSelect.setChecked(false);
         }
-        else{rbSelect.setChecked(false);}
-        TextView textView = (TextView) convertView.findViewById(0x7f0c007e);
-        textView.setText("1");
+
+        convertView = attachRandomTextUI(convertView, position);
+
+        return convertView;
+    }
+
+    private View attachRandomTextUI(View convertView, int typeNumber){
+
+        //id of the day textViews
+        int id = R.id.day1;
+
+
+        // Array of random name only for this type
+        ArrayList<String> typeNames = randomManager.getRandomizedType(typeNumber + 1);
+
+        for (int i = 0; i < 7; i++){
+            //Find the correct day
+            TextView textView = (TextView) convertView.findViewById(id + i);
+            //Get person index from organize array by sort with randomize name
+            textView.setText(""+ PersonDBHelper.nameToNumberConverter(typeNames.get(i), nameList));
+        }
+
         return convertView;
     }
 
     public void setSelectedIndex(int index){
-        selectedIndex = index;
+        selectedIndex = index - 1 ;// because of header takes first postion
         putSelectedIndex();
     }
 
     //insert selected index in selectionOption array depends on fragment TAG
     private void putSelectedIndex() {
+        //
         switch (FRAGMENT_TAG) {
             case RandomiseActivity.RANDOM_FRAGMENT_FIRST_CALL + "":
-                 RandomiseActivity.selectionOption[RandomiseActivity.RANDOM_FRAGMENT_FIRST_CALL] =selectedIndex ;
+                 RandomiseActivity.selectionOption[RandomiseActivity.RANDOM_FRAGMENT_FIRST_CALL] = selectedIndex ;
                 break;
 
             case RandomiseActivity.RANDOM_FRAGMENT_SECOND_CALL + "":
