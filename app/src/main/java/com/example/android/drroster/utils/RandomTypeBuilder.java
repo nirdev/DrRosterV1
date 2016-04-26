@@ -51,12 +51,10 @@ public class RandomTypeBuilder {
             // no on is on leave date
             if (firstNotEqualsLast(randomizedArray, mTempNames) && !isOnLeaveDateArrayChecker(mTempNames,dayOfMonthIndex)) {
                 //add all to the full array
-
                 for (int x = 0; x < this.names.size(); x++) {
-
                     randomizedArray.add(mTempNames.get(x));
                     dayOfMonthIndex++;
-                    if (dayOfMonthIndex == (numberOfDaysInMonth - 1)){
+                    if (dayOfMonthIndex == (numberOfDaysInMonth)){
                         break outerLoop;
                     }
                 }

@@ -75,7 +75,7 @@ public class DateUtils {
         Calendar mycal = new GregorianCalendar(iYear, iMonth, iDay);
 
         // Get the number of days in that month
-        int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH); // 28
+        int daysInMonth =(mycal.getActualMaximum(Calendar.DAY_OF_MONTH)) +1 ;
 
         return daysInMonth;
     }

@@ -28,7 +28,7 @@ public class ShiftHelper {
         ArrayList<ArrayList<String>> shuffledTable = data;
 
         //number of days in current month
-        int numberOfDays = monthDates.size();
+        int numberOfDays = monthDates.size() -1;
 
         for (int dayIndex = 0;dayIndex < numberOfDays ; dayIndex++){
             Date mCurrentDate = monthDates.get(dayIndex);

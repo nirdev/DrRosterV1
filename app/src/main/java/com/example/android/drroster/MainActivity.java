@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
     public static List<AdditionalDutyDB> getAllADforDate(PersonDB personDB) {
         // This is how you execute a query
         return new Select()
