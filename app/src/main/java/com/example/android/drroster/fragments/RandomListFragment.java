@@ -56,7 +56,7 @@ public class RandomListFragment extends ListFragment {
         setMenuTitle();
 
         //Not initialize anything if call empty
-        if (!randomManager.isCallEmpty()) {
+        if (!randomManager.isCallToShort()) {
             final ListView listView = getListView();
 
             //Add day names header to the list

@@ -12,13 +12,13 @@ import android.widget.TextView;
 import com.activeandroid.query.Select;
 import com.example.android.drroster.R;
 import com.example.android.drroster.UI.NavigationView;
-import com.example.android.drroster.models.AdditionalDutyDB;
-import com.example.android.drroster.models.PersonDB;
-import com.example.android.drroster.fragments.AdditionalDutiesListFragment;
+import com.example.android.drroster.databases.DutiesHelper;
 import com.example.android.drroster.fragments.ChooseMonthFragment;
 import com.example.android.drroster.fragments.DraggableListFragment;
+import com.example.android.drroster.fragments.DutiesTypesListFragment;
 import com.example.android.drroster.fragments.FinalReviewFragment;
 import com.example.android.drroster.models.ADBean;
+import com.example.android.drroster.models.PersonDB;
 import com.example.android.drroster.models.ShiftFull;
 
 import org.parceler.Parcels;
@@ -29,7 +29,7 @@ import java.util.List;
 public class GenerateRosterActivity extends AppCompatActivity {
 
     private List<PersonDB> mPeopleOnlyArray;
-    private List<AdditionalDutyDB> dutiesOnlyArray;
+    private ArrayList<String> dutiesTypesList;
 
     public static ArrayList<ShiftFull> mPeopleArray;
     public static ArrayList<ADBean> mADArray;
@@ -58,34 +58,6 @@ public class GenerateRosterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generate_roster);
         mContext = this;
-        //TODO: take from database - last item is dummy for + add new
-//
-//        PersonDB tempPerson = new PersonDB();
-//        tempPerson.name = "nir";
-//        tempPerson.number = 1;
-//        tempPerson.save();
-//
-//        tempPerson = new PersonDB();
-//        tempPerson.name = "nir1";
-//        tempPerson.number = 2;
-//        tempPerson.save();
-//
-//        tempPerson = new PersonDB();
-//        tempPerson.name = "nir3";
-//        tempPerson.number = 3;
-//        tempPerson.save();
-
-
-//
-//        SimpleDateFormat mothFormat = new SimpleDateFormat("MMM yyyy dd");
-//        String temp = mothFormat.format(myDate);
-//        Log.wtf("here", "--------------------------------------------" + temp);
-
-        //int check = DateUtils.getNumberOfDayInMonth()
-
-
-        //Setup menu title
-        int nir;
 
         //Build peopleOnlyArray from DB data
         mPeopleOnlyArray = new Select()
@@ -93,10 +65,8 @@ public class GenerateRosterActivity extends AppCompatActivity {
                 .orderBy("Number ASC")
                 .execute();
 
-        //Build dutiesOnlyArray
-        dutiesOnlyArray = new Select()
-                .from(AdditionalDutyDB.class)
-                .execute();
+        //Build duty types list
+        dutiesTypesList = DutiesHelper.getAllDutiesTypes();
 
         //Set local array
         mPeopleArray = new ArrayList<>();
@@ -117,9 +87,10 @@ public class GenerateRosterActivity extends AppCompatActivity {
                         false,false,false,false,null));
 
 
+        //Build add array
         mADArray = new ArrayList<>();
-        for (AdditionalDutyDB additionalDutyModel : dutiesOnlyArray) {
-            mADArray.add(new ADBean(additionalDutyModel.type));
+        for (String dutyName : dutiesTypesList) {
+            mADArray.add(new ADBean(dutyName));
         }
 
         //Set first layout
@@ -167,7 +138,7 @@ public class GenerateRosterActivity extends AppCompatActivity {
                             break;
                         case FRAGMENT_ADDITION_DUTIES_INDEX:
                             ft.replace(R.id.fragment_place_holder_generate_roster,
-                                    new AdditionalDutiesListFragment(),FRAGMENT_DATEABLE_LIST_INDEX + "");
+                                    new DutiesTypesListFragment(),FRAGMENT_DATEABLE_LIST_INDEX + "");
                             break;
                         case FRAGMENT_FINAL_REVIEW_INDEX:
                             ft.replace(R.id.fragment_place_holder_generate_roster,

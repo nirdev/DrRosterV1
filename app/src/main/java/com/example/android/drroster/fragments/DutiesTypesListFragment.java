@@ -14,15 +14,15 @@ import android.widget.ListView;
 import com.example.android.drroster.R;
 import com.example.android.drroster.activities.GenerateRosterActivity;
 import com.example.android.drroster.adapters.AdditionalDutiesAdapter;
-import com.example.android.drroster.models.AdditionalDutyDB;
+import com.example.android.drroster.databases.DutiesHelper;
 import com.example.android.drroster.models.ADBean;
 
 
-public class AdditionalDutiesListFragment extends ListFragment {
+public class DutiesTypesListFragment extends ListFragment {
 
     View mFooterView;
     AdditionalDutiesAdapter mAdapter;
-    public AdditionalDutiesListFragment() {
+    public DutiesTypesListFragment() {
         // Required empty public constructor
     }
 
@@ -76,7 +76,7 @@ public class AdditionalDutiesListFragment extends ListFragment {
 
                 EditText edit = (EditText) input.findViewById(DIALOD_EDITTEXT_ID);
                 String name = edit.getText().toString();
-                AddPersonName(name);
+                AddDutyType(name);
                 dialog.cancel(); //when they click dismiss we will dismiss the box
             }
         });
@@ -85,15 +85,13 @@ public class AdditionalDutiesListFragment extends ListFragment {
     }
 
 
-    private void AddPersonName( String newName) {
-        ADBean newDuty = new ADBean(newName);
+    private void AddDutyType(String typeName) {
+        ADBean newDuty = new ADBean(typeName);
         GenerateRosterActivity.mADArray.add(newDuty);
         mAdapter.notifyDataSetChanged();
 
-        //Set new duty in database todo:delete
-        AdditionalDutyDB tempDuty = new AdditionalDutyDB();
-        tempDuty.type = newName;
-        tempDuty.save();
+        //Add new person to db
+        DutiesHelper.addDutyTypeFromString(typeName);
 
     }
 }

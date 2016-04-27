@@ -1,0 +1,29 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.drroster.fragments.AddNewRosterFragment">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:onClick="addNewRoster"
+        android:gravity="center">
+    <ImageView
+        android:id="@+id/add_new_roster_fragment_image"
+        android:src="@drawable/ic_note_add_black_48dp"
+        android:paddingLeft="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/add_new_roster_fragment_text"
+        android:textSize="@dimen/text_view_title_very_big"
+        android:layout_below="@id/add_new_roster_fragment_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_new_roster" />
+
+    </RelativeLayout>
+
+</FrameLayout>

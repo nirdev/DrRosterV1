@@ -1,15 +1,15 @@
 package com.example.android.drroster.databases;
 
-import com.activeandroid.query.Select;
-import com.example.android.drroster.models.AdditionalDutyDB;
+import com.example.android.drroster.models.DutyDateDB;
+import com.example.android.drroster.models.DutyTypeDB;
 import com.example.android.drroster.models.LeaveDateDB;
 import com.example.android.drroster.models.PersonDB;
+import com.example.android.drroster.models.RosterDB;
 import com.example.android.drroster.models.ShiftDB;
 import com.example.android.drroster.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Nir on 4/26/2016.
@@ -30,6 +30,7 @@ public class ShiftHelper {
         //number of days in current month
         int numberOfDays = monthDates.size() -1;
 
+
         for (int dayIndex = 0;dayIndex < numberOfDays ; dayIndex++){
             Date mCurrentDate = monthDates.get(dayIndex);
 
@@ -47,11 +48,14 @@ public class ShiftHelper {
             ShiftDB shift =  new ShiftDB(mCurrentDate,firstCall,secondCall,thirdCall);
             shift.save();
 
-            //Build all additional duties on this current date with type only
+            // Build all additional duties on this current date with type only
             // Example - "Outreach" - person name will be added later
             for (int i = 0; i < ADArray.length; i++){
-                AdditionalDutyDB currentAD = new AdditionalDutyDB(mCurrentDate,ADArray[i]);
-                currentAD.save();
+                DutyTypeDB mDutyType = DutiesHelper.getDutyTypeFromString(ADArray[i]);
+
+                //Build new duties (amount of check duties types from ADArray) and set current date for each duty.
+                DutyDateDB mDutyDate = new DutyDateDB(mCurrentDate,mDutyType);
+                mDutyDate.save();
             }
 
             //Build all leave dates
@@ -71,23 +75,10 @@ public class ShiftHelper {
                 }
             }
 
-
-
         }
+        //Save table of first dates in moth to make ready roster index
+        RosterDB rosterDB = new RosterDB(monthDates.get(0));
+        rosterDB.save();
 
     }
-
-    public static List<AdditionalDutyDB> getAdditionalDutiesForDateList(Date currentDate){
-
-        List<AdditionalDutyDB> mADList;
-
-        mADList = new Select()
-                .from(AdditionalDutyDB.class)
-                .where("Date = ?",currentDate.getTime())
-                .execute();
-
-        return mADList;
-    }
-
-
 }

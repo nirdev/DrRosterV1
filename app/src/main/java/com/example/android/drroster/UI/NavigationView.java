@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.android.drroster.R;
 import com.example.android.drroster.activities.GenerateRosterActivity;
@@ -86,32 +87,34 @@ public class NavigationView extends RelativeLayout {
      */
     public void setSelectedIndex(int index) {
 
-
-
-        if (fragmentChangeListener != null){
-            fragmentChangeListener.onFragmentChange(index);
-        }
-
-        // Set the current index and display the value.
-        mSelectedIndex = index;
-
-        //Customize stepBar
-        mStepBarView.setBoldDot (index);
-
-        // If the first value is shown, hide the previous button.
-        if (mSelectedIndex == 0) {
-            mPreviousButton.setVisibility(INVISIBLE);
+        //if month haven't been chosen don't do anything beside toast
+        if ((index == 1) && (GenerateRosterActivity.monthYearNumbers[1] == 0)){
+            Toast.makeText(getContext(), "Please choose month", Toast.LENGTH_LONG).show();
         }
         else {
-            mPreviousButton.setVisibility(VISIBLE);
-        }
-        // If the last value is shown,show "generate" button.
-        if (mSelectedIndex ==  GenerateRosterActivity.GENERATOR_FRAGMENTS_NUMBER - 1 ) {
-            mNextButton.setText(R.string.generate_button_navigation_view);
-        }
-        else {
-            mNextButton.setText(R.string.next_button_text);
-            mNextButton.setVisibility(VISIBLE);
+            if (fragmentChangeListener != null) {
+                fragmentChangeListener.onFragmentChange(index);
+            }
+
+            // Set the current index and display the value.
+            mSelectedIndex = index;
+
+            //Customize stepBar
+            mStepBarView.setBoldDot(index);
+
+            // If the first value is shown, hide the previous button.
+            if (mSelectedIndex == 0) {
+                mPreviousButton.setVisibility(INVISIBLE);
+            } else {
+                mPreviousButton.setVisibility(VISIBLE);
+            }
+            // If the last value is shown,show "generate" button.
+            if (mSelectedIndex == GenerateRosterActivity.GENERATOR_FRAGMENTS_NUMBER - 1) {
+                mNextButton.setText(R.string.generate_button_navigation_view);
+            } else {
+                mNextButton.setText(R.string.next_button_text);
+                mNextButton.setVisibility(VISIBLE);
+            }
         }
     }
 }

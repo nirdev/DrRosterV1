@@ -41,6 +41,53 @@ public class DateUtils {
         return mDateUIList;
     }
 
+    public static String[] getDateUIMonthYear(Date date){
+        //@Params: First - month String, Second - year String
+        String[] mDateUIList = new String[2];
+
+        //Set formatting types for raw dates
+        SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM");
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+
+        //Set month and year
+        mDateUIList[0] = monthFormat.format(date);
+        mDateUIList[1] = yearFormat.format(date);
+        return mDateUIList;
+    }
+    public static Date addMonth(Date date) {
+        int amount = 1;
+        return add(date, Calendar.MONTH, amount);
+    }
+
+    public static Date removeMonth(Date date) {
+        int amount = -1;
+        return add(date, Calendar.MONTH, amount);
+    }
+
+    public static Calendar getCalendarFromInt(int month, int year){
+        Date date = getDateFromInt(month,year);
+        return getCalendarFromDate(date);
+    }
+
+    //Convert Date to Calendar
+    public static Calendar getCalendarFromDate(Date date) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
+
+    }
+
+    public static Date add(Date date, int calendarField, int amount) {
+        if (date == null) {
+            throw new IllegalArgumentException("The date must not be null");
+        }
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(calendarField, amount);
+        return c.getTime();
+    }
+
     //check if dates are at the same month
     public static boolean isSameMonth(Date startDate, Date endDate) {
         Calendar cal1 = Calendar.getInstance();
@@ -101,6 +148,26 @@ public class DateUtils {
         return monthOfDatesArray;
     }
 
+    public static Date getFirstDayOfMonthDate(){
+
+        Date today = new Date();
+        today = getStartOfDay(today);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(today);
+
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+        Date firstDayOfMonth = calendar.getTime();
+
+        return firstDayOfMonth;
+    }
+
+    public static Date getCurrentDate(){
+        Date date = new Date();
+        date = getStartOfDay(date);
+        return date;
+    }
     public static Date addOneDay(Date date) {
         long timeadj = 24 * 60 * 60 * 1000; // one day in millisecond
         return new Date(date.getTime() + timeadj);
@@ -121,4 +188,6 @@ public class DateUtils {
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTime();
     }
+
+
 }

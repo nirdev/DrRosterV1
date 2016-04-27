@@ -45,9 +45,8 @@ public class RandomTypeBuilder {
 
             Collections.shuffle(mTempNames);
 
-
             // Check Two randomization conditions -
-            // first - last full not equals temo so no same names day after day
+            // first - last full not equals temp so no same names day after day
             // no on is on leave date
             if (firstNotEqualsLast(randomizedArray, mTempNames) && !isOnLeaveDateArrayChecker(mTempNames,dayOfMonthIndex)) {
                 //add all to the full array

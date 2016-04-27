@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:background="@color/month_navigation_view_background"
+        android:gravity="center">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <!--PREVIOUS button-->
+            <ImageButton
+                android:id="@+id/view_month_nav_previous_button"
+                android:paddingRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_keyboard_arrow_left_white_18dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!-- middle title-->
+                <TextView
+                    android:id="@+id/view_month_nav_title_month"
+                    android:textSize="@dimen/calendar_text_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Month" />
+
+                <TextView
+                    android:id="@+id/view_month_nav_title_year"
+                    android:textSize="@dimen/calendar_text_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Year" />
+            </LinearLayout>
+            <!--NEXT button-->
+            <ImageButton
+                android:id="@+id/view_month_nav_next_button"
+                android:paddingLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_keyboard_arrow_right_white_18dp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</merge>

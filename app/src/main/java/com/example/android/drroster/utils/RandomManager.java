@@ -79,6 +79,10 @@ public class RandomManager {
         return mCurrentNames.isEmpty();
     }
 
+    public Boolean isCallToShort() {
+        return (mCurrentNames.size() < 3);
+    }
+
     private ArrayList<ArrayList<String>> getRandomMonth() {
         ArrayList<ArrayList<String>> fullRandomMonthName = new ArrayList<>();
         fullRandomMonthName.add(randomTypeBuilder.buildTypeOne(mCurrentNames, safeName));

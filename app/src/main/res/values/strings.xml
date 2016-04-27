@@ -38,8 +38,15 @@
     <string name="random_second_call_menu_title">2nd Call Randomization</string>
     <string name="random_third_call_menu_title">3rd Call Randomization</string>
 
+    <!-- drawer strings-->
+    <string name="drawer_menu_add_new">Add new month</string>
+    <string name="drawer_menu_delete_month">Delete roster</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="add_new_roster">Add new roster</string>
 
-    <!-- dummy data for random_list_fragment-->
+
+    <!-- data for random_list_fragment-->
     <string-array name="null_data">
         <item>No people on call </item>
     </string-array>

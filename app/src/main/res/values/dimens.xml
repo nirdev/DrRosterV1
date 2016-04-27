@@ -10,4 +10,5 @@
     <dimen name="dimen_margin_circle.negative">-4dp</dimen>
     <dimen name="small_title_size_final_review">22sp</dimen>
     <dimen name="chosen_objects_final_review">16sp</dimen>
+    <dimen name="text_view_title_very_big">26dp</dimen>
 </resources>

@@ -64,11 +64,13 @@ public class RandomAdapter extends BaseAdapter {
         // Array of random name only for this type
         ArrayList<String> typeNames = randomManager.getRandomizedType(typeNumber + 1);
 
-        for (int i = 0; i < 7; i++){
-            //Find the correct day
-            TextView textView = (TextView) convertView.findViewById(id + i);
-            //Get person index from organize array by sort with randomize name
-            textView.setText(""+ PersonDBHelper.nameToNumberConverter(typeNames.get(i), nameList));
+        if (typeNames != null && !randomManager.isCallToShort()) {
+            for (int i = 0; i < 7; i++) {
+                //Find the correct day
+                TextView textView = (TextView) convertView.findViewById(id + i);
+                //Get person index from organized array by sort with randomize name
+                textView.setText("" + PersonDBHelper.nameToNumberConverter(typeNames.get(i), nameList));
+            }
         }
 
         return convertView;

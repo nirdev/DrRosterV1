@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.android.drroster.R;
 import com.example.android.drroster.activities.GenerateRosterActivity;
-import com.example.android.drroster.models.PersonDB;
+import com.example.android.drroster.databases.PersonDBHelper;
 import com.example.android.drroster.models.ShiftFull;
 import com.example.android.drroster.utils.DateUtils;
 import com.squareup.timessquare.CalendarPickerView;
@@ -68,9 +68,13 @@ public class ItemDragListAdapter extends DragItemAdapter<ShiftFull, ItemDragList
         setHasStableIds(true);
         setItemList(list);
 
-        nextMonth = Calendar.getInstance();
+        //set first day and then add/remove one day to make range
+
+        nextMonth = DateUtils.getCalendarFromInt(GenerateRosterActivity.monthYearNumbers[0],GenerateRosterActivity.monthYearNumbers[1]);
+        nextMonth.set(Calendar.DAY_OF_MONTH, 1);
         nextMonth.add(Calendar.MONTH, 1);
-        lastMonth = Calendar.getInstance();
+        lastMonth = DateUtils.getCalendarFromInt(GenerateRosterActivity.monthYearNumbers[0], GenerateRosterActivity.monthYearNumbers[1]);
+        lastMonth.set(Calendar.DAY_OF_MONTH, 1);
         lastMonth.add(Calendar.MONTH, -1);
     }
 
@@ -208,8 +212,7 @@ public class ItemDragListAdapter extends DragItemAdapter<ShiftFull, ItemDragList
 
                             showCalendarInDialog(mContext.getString(R.string.dialog_calerdar_title), R.layout.dialog_date_picker);
                             mCalendarPickerView.init(lastMonth.getTime(), nextMonth.getTime())
-                                    .inMode(CalendarPickerView.SelectionMode.MULTIPLE)
-                                    .withSelectedDate(new Date());
+                                    .inMode(CalendarPickerView.SelectionMode.MULTIPLE);
 
                         }
                         notifyDataSetChanged();
@@ -331,6 +334,12 @@ public class ItemDragListAdapter extends DragItemAdapter<ShiftFull, ItemDragList
 
         private void deletePerson(int position) {
             if (position < mItemList.size() && position >= 0) {
+
+                //Old Name for DataBase
+                String name = GenerateRosterActivity.mPeopleArray.get(position).getName();
+                PersonDBHelper.removePersonFromString(name);
+
+                //Remove person from shift array
                 GenerateRosterActivity.mPeopleArray.remove(position);
                 notifyDataSetChanged();
             }
@@ -338,8 +347,16 @@ public class ItemDragListAdapter extends DragItemAdapter<ShiftFull, ItemDragList
 
         private void changePersonName(int position, String newName) {
             if (position < mItemList.size() && position >= 0) {
+                //Get the shift of the correct name
                 ShiftFull newPerson = GenerateRosterActivity.mPeopleArray.get(position);
+
+                //Old Name for DataBase
+                String name = newPerson.getName();
+                PersonDBHelper.updatePersonFromString(newName,name);
+
+                //Set new name to the specific person
                 newPerson.setName(newName);
+                //add person back to full shift array
                 GenerateRosterActivity.mPeopleArray.set(position, newPerson);
                 notifyDataSetChanged();
             }
@@ -348,13 +365,12 @@ public class ItemDragListAdapter extends DragItemAdapter<ShiftFull, ItemDragList
         private void AddPersonName(String newName) {
             ShiftFull newPerson = new ShiftFull((long) (mItemList.size()), newName, false, false, false, false, null);
             GenerateRosterActivity.mPeopleArray.add(GenerateRosterActivity.mPeopleArray.size() - 1, newPerson);
+
+            //Add person to DataBase
+            PersonDBHelper.addPersonFromString(newName);
+
             notifyDataSetChanged();
 
-            //Set new person in database todo:delete before realese
-            PersonDB tempPerson = new PersonDB();
-            tempPerson.name = newName;
-            tempPerson.number = GenerateRosterActivity.mPeopleArray.size() - 1;
-            tempPerson.save();
 
         }
 

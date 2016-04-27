@@ -1,5 +1,6 @@
 package com.example.android.drroster.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.android.drroster.MainActivity;
 import com.example.android.drroster.R;
 import com.example.android.drroster.databases.PersonDBHelper;
 import com.example.android.drroster.databases.ShiftHelper;
@@ -164,8 +166,10 @@ public class RandomiseActivity extends AppCompatActivity {
         }
         //if last button
         else if (index == RANDOM_FRAGMENT_NUMBER){
-            nextButton.setText(R.string.generate_random_acitvity_button);
-            ShiftHelper.buildShiftTable(monthYearNumbers[0],monthYearNumbers[1],shuffledTable,ADArray,leaveDatesArray);
+            ShiftHelper.buildShiftTable(monthYearNumbers[0], monthYearNumbers[1], shuffledTable, ADArray, leaveDatesArray);
+
+            Intent i1 = new Intent(this, MainActivity.class);
+            startActivity(i1);
         }
         //normal status
         else {

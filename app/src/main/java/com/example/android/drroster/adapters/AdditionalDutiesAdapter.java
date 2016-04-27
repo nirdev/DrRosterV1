@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.android.drroster.R;
 import com.example.android.drroster.activities.GenerateRosterActivity;
+import com.example.android.drroster.databases.DutiesHelper;
 import com.example.android.drroster.models.ADBean;
 
 
@@ -154,16 +155,27 @@ public class AdditionalDutiesAdapter extends BaseAdapter {
 
     private void deletePerson(int position) {
         if(position < GenerateRosterActivity.mADArray.size() && position >= 0) {
+            //get name to remove from DB
+            String dutyName = GenerateRosterActivity.mADArray.get(position).getName();
             GenerateRosterActivity.mADArray.remove(position);
-            notifyDataSetChanged();
+
+            //remove from DB
+            DutiesHelper.removeDutyTypeFromString(dutyName);
+
+            notifyDataSetInvalidated();
+            //notifyDataSetChanged();
         }
     }
 
     private void changePersonName(int position, String newName) {
         if (position < GenerateRosterActivity.mADArray.size() && position >= 0) {
+            //get name to update DB
+            String oldDutyName = GenerateRosterActivity.mADArray.get(position).getName();
             ADBean newDuty = GenerateRosterActivity.mADArray.get(position);
             newDuty.setName(newName);
             GenerateRosterActivity.mADArray.set(position, newDuty);
+            //update after UI
+            DutiesHelper.updateDutyTypeFromString(newName,oldDutyName);
             notifyDataSetChanged();
         }
     }
