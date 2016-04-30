@@ -21,6 +21,7 @@ public class RandomListFragment extends ListFragment {
 
     private RandomAdapter adapter;
     private RandomManager randomManager;
+    private Boolean mGoNext = false;
     ArrayList<String> nameList;
     public static ArrayList<String> chosenRandomNameList;
 
@@ -53,10 +54,16 @@ public class RandomListFragment extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
 
         //Setup actionbar
-        setMenuTitle();
+        setUpMenu();
+
+        //set go next bool
+        setGoNext(false);
 
         //Not initialize anything if call empty
         if (!randomManager.isCallToShort()) {
+            //Let the data setter know if data was changes
+            RandomiseActivity.isThisFragmentNull = false;
+
             final ListView listView = getListView();
 
             //Add day names header to the list
@@ -73,9 +80,46 @@ public class RandomListFragment extends ListFragment {
         }
         //call is empty
         else {
+            //Let the data seter know if data was changes
+            RandomiseActivity.isThisFragmentNull = true;
             ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.null_data, android.R.layout.simple_list_item_1);
             setListAdapter(adapter);
         }
+    }
+
+    private void setGoNext(Boolean bool) {
+        mGoNext = bool;
+        if ((getTag().equals(RandomiseActivity.RANDOM_FRAGMENT_THIRD_CALL + "")) &&
+                randomManager.isCallToShort()) {
+            mGoNext = true;
+
+        }
+    }
+
+    public Boolean getGoNext() {
+        return mGoNext;
+    }
+
+    private void setUpMenu() {
+        setMenuTitle();
+        setMenuGoBackButton();
+    }
+
+    private void setMenuGoBackButton() {
+        Boolean bool = false;
+        switch (getTag()) {
+            case RandomiseActivity.RANDOM_FRAGMENT_FIRST_CALL + "":
+                bool = true;
+                break;
+            case RandomiseActivity.RANDOM_FRAGMENT_SECOND_CALL + "":
+                bool = false;
+                break;
+            case RandomiseActivity.RANDOM_FRAGMENT_THIRD_CALL + "":
+                bool = false;
+                break;
+        }
+        //Set menu go back button in the activity
+        ((RandomiseActivity) getActivity()).setActionBarGoBackButton(bool);
     }
 
     private void setMenuTitle() {
@@ -104,6 +148,9 @@ public class RandomListFragment extends ListFragment {
             chosenRandomNameList = randomManager.getRandomizedType(position);
             adapter.setSelectedIndex(position);
             adapter.notifyDataSetChanged();
+
+            //set go next true
+            setGoNext(true);
         }
     }
 }

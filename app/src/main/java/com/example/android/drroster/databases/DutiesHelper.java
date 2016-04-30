@@ -61,6 +61,7 @@ public class DutiesHelper {
         }
         return (int) l;
     }
+
     public static void addDutyTypeFromString(String name){
         DutyTypeDB dutyType = new DutyTypeDB(name);
         dutyType.save();
@@ -70,7 +71,8 @@ public class DutiesHelper {
         DutyTypeDB.delete(DutyTypeDB.class, id);
     }
     public static void updateDutyTypeFromString(String newName,String oldName){
-        removeDutyTypeFromString(oldName);
-        addDutyTypeFromString(newName);
+        DutyTypeDB dutyType = getDutyTypeFromString(oldName);
+        dutyType.type = newName;
+        dutyType.save();
     }
 }

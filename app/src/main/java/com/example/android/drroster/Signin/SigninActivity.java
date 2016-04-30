@@ -9,8 +9,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.drroster.MainActivity;
 import com.example.android.drroster.R;
 import com.example.android.drroster.activities.GenerateRosterActivity;
+
+import java.util.Date;
 
 
 public class SigninActivity extends AppCompatActivity {
@@ -45,6 +48,7 @@ public class SigninActivity extends AppCompatActivity {
 
             //Go to choose month activity
             Intent i = new Intent(this, GenerateRosterActivity.class);
+            i.putExtra(MainActivity.CURRENT_MONTH_KEY, new Date().getTime());
             startActivity(i);
         }
         else {

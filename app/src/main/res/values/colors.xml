@@ -13,6 +13,9 @@
     <color name="list_person_name_color">#0e0d0d</color>
     <color name="month_navigation_view_background">#b5decf</color>
 
+    <color name="color_space_bar_dark">#3e6e7c</color>
+    <color name="color_space_bar_light">#5ea5a4</color>
+
     <!-- Draggable List-->
     <color name="drag_list_view_choosen_dates">#264557</color>
 

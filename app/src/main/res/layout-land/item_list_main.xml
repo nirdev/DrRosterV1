@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_list_parent_layout_land"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:paddingTop="6dp">
+
+</LinearLayout>
+
+
+
+
+
+
+
+<!--&lt;!&ndash; date number&ndash;&gt;-->
+<!--<TextView-->
+<!--android:id="@+id/main_list_date_number"-->
+<!--android:text="0"-->
+<!--android:textSize="@dimen/main_list_day_number_dim"-->
+<!--android:textColor="@color/colorPrimary"-->
+<!--android:layout_gravity="center_horizontal"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_weight="1"-->
+<!--android:layout_height="wrap_content" />-->
+<!--&lt;!&ndash; date name &ndash;&gt;-->
+<!--<TextView-->
+<!--android:id="@+id/main_list_date_name"-->
+<!--android:text="funDay"-->
+<!--android:textSize="@dimen/main_list_day_name_dim"-->
+<!--android:textColor="@color/colorPrimary"-->
+<!--android:layout_gravity="center_horizontal"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_weight="1"-->
+<!--android:layout_height="wrap_content" />-->
+
+<!--&lt;!&ndash; 1st call&ndash;&gt;-->
+<!--<TextView-->
+<!--android:id="@+id/main_list_shift_firstcall_person"-->
+<!--android:textSize="@dimen/main_list_text_size"-->
+<!--android:paddingBottom="@dimen/main_list_item_padding_bottom_title"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_weight="1"-->
+<!--android:layout_height="wrap_content" />-->
+<!--&lt;!&ndash; 2nd call&ndash;&gt;-->
+<!--<TextView-->
+<!--android:id="@+id/main_list_shift_secondcall_person"-->
+<!--android:textSize="@dimen/main_list_text_size"-->
+<!--android:paddingBottom="@dimen/main_list_item_padding_bottom_title"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_weight="1"-->
+<!--android:layout_height="wrap_content" />-->
+<!--&lt;!&ndash;  3rd  call&ndash;&gt;-->
+<!--<TextView-->
+<!--android:id="@+id/main_list_shift_thirdcall_person"-->
+<!--android:textSize="@dimen/main_list_text_size"-->
+<!--android:paddingBottom="@dimen/main_list_item_padding_bottom_title"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_weight="1"-->
+<!--android:layout_height="wrap_content" />-->
+<!--&lt;!&ndash; duty types title linearLayout - will be build programmatically &ndash;&gt;-->
+<!--<LinearLayout-->
+<!--android:id="@+id/main_list_duty_people_linearLayout"-->
+<!--android:orientation="vertical"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_weight="1"-->
+<!--android:layout_height="wrap_content">-->
+<!--</LinearLayout>-->
+
+<!--&lt;!&ndash; leave date&ndash;&gt;-->
+<!--<TextView-->
+<!--android:id="@+id/main_list_shift_leave_people"-->
+<!--android:textSize="@dimen/main_list_text_size"-->
+<!--android:paddingBottom="@dimen/main_list_item_padding_bottom_title"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_weight="1"-->
+<!--android:layout_height="wrap_content" />-->
+
+<!--</LinearLayout>-->
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout-->
+<!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--android:id="@+id/main_list_date_parent_layout"-->
+<!--android:orientation="horizontal"-->
+<!--android:paddingTop="6dp"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent">-->
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:paddingTop="6dp"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--&lt;!&ndash; Date vertical linear layout&ndash;&gt;-->
+    <!--<LinearLayout-->
+        <!--android:id="@+id/main_list_date_parent_layout"-->
+        <!--android:orientation="vertical"-->
+        <!--android:gravity="top"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:paddingRight="10dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--&lt;!&ndash; date number&ndash;&gt;-->
+        <!--<TextView-->
+            <!--android:id="@+id/main_list_date_number"-->
+            <!--android:text="0"-->
+            <!--android:textSize="@dimen/main_list_day_number_dim"-->
+            <!--android:textColor="@color/colorPrimary"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+        <!--&lt;!&ndash; date name &ndash;&gt;-->
+        <!--<TextView-->
+            <!--android:id="@+id/main_list_date_name"-->
+            <!--android:text="funDay"-->
+            <!--android:textSize="@dimen/main_list_day_name_dim"-->
+            <!--android:textColor="@color/colorPrimary"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+    <!--</LinearLayout>-->
+
+    <!--&lt;!&ndash; titles (first call, second call etc.)&ndash;&gt;-->
+    <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:id="@+id/main_list_shift_parent_layout"-->
+        <!--android:paddingRight="26dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--&lt;!&ndash; 1st call&ndash;&gt;-->
+        <!--<TextView-->
+            <!--android:id="@+id/main_list_shift_firstcall_title"-->
+            <!--android:text="@string/main_list_first_call_title"-->
+            <!--android:textSize="@dimen/main_list_text_size"-->
+            <!--android:textColor="@color/list_person_name_color"-->
+            <!--android:paddingBottom="@dimen/main_list_item_padding_bottom_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+        <!--&lt;!&ndash; 2nd call&ndash;&gt;-->
+        <!--<TextView-->
+            <!--android:id="@+id/main_list_shift_secondcall_title"-->
+            <!--android:text="@string/main_list_second_call_title"-->
+            <!--android:textSize="@dimen/main_list_text_size"-->
+            <!--android:textColor="@color/list_person_name_color"-->
+            <!--android:paddingBottom="@dimen/main_list_item_padding_bottom_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+        <!--&lt;!&ndash;  3rd  call&ndash;&gt;-->
+        <!--<TextView-->
+            <!--android:id="@+id/main_list_shift_thirdcall_title"-->
+            <!--android:text="@string/main_list_third_call_title"-->
+            <!--android:textSize="@dimen/main_list_text_size"-->
+            <!--android:textColor="@color/list_person_name_color"-->
+            <!--android:paddingBottom="@dimen/main_list_item_padding_bottom_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+        <!--&lt;!&ndash; duty types title linearLayout - will be build programmatically &ndash;&gt;-->
+        <!--<LinearLayout-->
+            <!--android:id="@+id/main_list_duty_types_linearLayout"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content">-->
+        <!--</LinearLayout>-->
+
+        <!--&lt;!&ndash; leave date&ndash;&gt;-->
+        <!--<TextView-->
+            <!--android:id="@+id/main_list_shift_leave_title"-->
+            <!--android:text="@string/main_list_leave_title"-->
+            <!--android:textSize="@dimen/main_list_text_size"-->
+            <!--android:paddingBottom="@dimen/main_list_item_padding_bottom_title"-->
+            <!--android:textColor="@color/list_person_name_color"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+    <!--</LinearLayout>-->
+
+    <!--&lt;!&ndash; data (first call, second call etc.)&ndash;&gt;-->
+    <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:id="@+id/main_list_shift_data_parent_layout"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1">-->
+        <!--&lt;!&ndash; 1st call&ndash;&gt;-->
+        <!--<TextView-->
+            <!--android:id="@+id/main_list_shift_firstcall_person"-->
+            <!--android:textSize="@dimen/main_list_text_size"-->
+            <!--android:paddingBottom="@dimen/main_list_item_padding_bottom_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+        <!--&lt;!&ndash; 2nd call&ndash;&gt;-->
+        <!--<TextView-->
+            <!--android:id="@+id/main_list_shift_secondcall_person"-->
+            <!--android:textSize="@dimen/main_list_text_size"-->
+            <!--android:paddingBottom="@dimen/main_list_item_padding_bottom_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+        <!--&lt;!&ndash;  3rd  call&ndash;&gt;-->
+        <!--<TextView-->
+            <!--android:id="@+id/main_list_shift_thirdcall_person"-->
+            <!--android:textSize="@dimen/main_list_text_size"-->
+            <!--android:paddingBottom="@dimen/main_list_item_padding_bottom_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+        <!--&lt;!&ndash; duty types title linearLayout - will be build programmatically &ndash;&gt;-->
+        <!--<LinearLayout-->
+            <!--android:id="@+id/main_list_duty_people_linearLayout"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content">-->
+        <!--</LinearLayout>-->
+
+        <!--&lt;!&ndash; leave date&ndash;&gt;-->
+        <!--<TextView-->
+            <!--android:id="@+id/main_list_shift_leave_people"-->
+            <!--android:textSize="@dimen/main_list_text_size"-->
+            <!--android:paddingBottom="@dimen/main_list_item_padding_bottom_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+    <!--</LinearLayout>-->
+
+<!--</LinearLayout>-->

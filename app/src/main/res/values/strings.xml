@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DrRoster</string>
+    <string name="app_name">Dr Roster</string>
     <string name="department_name_hint">Department name</string>
     <string name="next_button_text">NEXT</string>
     <string name="pick_month_button_text">Choose Month</string>
@@ -44,6 +44,11 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="add_new_roster">Add new roster</string>
+    <string name="main_list_first_call_title">1st call:</string>
+    <string name="main_list_second_call_title">2nd call:</string>
+    <string name="main_list_third_call_title">3rd call:</string>
+    <string name="main_list_leave_title">Leave:</string>
+    <string name="toast_choose_random_type">Please choose random type</string>
 
 
     <!-- data for random_list_fragment-->

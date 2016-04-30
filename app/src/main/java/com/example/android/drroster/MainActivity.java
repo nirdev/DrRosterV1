@@ -18,8 +18,10 @@ import android.widget.TextView;
 import com.example.android.drroster.Signin.SigninActivity;
 import com.example.android.drroster.Signin.SigninConstants;
 import com.example.android.drroster.UI.MonthNavView;
+import com.example.android.drroster.UI.SpaceBarColorHelper;
 import com.example.android.drroster.activities.GenerateRosterActivity;
 import com.example.android.drroster.databases.RosterHelper;
+import com.example.android.drroster.databases.ShiftHelper;
 import com.example.android.drroster.fragments.AddNewRosterFragment;
 import com.example.android.drroster.fragments.MainMonthListFragment;
 import com.example.android.drroster.utils.DateUtils;
@@ -29,11 +31,11 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String CURRENT_MONTH_KEY = "current_month_key";
-    public static int CURRENT_ROSTER_INDEX = 0;
-    public static int TOTAL_ROSTERS = 0;
+    public static final String CURRENT_MONTH_KEY = "current_month_key";
+
 
     public static Date CURRENT_MONTH_DATE;
+    public static Boolean IS_THERE_THIRD_CALL;
     String departmentName;
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //If first time go to sign in , else start activity //TODO: remove comment
-        //checkForSignIn();
+        checkForSignIn();
 
         //Set view and drawer
         setContentView(R.layout.activity_main);
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         //Check if first time or recreating the activity
         if (savedInstanceState == null) {
             //Set current roster date
-            CURRENT_MONTH_DATE = DateUtils.getFirstDayOfMonthDate();
+            CURRENT_MONTH_DATE = DateUtils.getFirstDayOfThisMonthDate();
         }
         setNewMonthUI();
         //month changed listener
@@ -68,8 +70,44 @@ public class MainActivity extends AppCompatActivity {
                 setNewMonthUI();
             }
         });
+
+
+//        ArrayList<Date> array1 = DateUtils.buildMonthOfDatesArray(4, 2016);
+//        ArrayList<Date> array2 = DateUtils.buildMonthOfDatesArray2(CURRENT_MONTH_DATE);
+//        ItemMainView itemMainView = ItemMainViewHelper.buildMainItemFromDB(array1.get(0));
+//
+//        Log.wtf("here", "--------------------------------------------");
+
 //        Date date = new Date();
-//        date = DateUtils.getStartOfDay(date);
+//        date = DateUtils.getFirstDayOfThisMonthDate();
+
+
+//        date = DateUtils.addMonth(date);
+
+//        ArrayList<Date>  monthOfDates = DateUtils.buildMonthOfDatesArray2(date);
+//        for (Date date1 : monthOfDates) {
+//            Log.wtf("here", " " + UIUtils.getDayNumber(date1));
+//        }
+
+//        Log.wtf("here", " " + DateUtils.isWeekend(date));
+//
+//        date = DateUtils.addOneDay(date);
+//        Log.wtf("here", " " + DateUtils.isWeekend(date));
+//
+//        date = DateUtils.addOneDay(date);
+//        Log.wtf("here", " " + DateUtils.isWeekend(date));
+//
+//        date = DateUtils.addOneDay(date);
+//        Log.wtf("here", " " + DateUtils.isWeekend(date));
+//
+//        date = DateUtils.addOneDay(date);
+//        Log.wtf("here", " " + DateUtils.isWeekend(date));
+
+
+//        Log.wtf("here", " " + ShiftHelper.isThereThirdCall(date));
+//        ItemMainView itemMainView = ItemMainViewHelper.buildMainItemFromDB(date);
+
+//        Log.wtf("here", "--------------------------------------------");
 //
 //        RosterDB rosterDB = new RosterDB(date);
 //        rosterDB.save();
@@ -100,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
 
-//        Date date1 = DateUtils.getFirstDayOfMonthDate();
+//        Date date1 = DateUtils.getFirstDayOfThisMonthDate();
 //        Log.wtf("here", " " + RosterHelper.getCurrentDayRosterIndex());
 
 //        ArrayList<Date> rosters = RosterHelper.getAllRosterDates();
@@ -147,11 +185,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setNewMonthUI() {
+        IS_THERE_THIRD_CALL = ShiftHelper.isThereThirdCall(CURRENT_MONTH_DATE);
         changeMonthNavViewUI();
-        changeFragment();
+        changeNewMonthFragment();
+//        changeNewMonthData();
     }
 
-    private void changeFragment() {
+    private void changeNewMonthData() {
+//        ArrayList<ItemMainView> everything = ItemMainViewHelper.buildMainItemMonthList(CURRENT_MONTH_DATE);
+    }
+
+    private void changeNewMonthFragment() {
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -182,6 +226,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDrawerUI() {
+        //set space bar color
+        SpaceBarColorHelper.setLightColor(this);
+
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -317,6 +364,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void addNewRoster(View view) {
         Intent i1 = new Intent(this, GenerateRosterActivity.class);
+        i1.putExtra(CURRENT_MONTH_KEY,CURRENT_MONTH_DATE.getTime());
         startActivity(i1);
     }
 

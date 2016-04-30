@@ -9,6 +9,29 @@
     android:elevation="4dp"
     app:titleTextAppearance="@style/Toolbar.TitleText">
 
+    <RelativeLayout
+        android:id="@+id/random_menu_relative_layout_wrapper"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+    <!--left side items-->
+    <LinearLayout
+        android:id="@+id/random_menu_left_items"
+        android:orientation="horizontal"
+        android:layout_alignParentLeft="true"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <ImageButton
+        android:id="@+id/random_menu_go_back_btn"
+        android:visibility="gone"
+        android:src="@drawable/ic_keyboard_backspace_white_18dp"
+        android:background="@color/colorTransparent"
+        android:paddingRight="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <TextView
         android:id="@+id/toolbar_title_rostergen"
         android:layout_width="wrap_content"
@@ -16,4 +39,26 @@
         android:text="@string/app_name"
         android:textColor="@color/colorTitleWhite"
         android:textSize="25sp" />
+    </LinearLayout>
+
+        <!-- right side items-->
+    <LinearLayout
+        android:id="@+id/random_menu_right_items"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:paddingRight="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/random_menu_exit_btn"
+            android:onClick="exitGenerator"
+            android:src="@drawable/ic_clear_white_18dp"
+            android:background="@color/colorTransparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    </RelativeLayout>
 </android.support.v7.widget.Toolbar>

@@ -60,11 +60,11 @@ public class PersonDBHelper {
     }
     public static void removePersonFromString(String name){
         int id = getIdFromString(name);
-
         new Delete().from(PersonDB.class).where("Id = ?", id).execute();
     }
     public static void updatePersonFromString(String newName,String oldName){
-        removePersonFromString(oldName);
-        addPersonFromString(newName);
+        PersonDB person = getPersonFromString(oldName);
+        person.name = newName;
+        person.save();
     }
 }

@@ -52,7 +52,7 @@ public class RosterHelper {
         int index = 0;
 
         //get first day of this month
-        Date firstDayOfThisMonth = DateUtils.getFirstDayOfMonthDate();
+        Date firstDayOfThisMonth = DateUtils.getFirstDayOfThisMonthDate();
         ArrayList<Date> allRosterDates = getAllRosterDates();
         //check in ready roster date array which on is equal
         if (allRosterDates.indexOf(firstDayOfThisMonth) != -1){

@@ -1,5 +1,6 @@
 package com.example.android.drroster.databases;
 
+import com.activeandroid.query.Select;
 import com.example.android.drroster.models.DutyDateDB;
 import com.example.android.drroster.models.DutyTypeDB;
 import com.example.android.drroster.models.LeaveDateDB;
@@ -28,7 +29,7 @@ public class ShiftHelper {
         ArrayList<ArrayList<String>> shuffledTable = data;
 
         //number of days in current month
-        int numberOfDays = monthDates.size() -1;
+        int numberOfDays = monthDates.size();
 
 
         for (int dayIndex = 0;dayIndex < numberOfDays ; dayIndex++){
@@ -37,12 +38,21 @@ public class ShiftHelper {
             //get name of people from shuffled array
             String mFirstCallName = shuffledTable.get(0).get(dayIndex);
             String mSecondCallName = shuffledTable.get(1).get(dayIndex);
-            String mThirdCallName = shuffledTable.get(2).get(dayIndex);
+
+            String mThirdCallName = null;//Check because maybe there is no third call
+            if (shuffledTable.get(2) != null && shuffledTable.get(2).size() > 0){
+                mThirdCallName = shuffledTable.get(2).get(dayIndex);
+            }
+
 
             //get person model from DB
             PersonDB firstCall = PersonDBHelper.getPersonFromString(mFirstCallName);
             PersonDB secondCall = PersonDBHelper.getPersonFromString(mSecondCallName);
-            PersonDB thirdCall = PersonDBHelper.getPersonFromString(mThirdCallName);
+
+            PersonDB thirdCall = null; //Check because maybe there is no third call
+            if (shuffledTable.get(2) != null && shuffledTable.get(2).size() > 0){
+                thirdCall = PersonDBHelper.getPersonFromString(mThirdCallName);
+            }
 
             //Build Shift model
             ShiftDB shift =  new ShiftDB(mCurrentDate,firstCall,secondCall,thirdCall);
@@ -59,26 +69,42 @@ public class ShiftHelper {
             }
 
             //Build all leave dates
-            //Run on month sized array with string arrays for each day index with respect to leave dates
-            for (int dayIndex2= 0;dayIndex2 < namesOnDatesArray.size();dayIndex2++){
-                //Get current day leave names array
-                ArrayList<String> mCurrentDayLeaveNames = namesOnDatesArray.get(dayIndex2);
-                //Loop on the array if not null and add each on to the array
-                if (mCurrentDayLeaveNames != null){
-                    for (String name : mCurrentDayLeaveNames){
-                        //Add each name of specific day string array as new additional
-                        //duty column with date and person DB relations
-                        PersonDB mPersonDB = PersonDBHelper.getPersonFromString(name);
-                        LeaveDateDB mLeaveDateDB = new LeaveDateDB(mCurrentDate,mPersonDB);
-                        mLeaveDateDB.save();
-                    }
-                }
-            }
+            saveLeaveDates(dayIndex,namesOnDatesArray,mCurrentDate);
+
 
         }
         //Save table of first dates in moth to make ready roster index
         RosterDB rosterDB = new RosterDB(monthDates.get(0));
         rosterDB.save();
 
+    }
+    private static void saveLeaveDates(int dayIndex,ArrayList<ArrayList<String>> namesOnDatesArray,Date mCurrentDate){
+        //Get current day leave names array
+        ArrayList<String> mCurrentDayLeaveNames = namesOnDatesArray.get(dayIndex);
+        //Loop on the array if not null and add each on to the array
+        if (mCurrentDayLeaveNames != null && (mCurrentDayLeaveNames.size() > 0)){
+            for (String name : mCurrentDayLeaveNames){
+                //Add each name of specific day string array as new additional
+                //duty column with date and person DB relations
+                PersonDB mPersonDB = PersonDBHelper.getPersonFromString(name);
+                LeaveDateDB mLeaveDateDB = new LeaveDateDB(mCurrentDate,mPersonDB);
+                mLeaveDateDB.save();
+            }
+        }
+    }
+    public static Boolean isThereThirdCall(Date date){
+        ShiftDB shiftDB = getShiftForDate(date);
+        if (shiftDB != null && shiftDB.thirdCall != null && !shiftDB.thirdCall.equals("")){
+            return true;
+        }
+        return false;
+    }
+    public static ShiftDB getShiftForDate(Date date){
+        ShiftDB shiftDB  = new Select()
+                .from(ShiftDB.class)
+                .where("Day = ?",date.getTime())
+                .executeSingle();
+
+        return shiftDB;
     }
 }

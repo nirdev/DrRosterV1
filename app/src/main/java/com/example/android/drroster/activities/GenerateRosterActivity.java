@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.activeandroid.query.Select;
+import com.example.android.drroster.MainActivity;
 import com.example.android.drroster.R;
 import com.example.android.drroster.UI.NavigationView;
+import com.example.android.drroster.UI.SpaceBarColorHelper;
 import com.example.android.drroster.databases.DutiesHelper;
 import com.example.android.drroster.fragments.ChooseMonthFragment;
 import com.example.android.drroster.fragments.DraggableListFragment;
@@ -24,6 +27,7 @@ import com.example.android.drroster.models.ShiftFull;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class GenerateRosterActivity extends AppCompatActivity {
@@ -53,11 +57,17 @@ public class GenerateRosterActivity extends AppCompatActivity {
     public static final String INTENT_EXTRA_MONTH_YEAR_ARRAY = "mMonthAndYear";
     public static final String INTENT_EXTRA_AD_ARRAY = "ADArray";
 
+    Date mCurrentDate;
+    public ChosenMonthData chosenMonthData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generate_roster);
+        SpaceBarColorHelper.setDarkColor(this);
         mContext = this;
+
+        mCurrentDate = getDateFromIntent();
 
         //Build peopleOnlyArray from DB data
         mPeopleOnlyArray = new Select()
@@ -72,12 +82,12 @@ public class GenerateRosterActivity extends AppCompatActivity {
         mPeopleArray = new ArrayList<>();
         for (PersonDB personDB : mPeopleOnlyArray){
             mPeopleArray.add(
-                    new ShiftFull( //Long id, String name, Boolean isFirstCall, Boolean isSecondCall, Boolean isThirdCall,Boolean isLeavDate, List<Date> leaveDates
+                    new ShiftFull( //Long id, String name, Boolean isFirstCall, Boolean isSecondCall, Boolean isThereThirdCall,Boolean isLeavDate, List<Date> leaveDates
                             Long.valueOf(personDB.number), //Long id
                             personDB.name, // String name
                             false, // Boolean isFirstCall
                             false, // Boolean isSecondCall
-                            false, // Boolean isThirdCall
+                            false, // Boolean isThereThirdCall
                             false, // Boolean isLeaveDate
                             null));// List<Date> leaveDates
         }
@@ -112,9 +122,8 @@ public class GenerateRosterActivity extends AppCompatActivity {
                     FragmentManager fm = getSupportFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
                     switch (index){
-
                         case FRAGMENT_CHOOSE_MONTH_INDEX:
-
+                            chosenMonthData.passDataToFragment(mCurrentDate);
                             ft.replace(R.id.fragment_place_holder_generate_roster,
                                     new ChooseMonthFragment(),FRAGMENT_CHOOSE_MONTH_INDEX+"");
                             break;
@@ -165,6 +174,14 @@ public class GenerateRosterActivity extends AppCompatActivity {
 
     }
 
+    private Date getDateFromIntent() {
+        Long dateTime = getIntent().getExtras().getLong(MainActivity.CURRENT_MONTH_KEY);
+        if ( dateTime > 0){
+            return new Date(dateTime);
+        }
+        return null;
+    }
+
     public static String[] getCheckedADArray(ArrayList<ADBean> data){
 
         ArrayList<String> temp = new ArrayList<>();
@@ -185,6 +202,17 @@ public class GenerateRosterActivity extends AppCompatActivity {
     public void setActionBarTitle(String title){
         TextView menuTitle = (TextView) findViewById(R.id.toolbar_title_rostergen);
         menuTitle.setText(title);
+    }
+    private void goToMainActivity() {
+        Intent i1 = new Intent(this, MainActivity.class);
+        startActivity(i1);
+    }
+
+    public interface ChosenMonthData{
+        public void passDataToFragment(Date chosenMonth);
+    }
+    public void exitGenerator(View view) {
+        goToMainActivity();
     }
     //Automagically lose focus on any click outside editText - this way app don't crush
     // http://stackoverflow.com/questions/4828636/edittext-clear-focus-on-touch-outside

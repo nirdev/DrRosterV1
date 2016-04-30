@@ -7,10 +7,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.drroster.MainActivity;
 import com.example.android.drroster.R;
+import com.example.android.drroster.UI.SpaceBarColorHelper;
 import com.example.android.drroster.databases.PersonDBHelper;
 import com.example.android.drroster.databases.ShiftHelper;
 import com.example.android.drroster.fragments.RandomListFragment;
@@ -31,7 +34,7 @@ public class RandomiseActivity extends AppCompatActivity {
     public static final int RANDOM_FRAGMENT_SECOND_CALL = 1;
     public static final int RANDOM_FRAGMENT_THIRD_CALL = 2;
     public static ArrayList<ArrayList<String>> shuffledTable;
-    public static final String[] typesList = new String[] {
+    public static final String[] typesList = new String[]{
             "Type 1",
             "Type 2",
             "Type 3",
@@ -49,6 +52,7 @@ public class RandomiseActivity extends AppCompatActivity {
     public static Integer[] selectionOption = new Integer[3];
     public static String[] ADArray;
     public static int[] monthYearNumbers;
+    public static Boolean isThisFragmentNull = true;
 
     ArrayList<ArrayList<String>> leaveDatesArray;
 
@@ -59,8 +63,8 @@ public class RandomiseActivity extends AppCompatActivity {
 
         //Initialize array with 3 items - ine for each fragment
         shuffledTable = new ArrayList<>(3);
-        for (int x = 0;x < 3 ; x++) {
-           shuffledTable.add(new ArrayList<String>());
+        for (int x = 0; x < 3; x++) {
+            shuffledTable.add(new ArrayList<String>());
         }
         //get unShuffled name list to show numbers and not items in fragment week days
         mUnShuffledNames = PersonDBHelper.getNameList();
@@ -73,7 +77,7 @@ public class RandomiseActivity extends AppCompatActivity {
         monthYearNumbers = getIntent().getExtras().getIntArray(GenerateRosterActivity.INTENT_EXTRA_MONTH_YEAR_ARRAY);
         ADArray = getIntent().getExtras().getStringArray(GenerateRosterActivity.INTENT_EXTRA_AD_ARRAY);
         //Build leave date array for DB
-        leaveDatesArray  = leaveDatesBuilder(mPeopleArray,monthYearNumbers);
+        leaveDatesArray = leaveDatesBuilder(mPeopleArray, monthYearNumbers);
 
         //Sets UI
         nextButton = (Button) findViewById(R.id.next_button_random_activity);
@@ -85,27 +89,27 @@ public class RandomiseActivity extends AppCompatActivity {
     //Build list of pairs with only leave date people and their date arrays
     private ArrayList<ArrayList<String>> leaveDatesBuilder(ArrayList<ShiftFull> peopleArray, int[] monthYearNumbers) {
         ArrayList<ArrayList<String>> namesOnDatesArray = new ArrayList<>();
-        int numOfDayInMonth = DateUtils.getNumberOfDayInMonth(monthYearNumbers[0],monthYearNumbers[1]);
+        int numOfDayInMonth = DateUtils.getNumberOfDayInMonth(monthYearNumbers[0], monthYearNumbers[1]);
 
         //initialize the array list with new null arrays
-        for (int init = 0; init < numOfDayInMonth;init++){
+        for (int init = 0; init < numOfDayInMonth; init++) {
             namesOnDatesArray.add(new ArrayList<String>());
         }
 
         //Iterate all FullShift Array
-        for (ShiftFull shiftFullPerson : peopleArray){
+        for (ShiftFull shiftFullPerson : peopleArray) {
             //if current checked person isOnLeaveDate
-            if (shiftFullPerson.getIsLeavDate()){
+            if (shiftFullPerson.getIsLeavDate()) {
                 //Get the dates array
                 List<Date> tempDates = shiftFullPerson.getLeaveDates();
                 //Iterate the dates array
-                for (Date date : tempDates){
+                for (Date date : tempDates) {
                     //Get index of day (if it's the 28 day index = 27)
                     int dayIndex = DateUtils.getDayIndex(date);
                     //Array of string for that particular  index (index  = day of month)
                     ArrayList<String> oneDayNames;
                     //If on that day this loop already put names - add new name to previous array
-                    if (namesOnDatesArray.get(dayIndex) != null){
+                    if (namesOnDatesArray.get(dayIndex) != null) {
                         //Take old names array for current day index
                         oneDayNames = namesOnDatesArray.get(dayIndex);
                         //Add new name for that particular name
@@ -113,8 +117,7 @@ public class RandomiseActivity extends AppCompatActivity {
                         //Set the new array back in the parent array ("namesOnDatesArray")
                     }
                     //If this is first name for this date index
-                    else
-                    {
+                    else {
                         //Initialize new array for that day index
                         oneDayNames = new ArrayList<>();
                         //Set person name
@@ -126,50 +129,53 @@ public class RandomiseActivity extends AppCompatActivity {
 
         return namesOnDatesArray;
     }
-    private void setUI(int index){
+
+
+    private void setUI(int index) {
         setFragmentUI(index);
         setButtonUI(index);
+        SpaceBarColorHelper.setDarkColor(this);
     }
 
     private void setFragmentUI(int index) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        switch (index){
+        switch (index) {
             case RANDOM_FRAGMENT_FIRST_CALL:
                 currentFragment = RANDOM_FRAGMENT_FIRST_CALL;
                 ft.replace(R.id.fragment_place_holder_random_activity,
-                        new RandomListFragment(),RANDOM_FRAGMENT_FIRST_CALL+"");
+                        new RandomListFragment(), RANDOM_FRAGMENT_FIRST_CALL + "");
                 break;
 
             case RANDOM_FRAGMENT_SECOND_CALL:
                 currentFragment = RANDOM_FRAGMENT_SECOND_CALL;
                 ft.replace(R.id.fragment_place_holder_random_activity,
-                        new RandomListFragment(),RANDOM_FRAGMENT_SECOND_CALL + "");
+                        new RandomListFragment(), RANDOM_FRAGMENT_SECOND_CALL + "");
                 break;
 
             case RANDOM_FRAGMENT_THIRD_CALL:
                 currentFragment = RANDOM_FRAGMENT_THIRD_CALL;
                 ft.replace(R.id.fragment_place_holder_random_activity,
-                        new RandomListFragment(),RANDOM_FRAGMENT_THIRD_CALL + "");
+                        new RandomListFragment(), RANDOM_FRAGMENT_THIRD_CALL + "");
         }
         ft.commit();
     }
 
     private void setButtonUI(int index) {
+
         //if first button
-        if (index == 0){
+        if (index == 0) {
             previousButton.setVisibility(View.INVISIBLE);
         }
         //if one before last button
-        else if (index == RANDOM_FRAGMENT_NUMBER - 1){
+        else if (index == RANDOM_FRAGMENT_NUMBER - 1) {
             nextButton.setText(R.string.generate_random_acitvity_button);
         }
         //if last button
-        else if (index == RANDOM_FRAGMENT_NUMBER){
+        else if (index == RANDOM_FRAGMENT_NUMBER) {
             ShiftHelper.buildShiftTable(monthYearNumbers[0], monthYearNumbers[1], shuffledTable, ADArray, leaveDatesArray);
 
-            Intent i1 = new Intent(this, MainActivity.class);
-            startActivity(i1);
+            goToMainActivity();
         }
         //normal status
         else {
@@ -178,11 +184,26 @@ public class RandomiseActivity extends AppCompatActivity {
         }
     }
 
+    private void goToMainActivity() {
+        Intent i1 = new Intent(this, MainActivity.class);
+        startActivity(i1);
+    }
 
     public void onNextButton(View view) {
-        saveCurrentNames();
-        fragmentIndex++;
-        setUI(fragmentIndex);
+        Boolean goNext = toGoNext();
+        if (goNext){
+            saveCurrentNames();
+            fragmentIndex++;
+            setUI(fragmentIndex);
+        }
+        else {
+            Toast.makeText(getApplicationContext(), R.string.toast_choose_random_type,Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private Boolean toGoNext() {
+        RandomListFragment randomListFragment = (RandomListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_place_holder_random_activity);
+        return randomListFragment.getGoNext();
     }
 
     public void onPreviousButton(View view) {
@@ -193,12 +214,39 @@ public class RandomiseActivity extends AppCompatActivity {
 
     //Set in the index of current visible fragment the chosen list from the fragment instance
     private void saveCurrentNames() {
-        shuffledTable.set(fragmentIndex, RandomListFragment.chosenRandomNameList);
+        if (!isThisFragmentNull) {
+            shuffledTable.set(fragmentIndex, RandomListFragment.chosenRandomNameList);
+        }
     }
 
+    public void setActionBarGoBackButton(Boolean bool){
+        if (bool){
+            ImageButton imageButton = (ImageButton) findViewById(R.id.random_menu_go_back_btn);
+            imageButton.setVisibility(View.VISIBLE);
+            imageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    goBackToGenActivity();
+                }
+            });
+        }else {
+            ImageButton imageButton = (ImageButton) findViewById(R.id.random_menu_go_back_btn);
+            imageButton.setVisibility(View.GONE);
+        }
 
-    public void setActionBarTitle(String title){
+    }
+
+    private void goBackToGenActivity() {
+        Intent i1 = new Intent(this, GenerateRosterActivity.class);
+        startActivity(i1);
+    }
+
+    public void setActionBarTitle(String title) {
         TextView menuTitle = (TextView) findViewById(R.id.toolbar_title_rostergen);
         menuTitle.setText(title);
+    }
+
+    public void exitGenerator(View view) {
+        goToMainActivity();
     }
 }

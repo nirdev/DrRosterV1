@@ -2,6 +2,7 @@ package com.example.android.drroster.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,12 @@ import com.example.android.drroster.activities.GenerateRosterActivity;
 import com.example.android.drroster.dialogs.ChooseMonthDialog;
 
 import java.text.DateFormatSymbols;
+import java.util.Date;
 
-public class ChooseMonthFragment extends Fragment {
+public class ChooseMonthFragment extends Fragment implements GenerateRosterActivity.ChosenMonthData {
 
     ChooseMonthDialog dialog;
+    Date currentDate = null;
     Button chooseMonthBtn;
     View view;
 
@@ -62,5 +65,23 @@ public class ChooseMonthFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setCurrentDateUI(currentDate);
+    }
+
+    private void setCurrentDateUI(Date date) {
+        if (date != null){
+            Log.wtf("here", "--------------------------------------------" + date.getTime());
+        }
+    }
+
+
+    @Override
+    public void passDataToFragment(Date chosenMonth) {
+       currentDate = chosenMonth;
     }
 }

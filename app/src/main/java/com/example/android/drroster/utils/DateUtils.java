@@ -68,6 +68,16 @@ public class DateUtils {
         Date date = getDateFromInt(month,year);
         return getCalendarFromDate(date);
     }
+    public static Boolean isWeekend(Date date){
+       return isDayInWeek(date, Calendar.SUNDAY) || isDayInWeek(date, Calendar.SATURDAY);
+    }
+
+    public static Boolean isDayInWeek(Date date, int dayConstant){
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.get(Calendar.DAY_OF_WEEK) == dayConstant;
+    }
 
     //Convert Date to Calendar
     public static Calendar getCalendarFromDate(Date date) {
@@ -115,46 +125,53 @@ public class DateUtils {
 
     public static int getNumberOfDayInMonth(int month, int year) {
         int iYear = year;
-        int iMonth = month; // 1 (months begin with 0)
+        int iMonth = month - 1; // 1 (months begin with 0)
         int iDay = 1; //always form first day
 
         // Create a calendar object and set year and month
         Calendar mycal = new GregorianCalendar(iYear, iMonth, iDay);
 
         // Get the number of days in that month
-        int daysInMonth =(mycal.getActualMaximum(Calendar.DAY_OF_MONTH)) +1 ;
+        int daysInMonth = (mycal.getActualMaximum(Calendar.DAY_OF_MONTH))  ;
 
         return daysInMonth;
     }
 
     public static ArrayList<Date> buildMonthOfDatesArray(int month, int year) {
 
-        long timeadj = 24 * 60 * 60 * 1000;
+        Date monthDate = getDateFromInt(month,year);
+        monthDate = getFirstDayOfMonthDate(monthDate);
 
-        int numberOfDays = getNumberOfDayInMonth(month, year);
-        Date currentDayDate = getDateFromInt(month, year);
+        ArrayList<Date> monthOfDatesArray = buildMonthOfDatesArray2(monthDate);
+        return monthOfDatesArray;
+    }
+    public static ArrayList<Date> buildMonthOfDatesArray2(Date date) {
 
-        //Set second and hour to zero to always work with start of the day
-        currentDayDate = getStartOfDay(currentDayDate);
+        Date currentDayDate = getStartOfDay(date);
+        Date endDate = addMonth(getStartOfDay(date));
 
         ArrayList<Date> monthOfDatesArray = new ArrayList<>();
-        monthOfDatesArray.add(currentDayDate);
 
-        for (int i = 0; i < numberOfDays; i++) {
-            currentDayDate = new Date(currentDayDate.getTime() + timeadj);
+        while (currentDayDate.getTime() < endDate.getTime()){
             monthOfDatesArray.add(currentDayDate);
+            currentDayDate = addOneDay(currentDayDate);
         }
+
 
         return monthOfDatesArray;
     }
 
-    public static Date getFirstDayOfMonthDate(){
+    public static Date getFirstDayOfThisMonthDate(){
+        return getFirstDayOfMonthDate(new Date());
+    }
 
-        Date today = new Date();
-        today = getStartOfDay(today);
+    public static Date getFirstDayOfMonthDate(Date date){
+
+        Date mDate = date;
+        mDate = getStartOfDay(mDate);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(today);
+        calendar.setTime(mDate);
 
         calendar.set(Calendar.DAY_OF_MONTH, 1);
 
