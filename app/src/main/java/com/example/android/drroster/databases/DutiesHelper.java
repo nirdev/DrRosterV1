@@ -1,5 +1,6 @@
 package com.example.android.drroster.databases;
 
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.example.android.drroster.models.DutyDateDB;
 import com.example.android.drroster.models.DutyTypeDB;
@@ -74,5 +75,37 @@ public class DutiesHelper {
         DutyTypeDB dutyType = getDutyTypeFromString(oldName);
         dutyType.type = newName;
         dutyType.save();
+    }
+
+    public static DutyDateDB getDutyDate(DutyTypeDB dutyType,Date date){
+        DutyDateDB dutyDateDB = new Select()
+                .from(DutyDateDB.class)
+                .where("DutyType = ?", dutyType.getId())
+                .where("Date = ?", date.getTime())
+                .executeSingle();
+
+        return  dutyDateDB;
+    }
+    public static List<DutyDateDB> getAllDutyForDate(Date date){
+
+        List<DutyDateDB> dutyDateDBList = new Select()
+                .from(DutyDateDB.class)
+                .where("Date = ?", date.getTime())
+                .execute();
+
+        return  dutyDateDBList;
+    }
+    public static void updateDutyDateDoer(Date date,String dutyType,String dutyDoer){
+        DutyTypeDB dutyTypeDB = getDutyTypeFromString(dutyType);
+
+        DutyDateDB dutyDateDB = getDutyDate(dutyTypeDB, date);
+        dutyDateDB.dutyDoer = dutyDoer;
+        dutyDateDB.save();
+    }
+    public static void removeDutyForDate(Date date){
+         new Delete()
+                .from(DutyDateDB.class)
+                .where("Date = ?", date.getTime())
+                .execute();
     }
 }

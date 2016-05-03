@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //If first time go to sign in , else start activity //TODO: remove comment
-        checkForSignIn();
+//        checkForSignIn();
 
         //Set view and drawer
         setContentView(R.layout.activity_main);
@@ -71,6 +71,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+//        Date date = new Date();
+//        date = DateUtils.getFirstDayOfThisMonthDate();
+
+
+//        date = DateUtils.addMonth(date);
+
+//        LeaveDatesHelper.removeAllLeaveDatePersonForDate(date);
+//        List<DutyDateDB> tempList = DutiesHelper.getAllDutiesForDate(date);
+//        for (DutyDateDB duty : tempList){
+//            Log.wtf("here", "--------------------------------------------" + duty.dutyType.type);
+//        }
+
+
+//        Log.wtf("here", " " + DateUtils.getYearFromDate(new Date()));
+//        Log.wtf("here", " " + DateUtils.getMonthFromDate(new Date()));
+//        Log.wtf("here", " " + DateUtils.getDayFromDate(new Date()));
 
 //        ArrayList<Date> array1 = DateUtils.buildMonthOfDatesArray(4, 2016);
 //        ArrayList<Date> array2 = DateUtils.buildMonthOfDatesArray2(CURRENT_MONTH_DATE);
@@ -118,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        Date newDate = DateUtils.addMonth(new Date());
 
-//        //Go to choose month activity //TODO:Delete after finish build sign in
+//        //Go to choose month activity
 //        Intent i1 = new Intent(this, GenerateRosterActivity.class);
 //        startActivity(i1);
 //        int nir34;
@@ -184,16 +200,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     private void setNewMonthUI() {
         IS_THERE_THIRD_CALL = ShiftHelper.isThereThirdCall(CURRENT_MONTH_DATE);
         changeMonthNavViewUI();
         changeNewMonthFragment();
-//        changeNewMonthData();
     }
 
-    private void changeNewMonthData() {
-//        ArrayList<ItemMainView> everything = ItemMainViewHelper.buildMainItemMonthList(CURRENT_MONTH_DATE);
-    }
 
     private void changeNewMonthFragment() {
 
@@ -220,9 +233,15 @@ public class MainActivity extends AppCompatActivity {
         navTitleYear.setText(titleUI[1]);
     }
 
-
-    private void setNewFragment() {
-
+    public void setMonthNavVisibility(Boolean visible) {
+        MonthNavView monthNavView = (MonthNavView) findViewById(R.id.month_nav_view_main_activity);
+        if (monthNavView != null) {
+            if (visible) {
+                monthNavView.setVisibility(View.VISIBLE);
+            } else {
+                monthNavView.setVisibility(View.GONE);
+            }
+        }
     }
 
     private void setDrawerUI() {
@@ -296,7 +315,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.nav_second_fragment:
-
+                RosterHelper.removeAllRosterForMonth(CURRENT_MONTH_DATE);
+                Intent i1 = new Intent(this, MainActivity.class);
+                startActivity(i1);
                 break;
 
         }
@@ -364,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void addNewRoster(View view) {
         Intent i1 = new Intent(this, GenerateRosterActivity.class);
-        i1.putExtra(CURRENT_MONTH_KEY,CURRENT_MONTH_DATE.getTime());
+        i1.putExtra(CURRENT_MONTH_KEY, CURRENT_MONTH_DATE.getTime());
         startActivity(i1);
     }
 

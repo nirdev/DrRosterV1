@@ -1,0 +1,154 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detailed_person_frg_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.drroster.fragments.SinglePersonDetailsFragment">
+
+    <LinearLayout
+        android:id="@+id/detailed_person_frg_parent_relative_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|center_vertical">
+
+        <!-- sub-menu layout -->
+        <LinearLayout
+            android:id="@+id/detailed_person_frg_sub_menu_parent"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingTop="6dp"
+            android:background="@color/month_navigation_view_background"
+            android:orientation="horizontal">
+
+            <!--PREVIOUS button-->
+            <ImageButton
+                android:id="@+id/detailed_person_frg_previous_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_gravity="center_vertical"
+                android:paddingRight="10dp"
+                android:src="@drawable/ic_keyboard_backspace_white_18dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Day number + Month + Year -->
+                <TextView
+                    android:id="@+id/detailed_person_frg_title_month_year_day_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/calendar_text_medium" />
+                <!-- Day name -->
+                <TextView
+                    android:id="@+id/detailed_person_frg_day_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/calendar_text_small" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Person details layout - pairs of titles and data -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--first call -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/person_details_first_call_title"
+                    android:paddingRight="@dimen/main_list_item_padding_right_title"
+                    android:textSize="@dimen/main_list_text_size"
+                    android:textColor="@color/list_person_name_color"
+                    android:paddingBottom="@dimen/main_list_item_padding_bottom_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/person_details_first_call_name"
+                    android:textSize="@dimen/main_list_text_size"
+                    android:paddingBottom="@dimen/main_list_item_padding_bottom_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!--second call -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/person_details_second_call_title"
+                    android:paddingRight="@dimen/main_list_item_padding_right_title"
+                    android:textSize="@dimen/main_list_text_size"
+                    android:textColor="@color/list_person_name_color"
+                    android:paddingBottom="@dimen/main_list_item_padding_bottom_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/person_details_second_call_name"
+                    android:textSize="@dimen/main_list_text_size"
+                    android:paddingBottom="@dimen/main_list_item_padding_bottom_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!--third call -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/person_details_third_call_title"
+                    android:paddingRight="@dimen/main_list_item_padding_right_title"
+                    android:textSize="@dimen/main_list_text_size"
+                    android:textColor="@color/list_person_name_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/person_details_third_call_name"
+                    android:textSize="@dimen/main_list_text_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/person_details_duties_layout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </LinearLayout>
+
+            <!--leave date people -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/person_details_leave_title"
+                    android:textColor="@color/list_person_name_color"
+                    android:textSize="@dimen/main_list_text_size"
+                    android:paddingBottom="@dimen/main_list_item_padding_bottom_title"
+                    android:paddingRight="@dimen/main_list_item_padding_right_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/person_details_leave_name"
+                    android:textSize="@dimen/main_list_text_size"
+                    android:paddingBottom="@dimen/main_list_item_padding_bottom_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

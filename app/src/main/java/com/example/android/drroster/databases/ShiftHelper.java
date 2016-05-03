@@ -1,5 +1,6 @@
 package com.example.android.drroster.databases;
 
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.example.android.drroster.models.DutyDateDB;
 import com.example.android.drroster.models.DutyTypeDB;
@@ -106,5 +107,11 @@ public class ShiftHelper {
                 .executeSingle();
 
         return shiftDB;
+    }
+    public static void RemoveShiftForDate(Date date){
+        new Delete()
+                .from(ShiftDB.class)
+                .where("Day = ?",date.getTime())
+                .execute();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.android.drroster.databases;
 
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.example.android.drroster.models.LeaveDateDB;
 
@@ -18,5 +19,13 @@ public class LeaveDatesHelper {
                 .execute();
 
         return leaveDates;
+    }
+
+    public static void removeAllLeaveDatePersonForDate(Date date){
+        new Delete()
+                .from(LeaveDateDB.class)
+                .where("Date = ?",date.getTime())
+                .execute();
+
     }
 }

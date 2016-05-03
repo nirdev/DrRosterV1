@@ -34,17 +34,13 @@ public class RandomTypeBuilder {
         this.names = names;
         ArrayList<String> mTempNames = this.names;
 
-//        this.names.add(safeName);
 
         //Set safe first one in full array and delete it from temp
-//        randomizedArray.add(safeName);
-//        mTempNames.remove(safeName);
+        randomizedArray.add(safeName);
+        mTempNames.remove(safeName);
 
-//        randomizedArray.add(names.get(0));
-//        mTempNames.remove(0);
 
-//        randomizedArray.add("item 1");
-        int dayOfMonthIndex = 0;
+        int dayOfMonthIndex = 1;
 
         outerLoop:
         for (int i = 0; i < mTotalLoops; i++) {
@@ -54,8 +50,7 @@ public class RandomTypeBuilder {
             // Check Two randomization conditions -
             // first - last full not equals temp so no same names day after day
             // no one is on leave date
-            //TODO: after startup delete
-            if (true || firstNotEqualsLast(randomizedArray, mTempNames) && !isOnLeaveDateArrayChecker(mTempNames, dayOfMonthIndex)) {
+            if (firstNotEqualsLast(randomizedArray, mTempNames) && !isOnLeaveDateArrayChecker(mTempNames, dayOfMonthIndex)) {
                 //add all to the full array
                 for (int x = 0; x < this.names.size(); x++) {
                     randomizedArray.add(mTempNames.get(x));

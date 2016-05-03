@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.android.drroster.MainActivity;
@@ -50,6 +51,12 @@ public class MainMonthListFragment extends ListFragment {
         // Required empty public constructor
     }
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ((MainActivity) getActivity()).setMonthNavVisibility(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,6 +110,24 @@ public class MainMonthListFragment extends ListFragment {
             }
         }
     }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        setPersonDetailsFragment(position);
+    }
+
+    private void setPersonDetailsFragment(int position) {
+
+        ItemMainView itemMainView = (ItemMainView) getListView().getAdapter().getItem(position);
+
+        SinglePersonDetailsFragment nextFrag= SinglePersonDetailsFragment.newInstance(itemMainView);
+        this.getFragmentManager().beginTransaction()
+                .replace(R.id.main_activity_place_holder, nextFrag)
+                .addToBackStack(null)
+                .commit();
+    }
+
 
     private ArrayList<Integer> getChildrenPosition(){
         ArrayList<Integer> childrenPosition = new ArrayList<>();

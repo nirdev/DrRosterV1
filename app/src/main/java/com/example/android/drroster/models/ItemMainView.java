@@ -2,6 +2,8 @@ package com.example.android.drroster.models;
 
 import android.util.Pair;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,6 +16,7 @@ import java.util.Date;
  * 5. ArrayList of Duty Task and name Pair<String,String> - F = DutyType, S = DutyDoer
  * 6. ArrayList of leave dates people ArrayList<String>
  * */
+@Parcel
 public class ItemMainView {
 
     Date day;

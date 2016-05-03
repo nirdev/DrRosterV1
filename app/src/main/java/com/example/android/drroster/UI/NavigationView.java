@@ -10,11 +10,15 @@ import android.widget.Toast;
 
 import com.example.android.drroster.R;
 import com.example.android.drroster.activities.GenerateRosterActivity;
+import com.example.android.drroster.models.ShiftFull;
+import com.example.android.drroster.utils.UIUtils;
 
 /**
  * Created by Nir on 4/1/2016.bububu
  */
 public class NavigationView extends RelativeLayout {
+
+    Context context;
 
     //Navigation buttons
     private Button mPreviousButton;
@@ -43,7 +47,7 @@ public class NavigationView extends RelativeLayout {
     }
 
     private void initializeViews(Context context) {
-
+        this.context = context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.view_navigation, this);
     }
@@ -53,8 +57,22 @@ public class NavigationView extends RelativeLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
+
         //find step bar in view
         mStepBarView  = (StepBarView) findViewById(R.id.step_bar_view);
+
+
+        // When the next button is pressed, select the next item in the list.
+        mNextButton = (Button) this.findViewById(R.id.navigationView_next_button);
+        mNextButton.setOnClickListener(new OnClickListener() {
+            public void onClick(View view) {
+                if ( mSelectedIndex < GenerateRosterActivity.GENERATOR_FRAGMENTS_NUMBER &&
+                        moveNextChecker(mSelectedIndex)) { //Check if user choose right things
+                    int newSelectedIndex = mSelectedIndex + 1;
+                    setSelectedIndex(newSelectedIndex);
+                }
+            }
+        });
 
         mPreviousButton = (Button) this.findViewById(R.id.navigationView_previous_button);
         mPreviousButton.setOnClickListener(new OnClickListener() {
@@ -66,16 +84,7 @@ public class NavigationView extends RelativeLayout {
             }
         });
 
-        // When the next button is pressed, select the next item in the list.
-        mNextButton = (Button) this.findViewById(R.id.navigationView_next_button);
-        mNextButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View view) {
-                if ( mSelectedIndex < GenerateRosterActivity.GENERATOR_FRAGMENTS_NUMBER) {
-                    int newSelectedIndex = mSelectedIndex + 1;
-                    setSelectedIndex(newSelectedIndex);
-                }
-            }
-        });
+
 
         // Select the first value by default.
         setSelectedIndex(0);
@@ -116,6 +125,60 @@ public class NavigationView extends RelativeLayout {
                 mNextButton.setVisibility(VISIBLE);
             }
         }
+    }
+
+    private Boolean moveNextChecker(int index){
+        Boolean moveNext = false;
+        String toastReason = null;
+        switch (index ){ //index -1 because is go from current to next fragment
+            case GenerateRosterActivity.FRAGMENT_CHOOSE_MONTH_INDEX :
+                moveNext = (GenerateRosterActivity.monthYearNumbers[0] != 0);
+                toastReason = "Please choose month";
+                break;
+
+            case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_FIRST_CALL_INDEX:
+                moveNext = (checkedPeople(index) > 2);
+                toastReason = context.getString(R.string.toast_choose_more_people);
+                break;
+
+            case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_SECOND_CALL_INDEX:
+                moveNext = (checkedPeople(index) > 2);
+                toastReason = context.getString(R.string.toast_choose_more_people);
+                break;
+            case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_THIRD_CALL_INDEX:
+                moveNext = true;
+                break;
+            case GenerateRosterActivity.FRAGMENT_DATEABLE_LIST_INDEX:
+                moveNext = true;
+            case GenerateRosterActivity.FRAGMENT_ADDITION_DUTIES_INDEX:
+                moveNext = true;
+                break;
+            case GenerateRosterActivity.FRAGMENT_FINAL_REVIEW_INDEX:
+                moveNext = true;
+                break;
+        }
+        if (!moveNext){
+            UIUtils.toast(toastReason, context);
+        }
+        return moveNext;
+    }
+    private int checkedPeople(int index){
+        int count = 0;
+        if (index == GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_FIRST_CALL_INDEX){
+            for (ShiftFull shift : GenerateRosterActivity.mPeopleArray){
+                if (shift.getIsFirstCall()){
+                    count++;
+                }
+            }
+        }
+        else if (index == GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_SECOND_CALL_INDEX){
+            for (ShiftFull shift : GenerateRosterActivity.mPeopleArray){
+                if (shift.getIsSecondCall()){
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 }
 

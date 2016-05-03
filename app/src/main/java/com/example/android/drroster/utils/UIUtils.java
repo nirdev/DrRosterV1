@@ -1,5 +1,8 @@
 package com.example.android.drroster.utils;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,10 +19,16 @@ public class UIUtils {
         String day = cal.get(Calendar.DAY_OF_MONTH) + "";
         return day;
     }
-    public static String getDayName(Date date){
+    public static String getDayName(Date date,int length){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        String day = cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.US);
+        String day = cal.getDisplayName(Calendar.DAY_OF_WEEK, length, Locale.US);
+        return day;
+    }
+    public static String getmonthName(Date date,int length){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        String day = cal.getDisplayName(Calendar.MONTH, length, Locale.US);
         return day;
     }
     public static String getStringFromArray(ArrayList<String> names){
@@ -40,5 +49,8 @@ public class UIUtils {
             return "-";
         }
         return  namesUI;
+    }
+    public static void toast(String content,Context context){
+        Toast.makeText(context,content,Toast.LENGTH_LONG).show();
     }
 }

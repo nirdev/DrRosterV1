@@ -43,7 +43,7 @@ public class DraggableListFragment extends Fragment {
         mDragListView = (DragListView) view.findViewById(R.id.drag_list_view_first_call);
         mDragListView.getRecyclerView().setVerticalScrollBarEnabled(true);
 
-        //Todo:Delete when finish list
+
         mDragListView.setDragListListener(new DragListView.DragListListener() {
             @Override
             public void onItemDragStarted(int position) {
@@ -83,12 +83,6 @@ public class DraggableListFragment extends Fragment {
         ((GenerateRosterActivity) getActivity()).setActionBarTitle(title);
     }
 
-    @Override
-    public void onDestroyView() {
-        //TODo: handel DB here with gettag() - check this is best practice place to handle db in fragment life cycle
-
-        super.onDestroyView();
-    }
 
     public void setupListRecyclerView() {
         mDragListView.setLayoutManager(new LinearLayoutManager(getContext()));

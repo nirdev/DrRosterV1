@@ -2,6 +2,7 @@ package com.example.android.drroster.databases;
 
 import android.util.Log;
 
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.example.android.drroster.models.RosterDB;
 import com.example.android.drroster.utils.DateUtils;
@@ -68,6 +69,23 @@ public class RosterHelper {
     public static Date getRosterDateFromIndex(int index){
         ArrayList<Date> allRosterDates = getAllRosterDates();
         return allRosterDates.get(index);
+    }
+
+    public static void removeRoster (Date date){
+        new Delete()
+                .from(RosterDB.class)
+                .where("Date = ?",date.getTime())
+                .execute();
+    }
+    public static void removeAllRosterForMonth(Date currentDate){
+        ArrayList<Date> monthDates = DateUtils.buildMonthOfDatesArray2(currentDate);
+
+        for (Date day: monthDates){
+            DutiesHelper.removeDutyForDate(day);
+            LeaveDatesHelper.removeAllLeaveDatePersonForDate(day);
+            ShiftHelper.RemoveShiftForDate(day);
+            removeRoster(day);
+        }
     }
 
 }

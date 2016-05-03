@@ -18,6 +18,7 @@ import com.example.android.drroster.utils.DateUtils;
 import com.example.android.drroster.utils.UIUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Layouts
@@ -89,7 +90,7 @@ public class MainViewAdapter extends ArrayAdapter<ItemMainView> {
     private void attachDataToUI(ItemMainView item) {
 
         //Set number and day name
-        dateDayName_tv.setText(UIUtils.getDayName(item.getDay()));
+        dateDayName_tv.setText(UIUtils.getDayName(item.getDay(), Calendar.SHORT));
         dateNumber_tv.setText(UIUtils.getDayNumber(item.getDay()));
 
         //if weekend make bold

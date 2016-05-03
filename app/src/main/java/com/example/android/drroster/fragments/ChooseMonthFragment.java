@@ -2,7 +2,6 @@ package com.example.android.drroster.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +11,18 @@ import android.widget.TextView;
 import com.example.android.drroster.R;
 import com.example.android.drroster.activities.GenerateRosterActivity;
 import com.example.android.drroster.dialogs.ChooseMonthDialog;
+import com.example.android.drroster.utils.DateUtils;
 
 import java.text.DateFormatSymbols;
 import java.util.Date;
 
-public class ChooseMonthFragment extends Fragment implements GenerateRosterActivity.ChosenMonthData {
+public class ChooseMonthFragment extends Fragment {
 
     ChooseMonthDialog dialog;
-    Date currentDate = null;
+    Date currentDate = GenerateRosterActivity.CURRENT_DATE;
     Button chooseMonthBtn;
     View view;
-
+    TextView choosedMonthTextview;
     //empty constructor
     public ChooseMonthFragment() {
     }
@@ -42,7 +42,8 @@ public class ChooseMonthFragment extends Fragment implements GenerateRosterActiv
         dialog.setDialogResult(new ChooseMonthDialog.OnMyDialogResult() {
             public void finish(int month,int year) {
 
-                TextView choosedMonthTextview = (TextView) view.findViewById(R.id.choosed_month_textview);
+
+                choosedMonthTextview = (TextView) view.findViewById(R.id.choosed_month_textview);
                 if (choosedMonthTextview != null) {
                     //Set chosen month text view
                     choosedMonthTextview.setText(
@@ -70,18 +71,22 @@ public class ChooseMonthFragment extends Fragment implements GenerateRosterActiv
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setCurrentDateUI(currentDate);
+        setCurrentDate(currentDate);
     }
 
-    private void setCurrentDateUI(Date date) {
+    private void saveDate(Date date) {
+        GenerateRosterActivity.monthYearNumbers[0] = DateUtils.getMonthFromDate(date);
+        GenerateRosterActivity.monthYearNumbers[1] = DateUtils.getYearFromDate(date);
+    }
+
+    private void setCurrentDate(Date date) {
         if (date != null){
-            Log.wtf("here", "--------------------------------------------" + date.getTime());
+            saveDate(date);
+            //Set UI
+            choosedMonthTextview = (TextView) view.findViewById(R.id.choosed_month_textview);
+            String[] dateUI = DateUtils.getDateUIMonthYear(date);
+            choosedMonthTextview.setText(dateUI[0] + " " + dateUI[1]);
         }
     }
 
-
-    @Override
-    public void passDataToFragment(Date chosenMonth) {
-       currentDate = chosenMonth;
-    }
 }

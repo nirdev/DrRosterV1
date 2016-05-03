@@ -19,6 +19,7 @@ import com.example.android.drroster.utils.DateUtils;
 import com.example.android.drroster.utils.UIUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Layouts
@@ -295,7 +296,7 @@ public class MainViewAdapterLand extends ArrayAdapter<ItemMainView> {
         ArrayList<String> mData = new ArrayList<>();
 
         mData.add(UIUtils.getDayNumber(item.getDay()));
-        mData.add(UIUtils.getDayName(item.getDay()));
+        mData.add(UIUtils.getDayName(item.getDay(), Calendar.SHORT));
         mData.add(item.getFirstCallName());
         mData.add(item.getSecondCallName());
         mData = handleThirdCall(mData);

@@ -23,6 +23,7 @@ import com.example.android.drroster.fragments.FinalReviewFragment;
 import com.example.android.drroster.models.ADBean;
 import com.example.android.drroster.models.PersonDB;
 import com.example.android.drroster.models.ShiftFull;
+import com.example.android.drroster.utils.DateUtils;
 
 import org.parceler.Parcels;
 
@@ -57,8 +58,7 @@ public class GenerateRosterActivity extends AppCompatActivity {
     public static final String INTENT_EXTRA_MONTH_YEAR_ARRAY = "mMonthAndYear";
     public static final String INTENT_EXTRA_AD_ARRAY = "ADArray";
 
-    Date mCurrentDate;
-    public ChosenMonthData chosenMonthData;
+    public static Date CURRENT_DATE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +67,7 @@ public class GenerateRosterActivity extends AppCompatActivity {
         SpaceBarColorHelper.setDarkColor(this);
         mContext = this;
 
-        mCurrentDate = getDateFromIntent();
+        CURRENT_DATE = getDateFromIntent();
 
         //Build peopleOnlyArray from DB data
         mPeopleOnlyArray = new Select()
@@ -80,7 +80,7 @@ public class GenerateRosterActivity extends AppCompatActivity {
 
         //Set local array
         mPeopleArray = new ArrayList<>();
-        for (PersonDB personDB : mPeopleOnlyArray){
+        for (PersonDB personDB : mPeopleOnlyArray) {
             mPeopleArray.add(
                     new ShiftFull( //Long id, String name, Boolean isFirstCall, Boolean isSecondCall, Boolean isThereThirdCall,Boolean isLeavDate, List<Date> leaveDates
                             Long.valueOf(personDB.number), //Long id
@@ -93,8 +93,8 @@ public class GenerateRosterActivity extends AppCompatActivity {
         }
         //Add Last person as - listView footer
         mPeopleArray.add(
-                new ShiftFull(Long.valueOf(mPeopleOnlyArray.size()),"Add new friend",
-                        false,false,false,false,null));
+                new ShiftFull(Long.valueOf(mPeopleOnlyArray.size()), "Add new friend",
+                        false, false, false, false, null));
 
 
         //Build add array
@@ -118,99 +118,111 @@ public class GenerateRosterActivity extends AppCompatActivity {
             navigationView.setFragmentChangeListener(new NavigationView.IFragmentChangeListener() {
                 @Override
                 public void onFragmentChange(int index) {
-                    // get fragment manager
-                    FragmentManager fm = getSupportFragmentManager();
-                    FragmentTransaction ft = fm.beginTransaction();
-                    switch (index){
-                        case FRAGMENT_CHOOSE_MONTH_INDEX:
-                            chosenMonthData.passDataToFragment(mCurrentDate);
-                            ft.replace(R.id.fragment_place_holder_generate_roster,
-                                    new ChooseMonthFragment(),FRAGMENT_CHOOSE_MONTH_INDEX+"");
-                            break;
 
-                        case FRAGMENT_PEOPLE_LIST_FIRST_CALL_INDEX:
-                            ft.replace(R.id.fragment_place_holder_generate_roster,
-                                    new DraggableListFragment(),FRAGMENT_PEOPLE_LIST_FIRST_CALL_INDEX + "");
-                            break;
+                    changeUI(index);
 
-                        case FRAGMENT_PEOPLE_LIST_SECOND_CALL_INDEX:
-                            ft.replace(R.id.fragment_place_holder_generate_roster,
-                                    new DraggableListFragment(),FRAGMENT_PEOPLE_LIST_SECOND_CALL_INDEX + "");
-                            break;
-                        case FRAGMENT_PEOPLE_LIST_THIRD_CALL_INDEX:
-                            ft.replace(R.id.fragment_place_holder_generate_roster,
-                                    new DraggableListFragment(),FRAGMENT_PEOPLE_LIST_THIRD_CALL_INDEX + "");
-                            break;
-                        case FRAGMENT_DATEABLE_LIST_INDEX:
-                            ft.replace(R.id.fragment_place_holder_generate_roster,
-                                    new DraggableListFragment(),FRAGMENT_DATEABLE_LIST_INDEX + "");
-                            break;
-                        case FRAGMENT_ADDITION_DUTIES_INDEX:
-                            ft.replace(R.id.fragment_place_holder_generate_roster,
-                                    new DutiesTypesListFragment(),FRAGMENT_DATEABLE_LIST_INDEX + "");
-                            break;
-                        case FRAGMENT_FINAL_REVIEW_INDEX:
-                            ft.replace(R.id.fragment_place_holder_generate_roster,
-                                    new FinalReviewFragment(),FRAGMENT_DATEABLE_LIST_INDEX + "");
-                            break;
-                    }
-                    // replace
-                    ft.commit();
-
-                    //If last button
-                    if (index == RANDOM_ACTIVITY){
-
-                        String[] tempADArray = GenerateRosterActivity.getCheckedADArray(GenerateRosterActivity.mADArray);
-
-                        Intent i = new Intent(mContext,RandomiseActivity.class);
-                        i.putExtra(INTENT_EXTRA_PEOPLE_ARRAY, Parcels.wrap(mPeopleArray));
-                        i.putExtra(INTENT_EXTRA_AD_ARRAY,tempADArray);
-                        i.putExtra(INTENT_EXTRA_MONTH_YEAR_ARRAY,monthYearNumbers);
-                        startActivity(i);
-                    }
                 }
             });
         }
 
     }
 
-    private Date getDateFromIntent() {
-        Long dateTime = getIntent().getExtras().getLong(MainActivity.CURRENT_MONTH_KEY);
-        if ( dateTime > 0){
-            return new Date(dateTime);
+    private void changeUI(int index) {
+
+        //If last button
+        if (index == RANDOM_ACTIVITY) {
+
+            String[] tempADArray = GenerateRosterActivity.getCheckedADArray(GenerateRosterActivity.mADArray);
+
+            Intent i = new Intent(mContext, RandomiseActivity.class);
+            i.putExtra(INTENT_EXTRA_PEOPLE_ARRAY, Parcels.wrap(mPeopleArray));
+            i.putExtra(INTENT_EXTRA_AD_ARRAY, tempADArray);
+            i.putExtra(INTENT_EXTRA_MONTH_YEAR_ARRAY, monthYearNumbers);
+            startActivity(i);
         }
-        return null;
+        changeFragment(index);
+
     }
 
-    public static String[] getCheckedADArray(ArrayList<ADBean> data){
+    private void changeFragment(int index) {
+        // get fragment manager
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        switch (index) {
+            case FRAGMENT_CHOOSE_MONTH_INDEX:
+                ft.replace(R.id.fragment_place_holder_generate_roster,
+                        new ChooseMonthFragment(), FRAGMENT_CHOOSE_MONTH_INDEX + "");
+                break;
+
+            case FRAGMENT_PEOPLE_LIST_FIRST_CALL_INDEX:
+                ft.replace(R.id.fragment_place_holder_generate_roster,
+                        new DraggableListFragment(), FRAGMENT_PEOPLE_LIST_FIRST_CALL_INDEX + "");
+                break;
+
+            case FRAGMENT_PEOPLE_LIST_SECOND_CALL_INDEX:
+                ft.replace(R.id.fragment_place_holder_generate_roster,
+                        new DraggableListFragment(), FRAGMENT_PEOPLE_LIST_SECOND_CALL_INDEX + "");
+                break;
+            case FRAGMENT_PEOPLE_LIST_THIRD_CALL_INDEX:
+                ft.replace(R.id.fragment_place_holder_generate_roster,
+                        new DraggableListFragment(), FRAGMENT_PEOPLE_LIST_THIRD_CALL_INDEX + "");
+                break;
+            case FRAGMENT_DATEABLE_LIST_INDEX:
+                ft.replace(R.id.fragment_place_holder_generate_roster,
+                        new DraggableListFragment(), FRAGMENT_DATEABLE_LIST_INDEX + "");
+                break;
+            case FRAGMENT_ADDITION_DUTIES_INDEX:
+                ft.replace(R.id.fragment_place_holder_generate_roster,
+                        new DutiesTypesListFragment(), FRAGMENT_DATEABLE_LIST_INDEX + "");
+                break;
+            case FRAGMENT_FINAL_REVIEW_INDEX:
+                ft.replace(R.id.fragment_place_holder_generate_roster,
+                        new FinalReviewFragment(), FRAGMENT_DATEABLE_LIST_INDEX + "");
+                break;
+        }
+        // replace
+        ft.commit();
+
+    }
+
+
+    private Date getDateFromIntent() {
+        if (getIntent().getExtras() != null) {
+            Long dateTime = getIntent().getExtras().getLong(MainActivity.CURRENT_MONTH_KEY);
+            if (dateTime > 0) {
+                return new Date(dateTime);
+            }
+        }
+        return DateUtils.getFirstDayOfThisMonthDate();
+    }
+
+    public static String[] getCheckedADArray(ArrayList<ADBean> data) {
 
         ArrayList<String> temp = new ArrayList<>();
-        for (int i1 = 0;i1 < data.size();i1++){
-            if (data.get(i1).getIsChecked()){
+        for (int i1 = 0; i1 < data.size(); i1++) {
+            if (data.get(i1).getIsChecked()) {
                 temp.add(data.get(i1).getName());
             }
         }
 
         String[] ADArray = new String[temp.size()];
-        for (int i2 = 0;i2 < temp.size(); i2++){
+        for (int i2 = 0; i2 < temp.size(); i2++) {
             ADArray[i2] = temp.get(i2);
         }
 
         return ADArray;
     }
 
-    public void setActionBarTitle(String title){
+    public void setActionBarTitle(String title) {
         TextView menuTitle = (TextView) findViewById(R.id.toolbar_title_rostergen);
         menuTitle.setText(title);
     }
+
     private void goToMainActivity() {
         Intent i1 = new Intent(this, MainActivity.class);
         startActivity(i1);
     }
 
-    public interface ChosenMonthData{
-        public void passDataToFragment(Date chosenMonth);
-    }
     public void exitGenerator(View view) {
         goToMainActivity();
     }

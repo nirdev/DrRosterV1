@@ -80,8 +80,7 @@ public class RandomManager {
     }
 
     public Boolean isCallToShort() {
-        //Todo: change to 3 after startup
-        return (mCurrentNames.size() < 1);
+        return (mCurrentNames.size() < 3);
     }
 
     private ArrayList<ArrayList<String>> getRandomMonth() {
