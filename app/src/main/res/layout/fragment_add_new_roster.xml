@@ -12,7 +12,7 @@
         android:gravity="center">
     <ImageView
         android:id="@+id/add_new_roster_fragment_image"
-        android:src="@drawable/ic_cancel_black_18dp"
+        android:src="@drawable/ic_note_add_black_48dp"
         android:paddingLeft="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

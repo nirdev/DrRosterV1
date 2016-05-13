@@ -26,7 +26,7 @@
     <ImageButton
         android:id="@+id/random_menu_go_back_btn"
         android:visibility="gone"
-        android:src="@drawable/bg_circle_selected"
+        android:src="@drawable/ic_keyboard_backspace_white_18dp"
         android:background="@color/colorTransparent"
         android:paddingRight="6dp"
         android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
         <ImageButton
             android:id="@+id/random_menu_exit_btn"
             android:onClick="exitGenerator"
-            android:src="@drawable/ic_cancel_black_18dp"
+            android:src="@drawable/ic_clear_white_18dp"
             android:background="@color/colorTransparent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
