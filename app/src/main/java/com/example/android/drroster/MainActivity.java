@@ -34,7 +34,7 @@ import com.example.android.drroster.databases.ShiftHelper;
 import com.example.android.drroster.fragments.AddNewRosterFragment;
 import com.example.android.drroster.fragments.MainMonthGridFragment;
 import com.example.android.drroster.fragments.MainMonthListFragment;
-import com.example.android.drroster.services.ExportToExcel;
+import com.example.android.drroster.services.exportToExcel;
 import com.example.android.drroster.utils.DateUtils;
 import com.example.android.drroster.utils.UIUtils;
 import com.google.android.gms.ads.AdListener;
@@ -355,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void downloadRoster() {
 
-        Intent msgIntent = new Intent(this, ExportToExcel.class);
+        Intent msgIntent = new Intent(this, exportToExcel.class);
         msgIntent.putExtra(CURRENT_MONTH_KEY, CURRENT_MONTH_DATE.getTime());
         startService(msgIntent);
     }
