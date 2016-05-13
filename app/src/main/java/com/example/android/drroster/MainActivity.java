@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
         int thiistestbranch = 6;
         Log.wtf("here", "--------------------------------------------" + thiistestbranch);
+        Log.wtf("here", "some more wrk on branch");
 
     }
 
