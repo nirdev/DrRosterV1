@@ -16,13 +16,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.drroster.Signin.SigninActivity;
 import com.example.android.drroster.Signin.SigninConstants;
@@ -92,10 +92,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         initializeAdMob();
-
-        int thiistestbranch = 6;
-        Log.wtf("here", "--------------------------------------------" + thiistestbranch);
-        Log.wtf("here", "some more wrk on branch");
 
     }
 
@@ -344,17 +340,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openAd(View view) {
-
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            downloadRoster();
+        //Check for roster to current month before downloading excel
+        if (RosterHelper.isAvailableRoster(CURRENT_MONTH_DATE)){
+            //Check if ad is loaded before show ad
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            } else {
+                downloadRoster();
+            }
+        }else {
+            Toast.makeText(this, "No roster for this month", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public void downloadRoster() {
-
         Intent msgIntent = new Intent(this, exportToExcel.class);
         msgIntent.putExtra(CURRENT_MONTH_KEY, CURRENT_MONTH_DATE.getTime());
         startService(msgIntent);
@@ -368,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
         mInterstitialAd.loadAd(adRequest);
     }
 
-    //Automagically lose focus on any click outside editText - this way app don't crush
+    //Automatically lose focus on any click outside editText - this way app don't crush
     // http://stackoverflow.com/questions/4828636/edittext-clear-focus-on-touch-outside
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
