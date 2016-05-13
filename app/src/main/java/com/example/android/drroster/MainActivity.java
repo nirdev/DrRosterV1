@@ -68,9 +68,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         //If first time go to sign in , else start activity
         checkForSignIn();
+        int nir = 5;
 
         //Set view and drawer
         setContentView(R.layout.activity_main);
