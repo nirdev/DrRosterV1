@@ -221,12 +221,6 @@ public class MainViewAdapterLand extends ArrayAdapter<ItemMainView> {
             parentLayout.addView(textView);
         }
 
-        //parentLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-//        parentLayout.addView(tv1);
-//        parentLayout.addView(tv2);
-//        parentLayout.addView(tv3);
-//        parentLayout.addView(tv4);
-
         return mItemView;
     }
 
@@ -251,7 +245,7 @@ public class MainViewAdapterLand extends ArrayAdapter<ItemMainView> {
             //if no date add weight
             else {
                 textView.setLayoutParams(new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
             }
 

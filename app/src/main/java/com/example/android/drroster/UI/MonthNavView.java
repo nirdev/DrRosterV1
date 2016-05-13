@@ -72,7 +72,7 @@ public class MonthNavView extends RelativeLayout {
     }
 
     private void lastMonth() {
-        MainActivity.CURRENT_MONTH_DATE = DateUtils.removeMonth(MainActivity.CURRENT_MONTH_DATE);
+        MainActivity.CURRENT_MONTH_DATE = DateUtils.removeOneMonth(MainActivity.CURRENT_MONTH_DATE);
         setMonthChanged();
     }
 

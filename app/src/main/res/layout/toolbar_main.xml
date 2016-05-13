@@ -2,27 +2,68 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:elevation="4dp"
     android:layout_height="wrap_content"
+    android:elevation="4dp"
+    android:fitsSystemWindows="true"
     android:minHeight="?attr/actionBarSize"
     android:theme="@style/ToolbarTheme"
-    app:titleTextColor="@color/colorWhite"
-    app:subtitleTextColor="@color/colorWhite"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    app:subtitleTextColor="@color/colorWhite"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    android:fitsSystemWindows="true"
-    app:titleTextAppearance="@style/Toolbar.TitleText">
+    app:titleTextAppearance="@style/Toolbar.TitleText"
+    app:titleTextColor="@color/colorWhite">
 
-    <ImageView
-        android:layout_width="35dp"
-        android:layout_height="match_parent"
-        android:layout_marginRight="10dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!-- left side items-->
+        <LinearLayout
+            android:layout_alignParentLeft="true"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-    <!--<TextView-->
-        <!--android:id="@+id/toolbar_title"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="@string/app_name"-->
-        <!--android:textColor="@color/colorTitleWhite"-->
-        <!--android:textSize="25sp" />-->
+            <!--<ImageView-->
+                <!--android:layout_width="35dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginRight="10dp" />-->
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@color/colorTitleWhite"
+                android:textSize="25sp" />
+        </LinearLayout>
+
+        <!--right side items -->
+
+        <LinearLayout
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal"
+            android:paddingRight="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/changeOrientation_btn"
+                android:onClick="changeOrientation"
+                android:paddingRight="16dp"
+                android:src="@drawable/ic_change_orientation_18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTransparent"/>
+
+            <ImageButton
+                android:id="@+id/downloadRoster_btn"
+                android:onClick="openAd"
+                android:src="@drawable/ic_file_download_white_18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTransparent"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
 </android.support.v7.widget.Toolbar>

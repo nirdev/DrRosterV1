@@ -101,7 +101,7 @@ public class RandomAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return typeStringArray.length - 1;
+        return typeStringArray.length;
     }
 
     @Override

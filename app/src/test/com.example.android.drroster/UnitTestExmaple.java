@@ -15,7 +15,7 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
         int actual = DateUtils.getYearFromDate(new Date());
-        assertEquals("DateUtils.getYearFromDate: ",2015, actual,1);
+        assertEquals(2016, actual);
 
     }
 }

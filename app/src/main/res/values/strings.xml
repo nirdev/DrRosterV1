@@ -25,7 +25,7 @@
 
     <!-- Action bar titles-->
     <string name="default_menu_title">Dr Roster</string>
-    <string name="sign_in_menu_title">Department Name</string>
+    <string name="sign_in_menu_title">Dr Roster</string>
     <string name="genros_month_menu_title">Month</string>
     <string name="genros_first_call_menu_title">1st Call</string>
     <string name="genros_second_call_menu_title">2nd Call</string>
@@ -49,6 +49,9 @@
     <string name="main_list_leave_title">Leave:</string>
     <string name="toast_choose_random_type">Please choose random type</string>
     <string name="toast_choose_more_people">Please choose more then 3 people</string>
+
+    <string name="ad_unit_id_random_activity">ca-app-pub-4429203365193534/4581922402</string>
+    <string name="ad_unit_id_main_activity">ca-app-pub-4429203365193534/9199082003</string>
 
 
     <!-- data for random_list_fragment-->

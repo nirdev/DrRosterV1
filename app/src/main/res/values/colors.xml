@@ -11,6 +11,7 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorBackgroundWhite">#FFFAFAFA</color>
     <color name="list_person_name_color">#0e0d0d</color>
+    <color name="grid_view_divider">#696868</color>
     <color name="month_navigation_view_background">#b5decf</color>
 
     <color name="color_space_bar_dark">#3e6e7c</color>

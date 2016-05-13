@@ -19,6 +19,9 @@ import com.example.android.drroster.databases.ShiftHelper;
 import com.example.android.drroster.fragments.RandomListFragment;
 import com.example.android.drroster.models.ShiftFull;
 import com.example.android.drroster.utils.DateUtils;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import org.parceler.Parcels;
 
@@ -45,6 +48,7 @@ public class RandomiseActivity extends AppCompatActivity {
     private int fragmentIndex = 0;
     Button nextButton;
     Button previousButton;
+    InterstitialAd mInterstitialAd;
     public static int currentFragment;
     public static ArrayList<String> nameList;
     public static ArrayList<ShiftFull> mPeopleArray;
@@ -83,6 +87,20 @@ public class RandomiseActivity extends AppCompatActivity {
         nextButton = (Button) findViewById(R.id.next_button_random_activity);
         previousButton = (Button) findViewById(R.id.previous_button_random_activity);
         setUI(fragmentIndex);
+
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.ad_unit_id_random_activity));
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+                goToMainActivity();
+            }
+        });
+
+        requestNewInterstitial();
 
     }
 
@@ -174,14 +192,23 @@ public class RandomiseActivity extends AppCompatActivity {
         //if last button
         else if (index == RANDOM_FRAGMENT_NUMBER) {
             ShiftHelper.buildShiftTable(monthYearNumbers[0], monthYearNumbers[1], shuffledTable, ADArray, leaveDatesArray);
+            goToAds();
 
-            goToMainActivity();
         }
         //normal status
         else {
             previousButton.setVisibility(View.VISIBLE);
             nextButton.setText(R.string.next_button_text);
         }
+    }
+
+    private void goToAds() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            goToMainActivity();
+        }
+
     }
 
     private void goToMainActivity() {
@@ -248,5 +275,13 @@ public class RandomiseActivity extends AppCompatActivity {
 
     public void exitGenerator(View view) {
         goToMainActivity();
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("SEE_YOUR_LOGCAT_TO_GET_YOUR_DEVICE_ID")
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
     }
 }

@@ -33,7 +33,7 @@ public class ShiftHelper {
         int numberOfDays = monthDates.size();
 
 
-        for (int dayIndex = 0;dayIndex < numberOfDays ; dayIndex++){
+        for (int dayIndex = 0;dayIndex < numberOfDays; dayIndex++){
             Date mCurrentDate = monthDates.get(dayIndex);
 
             //get name of people from shuffled array
@@ -47,9 +47,15 @@ public class ShiftHelper {
 
 
             //get person model from DB
-            PersonDB firstCall = PersonDBHelper.getPersonFromString(mFirstCallName);
-            PersonDB secondCall = PersonDBHelper.getPersonFromString(mSecondCallName);
+            PersonDB firstCall = null;
+            if (mFirstCallName != null){
+                firstCall = PersonDBHelper.getPersonFromString(mFirstCallName);
+            }
+            PersonDB secondCall = null;
+            if (mSecondCallName != null){
 
+                secondCall = PersonDBHelper.getPersonFromString(mSecondCallName);
+            }
             PersonDB thirdCall = null; //Check because maybe there is no third call
             if (shuffledTable.get(2) != null && shuffledTable.get(2).size() > 0){
                 thirdCall = PersonDBHelper.getPersonFromString(mThirdCallName);
@@ -70,7 +76,7 @@ public class ShiftHelper {
             }
 
             //Build all leave dates
-            saveLeaveDates(dayIndex,namesOnDatesArray,mCurrentDate);
+            saveLeaveDates(dayIndex, namesOnDatesArray, mCurrentDate);
 
 
         }

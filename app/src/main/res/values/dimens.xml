@@ -15,7 +15,7 @@
     <dimen name="main_list_day_number_dim">22sp</dimen>
     <dimen name="main_list_day_name_dim">18sp</dimen>
     <dimen name="main_list_text_size">16sp</dimen>
-    <dimen name="main_list_text_size_land">18sp</dimen>
+    <dimen name="main_list_text_size_land">7sp</dimen>
     <dimen name="main_list_item_padding_right_title">3dp</dimen>
     <dimen name="main_list_item_padding_bottom_title">6dp</dimen>
     <dimen name="main_list_item_padding_first_left_land">6dp</dimen>

@@ -1,18 +1,27 @@
 package com.example.android.drroster;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.android.drroster.Signin.SigninActivity;
@@ -23,10 +32,18 @@ import com.example.android.drroster.activities.GenerateRosterActivity;
 import com.example.android.drroster.databases.RosterHelper;
 import com.example.android.drroster.databases.ShiftHelper;
 import com.example.android.drroster.fragments.AddNewRosterFragment;
+import com.example.android.drroster.fragments.MainMonthGridFragment;
 import com.example.android.drroster.fragments.MainMonthListFragment;
+import com.example.android.drroster.services.ExportToExcel;
 import com.example.android.drroster.utils.DateUtils;
+import com.example.android.drroster.utils.UIUtils;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Handler;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     ActionBarDrawerToggle drawerToggle;
+    InterstitialAd mInterstitialAd;
+
+    Handler mHandler;
 
     MonthNavView monthNavView;
     TextView navTitleMonth;
@@ -49,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //If first time go to sign in , else start activity //TODO: remove comment
-//        checkForSignIn();
+        //If first time go to sign in , else start activity
+        checkForSignIn();
 
         //Set view and drawer
         setContentView(R.layout.activity_main);
@@ -71,133 +91,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        Date date = new Date();
-//        date = DateUtils.getFirstDayOfThisMonthDate();
+        initializeAdMob();
 
+        int thiistestbranch = 6;
+        Log.wtf("here", "--------------------------------------------" + thiistestbranch);
 
-//        date = DateUtils.addMonth(date);
+    }
 
-//        LeaveDatesHelper.removeAllLeaveDatePersonForDate(date);
-//        List<DutyDateDB> tempList = DutiesHelper.getAllDutiesForDate(date);
-//        for (DutyDateDB duty : tempList){
-//            Log.wtf("here", "--------------------------------------------" + duty.dutyType.type);
-//        }
+    private void initializeAdMob() {
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getString(R.string.ad_unit_id_main_activity));
 
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+                downloadRoster();
+            }
+        });
 
-//        Log.wtf("here", " " + DateUtils.getYearFromDate(new Date()));
-//        Log.wtf("here", " " + DateUtils.getMonthFromDate(new Date()));
-//        Log.wtf("here", " " + DateUtils.getDayFromDate(new Date()));
-
-//        ArrayList<Date> array1 = DateUtils.buildMonthOfDatesArray(4, 2016);
-//        ArrayList<Date> array2 = DateUtils.buildMonthOfDatesArray2(CURRENT_MONTH_DATE);
-//        ItemMainView itemMainView = ItemMainViewHelper.buildMainItemFromDB(array1.get(0));
-//
-//        Log.wtf("here", "--------------------------------------------");
-
-//        Date date = new Date();
-//        date = DateUtils.getFirstDayOfThisMonthDate();
-
-
-//        date = DateUtils.addMonth(date);
-
-//        ArrayList<Date>  monthOfDates = DateUtils.buildMonthOfDatesArray2(date);
-//        for (Date date1 : monthOfDates) {
-//            Log.wtf("here", " " + UIUtils.getDayNumber(date1));
-//        }
-
-//        Log.wtf("here", " " + DateUtils.isWeekend(date));
-//
-//        date = DateUtils.addOneDay(date);
-//        Log.wtf("here", " " + DateUtils.isWeekend(date));
-//
-//        date = DateUtils.addOneDay(date);
-//        Log.wtf("here", " " + DateUtils.isWeekend(date));
-//
-//        date = DateUtils.addOneDay(date);
-//        Log.wtf("here", " " + DateUtils.isWeekend(date));
-//
-//        date = DateUtils.addOneDay(date);
-//        Log.wtf("here", " " + DateUtils.isWeekend(date));
-
-
-//        Log.wtf("here", " " + ShiftHelper.isThereThirdCall(date));
-//        ItemMainView itemMainView = ItemMainViewHelper.buildMainItemFromDB(date);
-
-//        Log.wtf("here", "--------------------------------------------");
-//
-//        RosterDB rosterDB = new RosterDB(date);
-//        rosterDB.save();
-//        Log.wtf("here", " " + RosterHelper.isAvailableRoster(date));
-//        String[] dateUI = DateUtils.getDateUIMonthYear(DateUtils.removeMonth(new Date()));
-//        Log.wtf("here", " month: " + dateUI[0] + " year: " + dateUI[1]);
-
-
-//        Date newDate = DateUtils.addMonth(new Date());
-
-//        //Go to choose month activity
-//        Intent i1 = new Intent(this, GenerateRosterActivity.class);
-//        startActivity(i1);
-//        int nir34;
-//        //get current date time with Date()
-//        Date date = new Date();
-//        date = DateUtils.getStartOfDay(date);
-//
-
-
-        //Save table of first dates in moth to make ready roster index
-
-
-//        for (int ix = 0;ix  < 15;ix++) {
-//            date = addOneDay(date);
-//            RosterDB rosterDB = new RosterDB(date);
-//            rosterDB.save();
-//        }
-
-
-//        Date date1 = DateUtils.getFirstDayOfThisMonthDate();
-//        Log.wtf("here", " " + RosterHelper.getCurrentDayRosterIndex());
-
-//        ArrayList<Date> rosters = RosterHelper.getAllRosterDates();
-//        for (Date roster : rosters) {
-//            System.out.println(" time: " + roster.getTime());
-//        }
-//
-//        List<DutyDateDB> dutyDateDBs = DutiesHelper.getAllDutiesForDate(date);
-//        Log.wtf("here", "--------------------------------------------" + dutyDateDBs.size());
-//
-
-
-//
-//        PersonDB personDB = new PersonDB("nir2");
-//        personDB.save();
-//
-//        List<PersonDB> people = getAllPeople();
-//
-//        for (PersonDB personDB1 : people){
-//            System.out.print("peopleList:" + personDB1.name);
-//            System.out.println(" id: " + personDB1.getId());
-//        }
-//
-//        int temp = PersonDBHelper.getIdFromString("nir2");
-//        Log.wtf("here", " " + temp);
-//
-//        AdditionalDutyDB dutyDB = new AdditionalDutyDB(date,"outreach","or");
-//        dutyDB.save();
-//
-//        List<AdditionalDutyDB> dutyDBList = DutiesHelper.getAdditionalDutiesForDateList(date);
-//
-//        for (AdditionalDutyDB dutyDBModel : dutyDBList){
-//            System.out.print("additional duty list:" + dutyDBModel.date);
-//            System.out.print(" " + dutyDBModel.type);
-//            System.out.println(" id: " + dutyDBModel.getId());
-//        }
-//
-//
-//
-//        ShiftDB currentDayShift  = new ShiftDB(date,personDB,personDB,personDB);
-//
-//        int nir23;
-
+        requestNewInterstitial();
     }
 
 
@@ -207,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
         changeNewMonthFragment();
     }
 
-
     private void changeNewMonthFragment() {
 
         FragmentManager fm = getSupportFragmentManager();
@@ -215,8 +127,17 @@ public class MainActivity extends AppCompatActivity {
 
         //if roster available initialize list fragment
         if (RosterHelper.isAvailableRoster(CURRENT_MONTH_DATE)) {
-            ft.replace(R.id.main_activity_place_holder,
-                    new MainMonthListFragment(), "" + CURRENT_MONTH_DATE.getTime());
+            // Checks the orientation of the screen and toggle with respect
+            int currentConfig = getResources().getConfiguration().orientation;
+
+            if (currentConfig == Configuration.ORIENTATION_LANDSCAPE) {
+                ft.replace(R.id.main_activity_place_holder,
+                        new MainMonthGridFragment(), "" + CURRENT_MONTH_DATE.getTime());
+            } else {
+                ft.replace(R.id.main_activity_place_holder,
+                        new MainMonthListFragment(), "" + CURRENT_MONTH_DATE.getTime());
+            }
+
         }
         //if roster is not found initialize new roster fragment
         else {
@@ -315,29 +236,46 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.nav_second_fragment:
-                RosterHelper.removeAllRosterForMonth(CURRENT_MONTH_DATE);
-                Intent i1 = new Intent(this, MainActivity.class);
-                startActivity(i1);
+                openSureDialog();
                 break;
 
         }
-//            //Build new instance of the fragment
-//            PostFragment postFragment = PostFragment.newInstance(fPost);
-//
-//            //Set up fragment manager in order to make the transaction
-//            FragmentManager fm = getSupportFragmentManager();
-//            FragmentTransaction ft = fm.beginTransaction();
-//            ft.replace(R.id.fragment_place_holder, postFragment, fTag);
-//
-//            // replace
-//            ft.commit();
-
 
         // Close the navigation drawer
         mDrawer.closeDrawers();
     }
 
-    @Override
+    private void openSureDialog() {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //Yes button clicked
+                        RosterHelper.removeAllRosterForMonth(CURRENT_MONTH_DATE);
+                        Intent i1 = new Intent(getBaseContext(), MainActivity.class);
+                        startActivity(i1);
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        DrawerLayout mDrawerLayout;
+                        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+                        if (mDrawerLayout != null) {
+                            mDrawerLayout.closeDrawers();
+                        }
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to delete "+ UIUtils.getMonthName(CURRENT_MONTH_DATE, Calendar.LONG) + "'s roster?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+    }
+
+    @Override //Drawer toggle item
     public boolean onOptionsItemSelected(MenuItem item) {
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
@@ -352,7 +290,6 @@ public class MainActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle.syncState();
-
     }
 
     @Override
@@ -368,6 +305,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         Long tempCurrentDate = savedInstanceState.getLong(CURRENT_MONTH_KEY);
         CURRENT_MONTH_DATE = new Date(tempCurrentDate);
+
     }
 
     @Override
@@ -375,6 +313,8 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
+        setNewMonthUI();
+
     }
 
     private void inflateViews() {
@@ -389,6 +329,63 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i1);
     }
 
+    public void changeOrientation(View view) {
+
+        // Checks the orientation of the screen and toggle with respect
+        int currentConfig = getResources().getConfiguration().orientation;
+
+        if (currentConfig == Configuration.ORIENTATION_LANDSCAPE) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        } else if (currentConfig == Configuration.ORIENTATION_PORTRAIT) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+    }
+
+    public void openAd(View view) {
+
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            downloadRoster();
+        }
+
+    }
+
+    public void downloadRoster() {
+
+        Intent msgIntent = new Intent(this, ExportToExcel.class);
+        msgIntent.putExtra(CURRENT_MONTH_KEY, CURRENT_MONTH_DATE.getTime());
+        startService(msgIntent);
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("SEE_YOUR_LOGCAT_TO_GET_YOUR_DEVICE_ID")
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
+    }
+
+    //Automagically lose focus on any click outside editText - this way app don't crush
+    // http://stackoverflow.com/questions/4828636/edittext-clear-focus-on-touch-outside
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if ( v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent( event );
+
+    }
 
     //    public static List<AdditionalDutyDB> getAllADforDate(PersonDB personDB) {
 //        // This is how you execute a query

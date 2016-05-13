@@ -8,6 +8,7 @@
 
     <!-- Load the toolbar here -->
     <include
+        android:id="@+id/toolbar_roster_gen_on_sign_activity"
         layout="@layout/toolbar_roster_generator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

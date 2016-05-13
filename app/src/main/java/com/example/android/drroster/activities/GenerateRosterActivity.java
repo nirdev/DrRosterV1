@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -68,7 +69,6 @@ public class GenerateRosterActivity extends AppCompatActivity {
         mContext = this;
 
         CURRENT_DATE = getDateFromIntent();
-
         //Build peopleOnlyArray from DB data
         mPeopleOnlyArray = new Select()
                 .from(PersonDB.class)
@@ -125,10 +125,12 @@ public class GenerateRosterActivity extends AppCompatActivity {
             });
         }
 
+
     }
 
     private void changeUI(int index) {
 
+        Log.wtf("here", "--------------------------------------------" + index);
         //If last button
         if (index == RANDOM_ACTIVITY) {
 
@@ -226,22 +228,7 @@ public class GenerateRosterActivity extends AppCompatActivity {
     public void exitGenerator(View view) {
         goToMainActivity();
     }
-    //Automagically lose focus on any click outside editText - this way app don't crush
-    // http://stackoverflow.com/questions/4828636/edittext-clear-focus-on-touch-outside
-//    @Override
-//    public boolean dispatchTouchEvent(MotionEvent event) {
-//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//            View v = getCurrentFocus();
-//            if ( v instanceof EditText) {
-//                Rect outRect = new Rect();
-//                v.getGlobalVisibleRect(outRect);
-//                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
-//                    v.clearFocus();
-//                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-//                }
-//            }
-//        }
-//        return super.dispatchTouchEvent( event );
-//    }
+
+
+
 }

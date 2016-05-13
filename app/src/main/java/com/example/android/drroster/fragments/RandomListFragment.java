@@ -37,7 +37,7 @@ public class RandomListFragment extends ListFragment {
         randomManager.initiateRandomManager(
                 RandomiseActivity.mPeopleArray,
                 RandomiseActivity.monthYearNumbers
-                , getTag(), "gogo");
+                , getTag());
 
         //List of organized names
         nameList = RandomiseActivity.nameList;
@@ -80,7 +80,7 @@ public class RandomListFragment extends ListFragment {
         }
         //call is empty
         else {
-            //Let the data seter know if data was changes
+            //Let the data setter know if data was changes
             RandomiseActivity.isThisFragmentNull = true;
             ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.null_data, android.R.layout.simple_list_item_1);
             setListAdapter(adapter);

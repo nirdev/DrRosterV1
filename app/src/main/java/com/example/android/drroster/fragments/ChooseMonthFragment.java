@@ -12,8 +12,10 @@ import com.example.android.drroster.R;
 import com.example.android.drroster.activities.GenerateRosterActivity;
 import com.example.android.drroster.dialogs.ChooseMonthDialog;
 import com.example.android.drroster.utils.DateUtils;
+import com.example.android.drroster.utils.UIUtils;
 
 import java.text.DateFormatSymbols;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ChooseMonthFragment extends Fragment {
@@ -75,6 +77,7 @@ public class ChooseMonthFragment extends Fragment {
     }
 
     private void saveDate(Date date) {
+        GenerateRosterActivity.chosedMonth = UIUtils.getMonthName(date, Calendar.LONG);
         GenerateRosterActivity.monthYearNumbers[0] = DateUtils.getMonthFromDate(date);
         GenerateRosterActivity.monthYearNumbers[1] = DateUtils.getYearFromDate(date);
     }

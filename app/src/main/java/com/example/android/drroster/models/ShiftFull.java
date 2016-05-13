@@ -18,7 +18,7 @@ public class ShiftFull {
     Boolean isFirstCall = false;
     Boolean isSecondCall = false;
     Boolean isThirdCall = false;
-    boolean isLeavDate = false;
+    boolean isLeaveDate = false;
     List<Date> leaveDates = null;
 
     // empty constructor needed by the Parceler library
@@ -31,7 +31,7 @@ public class ShiftFull {
         this.isFirstCall = isFirstCall;
         this.isSecondCall = isSecondCall;
         this.isThirdCall = isThirdCall;
-        this.isLeavDate = isLeavDate;
+        this.isLeaveDate = isLeavDate;
         this.leaveDates = leaveDates;
     }
 
@@ -76,11 +76,11 @@ public class ShiftFull {
     }
 
     public boolean getIsLeavDate() {
-        return isLeavDate;
+        return isLeaveDate;
     }
 
     public void setIsLeavDate(boolean isLeavDate) {
-        this.isLeavDate = isLeavDate;
+        this.isLeaveDate = isLeavDate;
     }
 
     public List<Date> getLeaveDates() {

@@ -226,7 +226,7 @@ public class SinglePersonDetailsFragment extends Fragment {
     private String getTitleDateUI(Date day) {
         String titleDateString =
                 DateUtils.getDayFromDate(day) + " " +
-                UIUtils.getmonthName(day,Calendar.SHORT) + " " +
+                UIUtils.getMonthName(day, Calendar.SHORT) + " " +
                 DateUtils.getYearFromDate(day);
 
         return titleDateString;
