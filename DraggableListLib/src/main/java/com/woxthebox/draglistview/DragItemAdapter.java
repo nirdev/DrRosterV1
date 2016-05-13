@@ -48,7 +48,7 @@ public abstract class DragItemAdapter<T, VH extends DragItemAdapter.ViewHolder> 
     }
 
     public void changeItemPosition(int fromPos, int toPos) {
-        if (mItemList != null && mItemList.size() > fromPos && mItemList.size() > toPos) {
+        if (mItemList != null && mItemList.size() > fromPos && mItemList.size() > toPos && toPos != mItemList.size() -1) {
             T item = mItemList.remove(fromPos);
             mItemList.add(toPos, item);
             notifyItemMoved(fromPos, toPos);
