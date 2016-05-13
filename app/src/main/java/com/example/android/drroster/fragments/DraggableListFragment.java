@@ -51,7 +51,7 @@ public class DraggableListFragment extends Fragment {
 
             @Override
             public void onItemDragEnded(int fromPosition, int toPosition) {
-                if (fromPosition != toPosition) {
+                if (fromPosition != toPosition ) {
                 }
             }
         });
