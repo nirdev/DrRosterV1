@@ -47,7 +47,7 @@ public class SigninActivity extends AppCompatActivity {
         //inflate string from activity_signin xml
         editText = (EditText) findViewById(R.id.department_name_edit_text);
 
-        if ( editText.getText() != null && !editText.getText().toString().isEmpty()) {
+        if ( editText!= null && editText.getText() != null && !editText.getText().toString().isEmpty()) {
             //Save String in sharedpref
             SharedPreferences mSetSettings = getSharedPreferences(SigninConstants.SHAREDPREF_FILE_KEY, SigninConstants.SHAREDPREF_MODE_KEY);
             SharedPreferences.Editor editor = mSetSettings.edit();

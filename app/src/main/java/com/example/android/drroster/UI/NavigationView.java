@@ -146,7 +146,8 @@ public class NavigationView extends RelativeLayout {
                 toastReason = context.getString(R.string.toast_choose_more_people);
                 break;
             case GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_THIRD_CALL_INDEX:
-                moveNext = true;
+                moveNext = (checkedPeople(index) > 2);
+                toastReason = context.getString(R.string.toast_choose_more_people);
                 break;
             case GenerateRosterActivity.FRAGMENT_DATEABLE_LIST_INDEX:
                 moveNext = true;
@@ -174,6 +175,13 @@ public class NavigationView extends RelativeLayout {
         else if (index == GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_SECOND_CALL_INDEX){
             for (ShiftFull shift : GenerateRosterActivity.mPeopleArray){
                 if (shift.getIsSecondCall()){
+                    count++;
+                }
+            }
+        }
+        else if (index == GenerateRosterActivity.FRAGMENT_PEOPLE_LIST_THIRD_CALL_INDEX){
+            for (ShiftFull shift : GenerateRosterActivity.mPeopleArray){
+                if (shift.getIsThirdCall()){
                     count++;
                 }
             }

@@ -48,7 +48,7 @@
     <string name="main_list_third_call_title">3rd call:</string>
     <string name="main_list_leave_title">Leave:</string>
     <string name="toast_choose_random_type">Please choose random type</string>
-    <string name="toast_choose_more_people">Please choose more then 3 people</string>
+    <string name="toast_choose_more_people">Please choose more then 2 people</string>
 
     <string name="ad_unit_id_random_activity">ca-app-pub-4429203365193534/4581922402</string>
     <string name="ad_unit_id_main_activity">ca-app-pub-4429203365193534/9199082003</string>

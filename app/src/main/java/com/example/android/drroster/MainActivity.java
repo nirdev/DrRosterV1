@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //If first time go to sign in , else start activity
         checkForSignIn();
-        int nir = 5;
 
         //Set view and drawer
         setContentView(R.layout.activity_main);
@@ -82,7 +81,10 @@ public class MainActivity extends AppCompatActivity {
             //Set current roster date
             CURRENT_MONTH_DATE = DateUtils.getFirstDayOfThisMonthDate();
         }
+
+        //if not first time start app
         setNewMonthUI();
+
         //month changed listener
         monthNavView.setMonthChangeListener(new MonthNavView.IfMonthChangeListener() {
             @Override
@@ -219,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(this, SigninActivity.class);
             startActivity(i);
         }
-        // if false start app
+
     }
 
     //Handle drawer selection
@@ -246,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which){
+                switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
                         RosterHelper.removeAllRosterForMonth(CURRENT_MONTH_DATE);
@@ -268,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to delete "+ UIUtils.getMonthName(CURRENT_MONTH_DATE, Calendar.LONG) + "'s roster?").setPositiveButton("Yes", dialogClickListener)
+        builder.setMessage("Are you sure you want to delete " + UIUtils.getMonthName(CURRENT_MONTH_DATE, Calendar.LONG) + "'s roster?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
     }
 
@@ -341,14 +343,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void openAd(View view) {
         //Check for roster to current month before downloading excel
-        if (RosterHelper.isAvailableRoster(CURRENT_MONTH_DATE)){
+        if (RosterHelper.isAvailableRoster(CURRENT_MONTH_DATE)) {
             //Check if ad is loaded before show ad
             if (mInterstitialAd.isLoaded()) {
                 mInterstitialAd.show();
             } else {
                 downloadRoster();
             }
-        }else {
+        } else {
             Toast.makeText(this, "No roster for this month", Toast.LENGTH_SHORT).show();
         }
     }
@@ -373,17 +375,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             View v = getCurrentFocus();
-            if ( v instanceof EditText) {
+            if (v instanceof EditText) {
                 Rect outRect = new Rect();
                 v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
                     v.clearFocus();
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
             }
         }
-        return super.dispatchTouchEvent( event );
+        return super.dispatchTouchEvent(event);
 
     }
 

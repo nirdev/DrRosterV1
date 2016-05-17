@@ -78,6 +78,8 @@ public class exportToExcel extends IntentService {
         boolean success = saveExcelFile(this, currentMonth, mTitles, excelDataTable);
         if (success){
             mHandler.post(new DisplayToast(this, "File save in" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + " folder"));
+
+
         }
         else {
             mHandler.post(new DisplayToast(this, "Error occurred while trying to save excel file"));

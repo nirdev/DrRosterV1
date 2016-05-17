@@ -10,6 +10,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -27,6 +28,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-library:1.3'
+    androidTestCompile "org.mockito:mockito-core:1.+"
     compile project(':DraggableListLib')
     apt 'org.parceler:parceler:1.0.4'
     compile 'com.android.support:appcompat-v7:23.2.1'
@@ -39,4 +41,5 @@ dependencies {
     compile 'org.apache.poi:poi:3.10.1'
     compile 'com.google.android.gms:play-services-ads:8.4.0'
 
+    androidTestCompile 'junit:junit:4.12'
 }

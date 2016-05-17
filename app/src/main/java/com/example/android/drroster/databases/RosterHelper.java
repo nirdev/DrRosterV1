@@ -60,7 +60,7 @@ public class RosterHelper {
             index = allRosterDates.indexOf(firstDayOfThisMonth);
         }
         else {
-            Log.wtf("here", "-------------------------------------------- dude get a life and check " +
+            Log.e("here", "dude get a life and check " +
                     "getCurrentDayRosterIndex method in RosterHelper class, fucker");
         }
 

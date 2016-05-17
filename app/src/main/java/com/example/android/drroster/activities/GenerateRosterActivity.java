@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -130,7 +129,7 @@ public class GenerateRosterActivity extends AppCompatActivity {
 
     private void changeUI(int index) {
 
-        Log.wtf("here", "--------------------------------------------" + index);
+
         //If last button
         if (index == RANDOM_ACTIVITY) {
 
