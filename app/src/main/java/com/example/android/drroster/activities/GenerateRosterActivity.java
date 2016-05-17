@@ -120,6 +120,7 @@ public class GenerateRosterActivity extends AppCompatActivity {
 
                     changeUI(index);
 
+                    int git;
                 }
             });
         }
